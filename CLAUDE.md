@@ -32,6 +32,7 @@ slides/
 - Use sentence case for slide titles
 - Prefer dark theme (`night`) for consistency
 - Link shared assets with absolute paths: `/shared/assets/images/`
+- **Add favicon** using `soumendra_avatar.webp`: `<link rel="icon" href="shared/assets/images/soumendra_avatar.webp">` (adjust path depth as needed for nested files)
 
 ## Tech Stack
 
