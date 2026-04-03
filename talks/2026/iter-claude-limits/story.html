@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tips & Tricks for Claude, Workspace Anatomy & Token Optimization</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:          #0f0f0f;
+      --paper:        #f8f6f1;
+      --accent:       #b8243f;
+      --gold:         #c49b2a;
+      --muted:        #5e5e5e;
+      --faint:        #9a9a9a;
+      --border:       #d9d5cc;
+      --highlight-bg: #fdf5e6;
+      --dark:         #1a1a2e;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Libre Baskerville', Georgia, serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.78;
+      font-size: 18px;
+      overflow-x: hidden;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent);
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+
+    /* Masthead */
+    .masthead {
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0.6rem 1.5rem;
+    }
+    .masthead-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--faint);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 5rem 1.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .event-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--faint);
+      border-top: 1px solid var(--border);
+      padding-top: 1.2rem;
+    }
+    .hero-meta a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .hero-meta a:hover { text-decoration: underline; }
+
+    /* Article column */
+    .article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    /* Section headings */
+    .article h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 3.5rem 0 1rem;
+      line-height: 1.2;
+    }
+    .article h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2.5rem 0 0.75rem;
+    }
+    .article p {
+      margin-bottom: 1.4rem;
+      color: var(--ink);
+    }
+
+    /* Part label */
+    .part-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .part-label.green  { background: #d1fae5; color: #065f46; }
+    .part-label.purple { background: #ede9fe; color: #4c1d95; }
+    .part-label.red    { background: #fee2e2; color: #7f1d1d; }
+
+    /* Pull quote */
+    blockquote.pull-quote {
+      border-left: 4px solid var(--accent);
+      padding: 1.25rem 2rem;
+      margin: 2.5rem -10%;
+      font-style: italic;
+      font-size: 1.2rem;
+      line-height: 1.65;
+      background: var(--highlight-bg);
+      border-radius: 0 4px 4px 0;
+    }
+    blockquote.pull-quote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+    @media (max-width: 600px) {
+      blockquote.pull-quote { margin-left: 0; margin-right: 0; }
+    }
+
+    /* Inline code */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: #f0ece4;
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      color: #5c3317;
+    }
+
+    /* Code block */
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      padding: 1.25rem 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5rem 0 2rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    /* Key term callout */
+    .callout {
+      background: var(--highlight-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.4rem;
+      margin: 1.8rem 0;
+    }
+    .callout strong { color: var(--accent); }
+
+    /* Concept grid */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .concept-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      transition: box-shadow 0.2s;
+    }
+    .concept-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .concept-card .concept-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .concept-card .concept-name {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .concept-card p {
+      font-size: 0.85rem;
+      line-height: 1.55;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Tooltip */
+    .tooltip-trigger {
+      border-bottom: 1px dotted var(--accent);
+      cursor: help;
+      position: relative;
+    }
+    .tooltip-trigger::after {
+      content: attr(data-tip);
+      position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+      background: var(--dark); color: #fff; padding: 0.5rem 0.75rem;
+      border-radius: 4px; font-size: 0.85rem; white-space: normal;
+      width: 240px; pointer-events: none; opacity: 0; transition: opacity 0.2s;
+      font-style: normal; font-family: var(--font-body); z-index: 50;
+    }
+    .tooltip-trigger:hover::after { opacity: 1; }
+
+    /* Cite button */
+    .cite-btn {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      line-height: 1;
+      vertical-align: baseline;
+    }
+    .cite-btn:hover { background: var(--accent); color: #fff; }
+    .popup-data { display: none; }
+
+    /* Full-width breakout */
+    .pull-quote-wrap,
+    .takeaways-wrap {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      padding: 3rem 2rem;
+      background: var(--dark);
+      color: #f0ece4;
+    }
+
+    /* Highlight number */
+    .stat {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .stat-row {
+      display: flex;
+      gap: 2.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .stat-item { flex: 1; min-width: 140px; }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.03em;
+    }
+
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin: 1.5rem 0 2rem;
+      font-family: var(--font-mono);
+    }
+    .compare-table th {
+      background: #f0ece4;
+      color: var(--accent);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      font-weight: 500;
+      border-bottom: 2px solid var(--border);
+    }
+    .compare-table td {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .compare-table tr:nth-child(even) td { background: #faf8f4; }
+    .compare-table td:first-child { color: var(--ink); font-weight: 500; }
+
+    /* Model tier pills */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .tier-card {
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      text-align: center;
+    }
+    .tier-card.haiku  { background: #d1fae5; border: 1px solid #6ee7b7; }
+    .tier-card.sonnet { background: #fef9c3; border: 1px solid #fde047; }
+    .tier-card.opus   { background: #fee2e2; border: 1px solid #fca5a5; }
+    .tier-card .tier-name {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+    .tier-card p {
+      font-size: 0.8rem;
+      margin: 0;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    /* Takeaways */
+    .takeaways-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .takeaways-wrap h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: #f0ece4;
+      margin-bottom: 2rem;
+    }
+    .takeaways-wrap ol {
+      padding-left: 1.5rem;
+    }
+    .takeaways-wrap li {
+      color: #f0ece4;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    .takeaways-wrap li strong {
+      color: #fbbf24;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    footer img {
+      width: 140px;
+      border-radius: 8px;
+      margin: 1.2rem 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    footer p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 4px; }
+
+    /* Popup */
+    .popup-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .popup-overlay.open { display: flex; }
+    .popup-box {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 520px;
+      width: 90%;
+      position: relative;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .popup-close {
+      position: absolute; top: 0.75rem; right: 1rem;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--muted);
+    }
+    .popup-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+    .popup-box p { font-size: 0.9rem; color: var(--muted); }
+    .popup-box a { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 3rem 1rem 2rem; }
+      .article { padding: 2rem 1rem 1rem; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .concept-grid { grid-template-columns: 1fr 1fr; }
+      .stat-row { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <span>ITER 2026 · CLAUDE DEEP DIVE</span>
+      <span>By Soumendra Kumar Sahoo</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="event-label">Conference Talk · 2026</div>
+      <h1 class="hero-title">You're Not Hitting Claude's Limits. You're Just Using It Wrong.</h1>
+      <p class="hero-subtitle">A guide to workspace anatomy, context windows, and the token habits that make or break your AI workflow, explained for humans with things to do.</p>
+      <div class="hero-meta">
+        <span>Soumendra Kumar Sahoo</span>
+        <span>·</span>
+        <span>Tips &amp; Tricks for Claude</span>
+        <span>·</span>
+        <span>3 parts · ~15 min read</span>
+      </div>
+    </div>
+  </section>
+
+  <article class="article">
+
+    <!-- OPENING HOOK -->
+    <p>Here is a scenario that happens to almost everyone. You open Claude, fire off a clever prompt, get a brilliant answer, and then, three days and forty messages later, Claude starts forgetting things, slowing down, or refusing to cooperate entirely. You blame the model. You blame Anthropic. You post a frustrated tweet.</p>
+
+    <p>But here's what nobody told you: Claude isn't broken. You just haven't learned how it thinks. Once you understand its anatomy, how it stores context, what "tokens" actually mean, and where its configuration lives, everything changes. This is that guide.</p>
+
+    <blockquote class="pull-quote">
+      <p>"Claude doesn't count messages. It counts tokens. And that one fact changes everything about how you should work with it."</p>
+      <cite>Soumendra Kumar Sahoo </cite>
+    </blockquote>
+
+    <p>We'll cover three things. First, the vocabulary, the building blocks of the Claude ecosystem that most people never bother to learn. Second, the <code>.claude/</code> folder, the hidden control centre that lets you configure Claude like a professional. Third, the token game, ten habits that will stop you from hitting usage limits and make your interactions dramatically more effective.</p>
+
+    <!-- PART 0 -->
+    <span class="part-label green">Part 0: Introductory Concepts</span>
+    <h2>The Seven Words You Need to Know</h2>
+
+    <p>Most people use Claude the same way they use a search engine: type something in, read something back, repeat. That works, until it doesn't. To really leverage Claude, you need to understand seven distinct concepts that form its ecosystem. Each one has a specific job, and confusing them is the single biggest source of frustration for new users.</p>
+
+    <p>Think of it like this. A kitchen has knives, chopping boards, pots, ovens, recipe books, and a head chef. They're all different things. Using a knife when you need a pot isn't a failure of the kitchen, it's a failure of understanding the tools.</p>
+
+    <h3>1. Prompts, the conversation you're having right now</h3>
+
+    <p>A <span class="tooltip-trigger" data-tip="Natural language instructions you type directly into the chat interface during a conversation">prompt</span> is the most basic unit of interaction. It's the message you type. It's <em>ephemeral</em>, it only exists for the current conversation. When the chat ends, the prompt is gone.</p>
+
+    <div class="callout">
+      <strong>The key insight:</strong> If you find yourself typing the same thing at the start of every conversation, "act as a senior developer", "always use TypeScript", "keep responses concise", that's not a prompt problem. That's a sign you need one of the tools below.
+    </div>
+
+    <h3>2. Projects, your long-term workspace</h3>
+
+    <p>Projects are self-contained workspaces with their own chat histories and a 200,000-token knowledge base. Anything you upload into a Project, documents, code, PDFs, becomes available across every conversation inside it. Claude caches this content, so it doesn't re-read it from scratch each time.</p>
+
+    <p>Use Projects when you're doing sustained, multi-session work on a specific topic. The signal that you should <em>stop</em> using a Project and use a <span class="tooltip-trigger" data-tip="A packaged set of instructions that Claude loads automatically when relevant, more on this below">Skill</span> instead? When you find yourself copying the same instructions into multiple Projects.</p>
+
+    <h3>3. Rules, targeted instructions for specific files</h3>
+
+    <p>Rules solve a very specific problem: what do you do when you have instructions that only apply to <em>some</em> files? You don't want your API design conventions cluttering up the instructions for your frontend components.</p>
+
+    <p>Rules are path-scoped configuration files. Claude only loads them when you're editing files that match the defined pattern. Here's what one looks like:</p>
+
+    <pre>---
+paths:
+  - "src/api/**/*.ts"
+  - "src/handlers/**/*.ts"
+---
+# API Design Rules
+- All handlers return { data, error } shape
+- Never expose internal error details to clients</pre>
+
+    <p>Claude reads this rule only when you're working inside those paths. Everywhere else, it's invisible. This is how you keep your main configuration file clean.</p>
+
+    <h3>4. Skills, Claude's memory for how to do things</h3>
+
+    <p>This is the concept most people miss, and it's the most powerful. Skills are packaged procedures, instructions, scripts, and supporting resources, that Claude discovers and loads <em>automatically</em> when a task matches.</p>
+
+    <p>The magic is in how they load. Claude reads the metadata first (about 100 tokens). If the task matches, it loads the full instructions (under 5,000 tokens). Only if it needs to does it load the bundled files. This is called <em>progressive disclosure</em>, you're not burning tokens on things Claude doesn't need.</p>
+
+    <div class="callout">
+      <strong>When to create a Skill:</strong> The signal is simple. If you're typing the same prompt across multiple conversations, "here's how to review a PR", "here's our brand voice", "here's how to manipulate this Excel format", turn it into a Skill. Once. Use it forever.
+    </div>
+
+    <h3>5. Subagents, delegation with guardrails</h3>
+
+    <p>Subagents are specialised AI assistants with their own context windows, custom system prompts, and specific tool permissions. They handle discrete tasks independently and return results to the main agent.</p>
+
+    <p>Think of them as trusted interns with a defined job description. You might have a "Code Reviewer" subagent restricted to read-only tools and the cheaper Haiku model, fast, focused, and incapable of accidentally deleting your database. Claude can delegate to subagents automatically based on their descriptions, or you can invoke them explicitly.</p>
+
+    <h3>6. MCP, the universal power socket</h3>
+
+    <p><span class="tooltip-trigger" data-tip="Model Context Protocol, an open standard for connecting AI assistants to external data sources and tools">MCP</span> stands for Model Context Protocol. Think of it as the USB-C of AI integrations. It's an open standard that lets Claude connect to external systems: Google Drive, Slack, GitHub, databases, internal tools.</p>
+
+    <p>The distinction that matters: use <strong>MCP</strong> to give Claude <em>access</em> to tools and data. Use <strong>Skills</strong> to give Claude <em>knowledge</em> of how to use those tools or follow your procedures. They're complementary, not interchangeable.</p>
+
+    <!-- COMPARISON TABLE -->
+    <h3>How they fit together</h3>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Skills</th>
+          <th>Prompts</th>
+          <th>Projects</th>
+          <th>Subagents</th>
+          <th>MCP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Provides</td>
+          <td>Procedural know-how</td>
+          <td>Moment-to-moment instructions</td>
+          <td>Background knowledge</td>
+          <td>Task delegation</td>
+          <td>Tool connectivity</td>
+        </tr>
+        <tr>
+          <td>Persists</td>
+          <td>Across conversations</td>
+          <td>Single conversation</td>
+          <td>Within project</td>
+          <td>Across sessions</td>
+          <td>Always</td>
+        </tr>
+        <tr>
+          <td>Loads when</td>
+          <td>Task matches</td>
+          <td>Every turn</td>
+          <td>Always in project</td>
+          <td>Invoked</td>
+          <td>Always available</td>
+        </tr>
+        <tr>
+          <td>Can include code</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Yes</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PART 1 -->
+    <span class="part-label purple">Part 1: The .claude/ Folder</span>
+    <h2>The Control Centre Nobody Shows You</h2>
+
+    <p>There's a hidden folder in your project that most Claude users have never opened. It's called <code>.claude/</code>, and it's where the real configuration lives. Understanding it is the difference between using Claude like a tourist and using it like a local.</p>
+
+    <p>It comes in two flavours. The one inside your project (<code>your-repo/.claude/</code>) gets committed to Git, it's shared team configuration, project-specific rules, agents, and Skills. The one in your home directory (<code>~/.claude/</code>) stays on your local machine, personal preferences, global memory, cross-project Skills.</p>
+
+    <pre style="font-size: 0.75rem; line-height: 1.5; background: #1e1e2e; color: #cdd6f4; padding: 1.25rem 1.5rem; border-radius: 6px; overflow-x: auto; border-left: 3px solid #a78bfa;">your-project/
+├── CLAUDE.md                  # Team instructions (committed)
+├── CLAUDE.local.md            # Your personal overrides (gitignored)
+│
+└── .claude/
+    ├── settings.json          # Permissions + config (committed)
+    ├── settings.local.json    # Personal permission overrides (gitignored)
+    │
+    ├── rules/                 # Modular instruction files
+    │   ├── code-style.md
+    │   ├── testing.md
+    │   └── api-conventions.md
+    │
+    ├── skills/                # Auto-invoked workflows
+    │   ├── security-review/
+    │   │   └── SKILL.md
+    │   └── deploy/
+    │       └── SKILL.md
+    │
+    └── agents/                # Specialized subagent personas
+        ├── code-reviewer.md
+        └── security-auditor.md
+
+~/.claude/
+├── CLAUDE.md                  # Your global instructions
+├── settings.json              # Your global settings
+├── commands/                  # Your personal commands (all projects)
+├── skills/                    # Your personal skills (all projects)
+├── agents/                    # Your personal agents (all projects)
+└── projects/                  # Session history + auto-memory</pre>
+
+    <blockquote class="pull-quote">
+      <p>"Treat <code>.claude/</code> as code, not configuration. The same discipline you apply to your codebase, version control, review, modularity, applies here."</p>
+      <cite>Soumendra Kumar Sahoo </cite>
+    </blockquote>
+
+    <h3>CLAUDE.md, the instruction manual</h3>
+
+    <p><code>CLAUDE.md</code> is the most important file in the folder. It's loaded directly into Claude's system prompt at the start of every session, which means every word in it costs tokens. This is both its power and its danger.</p>
+
+    <p>Keep it <strong>under 200 lines</strong>. That's not arbitrary, it's the threshold at which Claude's instruction adherence starts to degrade. Too many instructions and they start cancelling each other out.</p>
+
+    <div class="callout">
+      <strong>What to put in CLAUDE.md:</strong> Run commands (<code>npm run test</code>), architecture decisions (Express/Prisma), strict conventions (<code>use zod</code>, <code>no console.log</code>). <strong>What to leave out:</strong> Linter configs, long theoretical explanations, rules that only apply to specific directories (those go in <code>.claude/rules/</code>).
+    </div>
+
+    <p>There's also <code>CLAUDE.local.md</code>, an uncommitted override file for personal preferences that you don't want to impose on the whole team. Put your quirks there.</p>
+
+    <h3>rules/, surgical precision at scale</h3>
+
+    <p>As a project grows, you'll accumulate rules that only matter for specific parts of the codebase. API conventions, database access patterns, component naming, these don't belong in <code>CLAUDE.md</code>. That way lies bloat.</p>
+
+    <p>The <code>.claude/rules/</code> directory solves this with path-scoped markdown files. Define <code>paths</code> in the YAML frontmatter, and Claude only loads those rules when you're editing matching files. Your API rules are invisible when you're working on the frontend. Zero overhead, maximum relevance.</p>
+
+    <h3>skills/, autonomous workflows</h3>
+
+    <p><strong>Skills</strong> are autonomous. You place a <code>SKILL.md</code> inside <code>.claude/skills/your-skill/</code> with a description of when to trigger it, "Use when reviewing PRs", "Use when the user asks about Excel files", and Claude reads that description, decides if it's relevant to the current task, and loads the full instructions only if it is.</p>
+
+    <h3>agents/ and settings.json, specialisation and safety</h3>
+
+    <p>The <code>.claude/agents/</code> folder lets you define specialised personas with isolated contexts. Each agent gets its own system prompt, its own set of allowed tools, and even its own model. A "Code Reviewer" agent might be restricted to read-only tools and run on the faster, cheaper Haiku model, fast feedback, no accidental writes.</p>
+
+    <p><code>settings.json</code> is your safety net. It controls what Claude is <em>allowed</em> to do at all. An allow list defines what's permitted, <code>Bash(npm run *)</code>, <code>Read</code>, <code>Write</code>. A deny list defines what's forbidden, <code>Bash(rm -rf *)</code>, <code>Read(./.env)</code>. In headless or agentic runs, this is essential. Without it, you're trusting the model's judgment on operations that should require human authorisation.</p>
+
+    <!-- PART 2 -->
+    <span class="part-label red">Part 2: The Token Game</span>
+    <h2>Why Message 30 Costs 31x More Than Message 1</h2>
+
+    <p>Here's the thing about Claude that nobody explains at the start. Every time you send a message, Claude doesn't just read your new message. It re-reads the <em>entire conversation history</em> from the beginning. Every previous message. Every previous response. All of it, every single time.</p>
+
+    <p>This means that by the time you're on message 30, you've re-read messages 1 through 29 thirty times over. Your 30th message isn't costing you one message worth of tokens. It's costing you thirty-one message-equivalents. The meter runs exponentially, not linearly.</p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="stat">31×</span>
+        <span class="stat-label">cost of message 30 vs. message 1</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat">98.5%</span>
+        <span class="stat-label">tokens "wasted" re-reading history in a long chat</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat">15–20</span>
+        <span class="stat-label">messages before starting a fresh chat</span>
+      </div>
+    </div>
+
+    <h3>Habit 1: Edit the prompt, don't feed the history</h3>
+
+    <p>The single most wasteful thing you can do is send a follow-up correction. "No, I meant X." "Actually, make it shorter." "Wait, add TypeScript types." Every correction adds to the history that Claude must re-read forever after.</p>
+
+    <p>The fix is simple but requires a change of instinct: <strong>edit your original prompt and regenerate</strong>. Don't append, amend. Fix the source, not the symptom. This alone can cut your token usage in half on complex tasks.</p>
+
+    <h3>Habit 2: Fresh chats are free, use them</h3>
+
+    <p>A common mistake is treating a conversation like a continuous working session. In reality, each message you add makes the next one more expensive. After 15–20 messages, the overhead of re-reading history starts to dwarf the actual work being done.</p>
+
+    <p>The workflow: ask Claude to summarise where things stand, open a new chat, paste the summary, and continue. You lose nothing useful. You reset the exponential cost curve back to zero.</p>
+
+    <h3>Habit 3: Batch your tasks</h3>
+
+    <p>Three separate prompts means three context loads. One prompt with three tasks means one context load, and Claude produces better output because it sees the full picture at once.</p>
+
+    <blockquote class="pull-quote">
+      <p>"Three separate messages. Three times the overhead. One batched prompt gives you better answers at a third of the cost."</p>
+      <cite>Soumendra Kumar Sahoo </cite>
+    </blockquote>
+
+    <h3>Habit 4: Use Projects for recurring files</h3>
+
+    <p>If you're uploading the same PDF, the same architecture diagram, or the same specification document at the start of every conversation, stop. Upload it to a Project once. Claude caches it. It won't re-tokenise it every session. The file becomes part of the Project's persistent memory.</p>
+
+    <h3>Habit 5: Save your preferences in Memory</h3>
+
+    <p>Every time you start a conversation with "Act as a senior backend developer with 10 years of experience who prefers functional programming patterns and writes clean, well-commented TypeScript..." you're burning tokens on a boilerplate you've written a hundred times. Put it in Settings → Memory. Once. Done.</p>
+
+    <h3>Habit 6: Disable tools you're not using</h3>
+
+    <p>Web Search, Connectors, Advanced Thinking, these features eat tokens even when you don't explicitly invoke them. Claude reads their availability and factors them in. Turn off anything you're not actively using. You can always switch them back on when you need them.</p>
+
+    <h3>Habit 7: Right-size your model</h3>
+
+    <p>Not every task needs the most powerful model. This is the most overlooked cost lever in the entire Claude ecosystem.</p>
+
+    <div class="tier-grid">
+      <div class="tier-card haiku">
+        <div class="tier-name">Claude Haiku</div>
+        <p>Drafts, grammar checks, formatting, summarisation. Saves 50–70% of your budget on tasks that don't need deep reasoning.</p>
+      </div>
+      <div class="tier-card sonnet">
+        <div class="tier-name">Claude Sonnet</div>
+        <p>Real coding work, medium-complexity analysis, most everyday tasks. The workhorse, reach for this by default.</p>
+      </div>
+      <div class="tier-card opus">
+        <div class="tier-name">Claude Opus</div>
+        <p>Deep architectural thinking, hard reasoning problems, nuanced judgment. Reserve it, don't use it for formatting a table.</p>
+      </div>
+    </div>
+
+    <h3>Habit 8: Work with the rolling window, not against it</h3>
+
+    <p>Claude's usage limits operate on a <strong>5-hour rolling window</strong>, not a fixed daily reset. This means the limit renews continuously as older usage ages out. If you understand this, you can spread heavy work across morning, afternoon, and late-night sessions, and never hit a hard wall.</p>
+
+    <p>A practical corollary: avoid scheduling your most intensive Claude sessions during peak hours. Between 5:30 PM and 11:30 PM IST, shared infrastructure is under maximum load and limits drain faster. Front-load your heavy lifting earlier in the day.</p>
+
+    <div class="callout">
+      <strong>The underlying principle:</strong> Claude is a shared resource with a token budget. Every habit here is about spending that budget on work that matters, not on overhead, not on re-reading history, not on boilerplate you've typed a thousand times.
+    </div>
+
+  </article>
+
+  <!-- Full-width Takeaways -->
+  <section class="takeaways-wrap">
+    <div class="takeaways-inner">
+      <h2>The Golden Rules</h2>
+      <ol>
+        <li><strong>Treat tokens like currency.</strong> Edit prompts instead of appending corrections, batch multiple tasks into one message, and start a fresh chat every 15–20 messages. The meter runs exponentially, manage it deliberately.</li>
+        <li><strong>Infrastructure as prompt.</strong> Treat <code style="background:rgba(255,255,255,0.1); color:#fbbf24;">.claude/</code> as code. Keep <code style="background:rgba(255,255,255,0.1); color:#fbbf24;">CLAUDE.md</code> dense and under 200 lines. Use path-scoped <code style="background:rgba(255,255,255,0.1); color:#fbbf24;">/rules/</code> for project-specific conventions so your main file stays clean.</li>
+        <li><strong>Right-size your models.</strong> Default to Haiku for lightweight tasks, escalate to Sonnet for real work, and reserve Opus only for problems that genuinely need deep reasoning. The difference in cost is dramatic.</li>
+        <li><strong>Automate what you repeat.</strong> The moment you type the same prompt twice, it belongs in a Skill, not in your clipboard. Encode your expertise once, reuse it forever.</li>
+        <li><strong>Guard the gates.</strong> Always configure <code style="background:rgba(255,255,255,0.1); color:#fbbf24;">settings.json</code> with an explicit deny list for destructive commands and sensitive files. In agentic workflows, safety guardrails are not optional.</li>
+        <li><strong>Work with the rolling window.</strong> Limits renew every 5 hours, not at midnight. Spread heavy sessions across morning, afternoon, and late night. Avoid the 5:30–11:30 PM IST peak window for intensive work.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <p style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint);">Connect with the speaker</p>
+    <img src="/shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code, Soumendra Kumar Sahoo">
+    <p>Scan to connect on LinkedIn, or reach out with questions.</p>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--faint);">Talk delivered at ITER 2026 &mdash; Tips &amp; Tricks for Claude</p>
+  </footer>
+
+  <!-- Lightbox overlay -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <!-- Popup overlay -->
+  <div id="popup-overlay" class="popup-overlay" onclick="closePopup()">
+    <div class="popup-box" onclick="event.stopPropagation()">
+      <button class="popup-close" onclick="closePopup()">×</button>
+      <div id="popup-content"></div>
+    </div>
+  </div>
+
+  <script>
+    // Progress bar
+    const bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const doc = document.documentElement;
+      const scrolled = doc.scrollTop || document.body.scrollTop;
+      const total = doc.scrollHeight - doc.clientHeight;
+      bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+    });
+
+    // Lightbox
+    function openLightbox(src, alt) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-img').alt = alt || '';
+      lb.classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeLightbox(); closePopup(); }
+    });
+
+    // Popup
+    function openPopup(id) {
+      const data = document.getElementById(id);
+      if (!data) return;
+      document.getElementById('popup-content').innerHTML = data.innerHTML;
+      document.getElementById('popup-overlay').classList.add('open');
+    }
+    function closePopup() {
+      document.getElementById('popup-overlay').classList.remove('open');
+      document.getElementById('popup-content').innerHTML = '';
+    }
+  </script>
+
+</body>
+</html>

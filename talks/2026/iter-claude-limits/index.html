@@ -261,17 +261,6 @@
                 </section>
 
                 <section>
-                    <h2>Commands</h2>
-                    <p><strong>Custom slash commands</strong> that trigger specific workflows or actions when invoked.</p>
-                    <ul>
-                        <li><strong>Purpose:</strong> Execute predefined operations like <code>/project:review</code> or <code>/deploy</code>.</li>
-                        <li><strong>Example:</strong> A markdown file that runs <code>git diff</code> and prompts Claude to review for security/performance issues.</li>
-                        <li><strong>Location:</strong> Defined in <code>.claude/commands/</code> folder or global <code>~/.claude/commands/</code>.</li>
-                        <li><strong>Use for:</strong> Repetitive workflows that need manual triggering but consistent execution.</li>
-                    </ul>
-                </section>
-
-                <section>
                     <h2>Rules</h2>
                     <p><strong>Path-scoped configuration files</strong> that provide modular, file-specific instructions to Claude.</p>
                     <ul>
@@ -400,7 +389,7 @@
                             <ul>
                                 <li>Committed to Git.</li>
                                 <li>Shared team configuration.</li>
-                                <li>Project-specific rules, agents, and slash commands.</li>
+                                <li>Project-specific rules, agents, and Skills.</li>
                             </ul>
                         </div>
                         <div>
@@ -443,11 +432,8 @@ paths:
                 </section>
 
                 <section>
-                    <h2>Agentic Extension: Commands & Skills</h2>
+                    <h2>Agentic Extension: Skills</h2>
                     <ul>
-                        <li><strong>Commands (<code>/commands/</code>):</strong> Custom slash commands (e.g., <code>/project:review</code>).<br>
-                            <em>Example: A markdown file that runs <code>git diff</code> and prompts Claude to review for security/performance.</em>
-                        </li>
                         <li><strong>Skills (<code>/skills/</code>):</strong> Workflows Claude invokes <em>autonomously</em> based on task matching.<br>
                             Includes a <code>SKILL.md</code> describing when to trigger it (e.g., "Use when reviewing PRs"). Can bundle supporting docs (like <code>DETAILED_GUIDE.md</code>).
                         </li>
