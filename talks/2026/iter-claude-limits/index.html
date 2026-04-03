@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Claude: Limits & Configuration</title>
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+    <style>
+        .reveal {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            color: #e2e8f0;
+            text-transform: none;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.6em;
+        }
+        .reveal h1 { 
+            font-size: 2.4em; 
+            font-weight: 700;
+            margin-bottom: 0.4em;
+        }
+        .reveal h2 { 
+            font-size: 1.6em; 
+            color: #60a5fa; 
+            border-bottom: 2px solid #60a5fa;
+            padding-bottom: 0.3em;
+            margin-bottom: 0.8em;
+        }
+        .reveal h3 { 
+            font-size: 1.15em; 
+            color: #93c5fd; 
+            font-weight: 500;
+            margin-bottom: 0.5em;
+        }
+        .reveal p {
+            font-size: 0.75em;
+            line-height: 1.6;
+            color: #cbd5e1;
+            text-align: left;
+            margin-bottom: 0.8em;
+        }
+        .reveal ul {
+            display: block;
+            margin-left: 0;
+            padding-left: 1.2em;
+            font-size: 0.9em;
+        }
+        .reveal li { 
+            font-size: 0.75em;
+            line-height: 1.6;
+            color: #cbd5e1;
+            text-align: left;
+            margin-bottom: 0.6em;
+        }
+        .reveal li li {
+            font-size: 0.95em;
+            margin-bottom: 0.4em;
+        }
+        .highlight-text { 
+            color: #facc15; 
+            font-weight: 600;
+            background: rgba(250, 204, 21, 0.1);
+            padding: 0.1em 0.3em;
+            border-radius: 4px;
+        }
+        .code-block {
+            background: #1e293b;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+            font-size: 0.7em !important;
+            color: #a78bfa;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-left: 3px solid #a78bfa;
+            line-height: 1.5;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .two-column > div {
+            text-align: left;
+        }
+        .two-column h3 {
+            font-size: 1em;
+            margin-bottom: 0.6em;
+            color: #60a5fa;
+        }
+        .two-column h3 code {
+            font-size: 0.9em;
+            color: #a78bfa;
+            background: rgba(167, 139, 250, 0.1);
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+        }
+        .agenda-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .agenda-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 18px 25px;
+            border-radius: 12px;
+            width: 70%;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .agenda-card h3 {
+            margin: 0 0 6px 0;
+            color: #60a5fa;
+            font-size: 1em;
+        }
+        .agenda-card p {
+            margin: 0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.75em;
+            line-height: 1.4;
+        }
+        .thanks-slide img {
+            max-width: 200px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.3);
+        }
+        .thanks-slide p {
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+        .thanks-slide .connect-text {
+            font-size: 1em;
+            color: #60a5fa;
+            margin-top: 10px;
+        }
+        .quote {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #94a3b8;
+            margin-top: 1.5em;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.55em;
+            background: #3b82f6;
+            color: white;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 500;
+        }
+        .reveal section > p:first-of-type strong {
+            color: #f87171;
+        }
+        .reveal ul ul {
+            margin-top: 0.4em;
+            margin-bottom: 0.6em;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.55em;
+            margin-top: 1em;
+        }
+        .comparison-table th {
+            background: #1e293b;
+            color: #60a5fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #60a5fa;
+        }
+        .comparison-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #334155;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: rgba(30, 41, 59, 0.3);
+        }
+        .comparison-table td:first-child {
+            color: #e2e8f0;
+            font-weight: 500;
+            width: 18%;
+        }
+        .comparison-table td:not(:first-child) {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide 1: Title -->
+            <section>
+                <h1>Tips & Tricks for Claude</h1>
+                <h3>Workspace Anatomy & Token Optimization</h3>
+                <p style="text-align: center; margin-top: 2em; font-style: italic;">By Soumendra Kumar Sahoo</p>
+            </section>
+
+            <!-- Slide 2: Agenda -->
+            <section>
+                <h2>Agenda</h2>
+                <div class="agenda-container">
+                    <div class="agenda-card">
+                        <h3>Part 0: Introductory Concepts</h3>
+                        <p>Understanding the Basics</p>
+                    </div>
+                    <div class="agenda-card">
+                        <h3>Part 1: The .claude/ Folder</h3>
+                        <p>Anatomy of Claude Code Config, Agents, and Permissions</p>
+                    </div>
+                    <div class="agenda-card">
+                        <h3>Part 2: The Token Game</h3>
+                        <p>10 Habits to Stop Hitting Claude's Usage Limits</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PART 0: INTRODUCTORY CONCEPTS -->
+            <section>
+                <section>
+                    <h2 style="color: #4ade80;">Part 0: Introductory Concepts</h2>
+                    <p class="quote">Understanding the building blocks of the Claude ecosystem</p>
+                </section>
+                
+                <section>
+                    <h2>Prompts</h2>
+                    <p><strong>Ephemeral, conversational instructions</strong> you provide in natural language during a conversation.</p>
+                    <ul>
+                        <li><strong>Use for:</strong> One-off requests, conversational refinement, immediate context, ad-hoc instructions.</li>
+                        <li><strong>Don't persist</strong> across conversations. For repeated workflows, capture as Skills or project instructions.</li>
+                        <li><strong>Pro-tip:</strong> If you find yourself typing the same prompt repeatedly → transform it into a Skill.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Projects</h2>
+                    <p><strong>Self-contained workspaces</strong> with their own chat histories and 200K context window knowledge bases.</p>
+                    <ul>
+                        <li>Everything uploaded becomes available across all chats within the project.</li>
+                        <li>RAG mode expands capacity by 10x when approaching context limits.</li>
+                        <li><strong>Use for:</strong> Persistent context, workspace organization, team collaboration, custom instructions.</li>
+                        <li><strong>Signal to use Skills instead:</strong> Copying same instructions across multiple Projects.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Commands</h2>
+                    <p><strong>Custom slash commands</strong> that trigger specific workflows or actions when invoked.</p>
+                    <ul>
+                        <li><strong>Purpose:</strong> Execute predefined operations like <code>/project:review</code> or <code>/deploy</code>.</li>
+                        <li><strong>Example:</strong> A markdown file that runs <code>git diff</code> and prompts Claude to review for security/performance issues.</li>
+                        <li><strong>Location:</strong> Defined in <code>.claude/commands/</code> folder or global <code>~/.claude/commands/</code>.</li>
+                        <li><strong>Use for:</strong> Repetitive workflows that need manual triggering but consistent execution.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Rules</h2>
+                    <p><strong>Path-scoped configuration files</strong> that provide modular, file-specific instructions to Claude.</p>
+                    <ul>
+                        <li><strong>Purpose:</strong> Avoid bloating CLAUDE.md with rules that only apply to specific file types or directories.</li>
+                        <li><strong>How they work:</strong> Rules only load when editing files matching specified path patterns.</li>
+                        <li><strong>Example:</strong> API design rules for <code>src/api/**/*.ts</code>. Handlers must return <code>{ data, error }</code> shape.</li>
+                        <li><strong>Location:</strong> <code>.claude/rules/*.md</code> with YAML frontmatter defining <code>paths</code>.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Skills</h2>
+                    <p><strong>Specialized training manuals</strong> containing instructions, scripts, and resources that Claude discovers and loads dynamically when relevant.</p>
+                    <ul>
+                        <li><strong>How they work:</strong> Progressive disclosure. Metadata loads first (~100 tokens), full instructions when needed (&lt;5k tokens), bundled files only as required.</li>
+                        <li><strong>Use for:</strong> Organizational workflows (brand guidelines, compliance), Domain expertise (Excel, PDF manipulation), Personal preferences (coding patterns).</li>
+                        <li><strong>Signal to create:</strong> Typing the same prompt repeatedly across conversations.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Subagents</h2>
+                    <p><strong>Specialized AI assistants</strong> with their own context windows, custom system prompts, and specific tool permissions.</p>
+                    <ul>
+                        <li>Handle discrete tasks independently and return results to the main agent.</li>
+                        <li>Claude automatically delegates based on subagent descriptions, or you can explicitly request one.</li>
+                        <li><strong>Use for:</strong> Task specialization (code review, security audits), context management, parallel processing, tool restriction.</li>
+                        <li>Subagents can use Skills for portable expertise.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>MCP</h2>
+                    <p><strong>Model Context Protocol</strong>. An open standard for connecting AI assistants to external systems where data lives.</p>
+                    <ul>
+                        <li><strong>Purpose:</strong> Universal connection layer between Claude and tools/data sources (Google Drive, Slack, GitHub, databases).</li>
+                        <li><strong>How it works:</strong> MCP servers expose data/capabilities; MCP clients (like Claude) connect to them.</li>
+                        <li><strong>Use MCP for:</strong> Access to external data and business tools.</li>
+                        <li><strong>Use Skills for:</strong> How to use those tools or follow procedures.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>How They Work Together</h2>
+                    <table class="comparison-table" style="font-size: 0.5em;">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Skills</th>
+                                <th>Prompts</th>
+                                <th>Projects</th>
+                                <th>Subagents</th>
+                                <th>MCP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>What it provides</strong></td>
+                                <td>Procedural knowledge</td>
+                                <td>Moment-to-moment instructions</td>
+                                <td>Background knowledge</td>
+                                <td>Task delegation</td>
+                                <td>Tool connectivity</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Persistence</strong></td>
+                                <td>Across conversations</td>
+                                <td>Single conversation</td>
+                                <td>Within project</td>
+                                <td>Across sessions</td>
+                                <td>Continuous connection</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contains</strong></td>
+                                <td>Instructions + code + assets</td>
+                                <td>Natural language</td>
+                                <td>Documents + context</td>
+                                <td>Full agent logic</td>
+                                <td>Tool definitions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>When it loads</strong></td>
+                                <td>Dynamically, as needed</td>
+                                <td>Each turn</td>
+                                <td>Always in project</td>
+                                <td>When invoked</td>
+                                <td>Always available</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Can include code</strong></td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Best for</strong></td>
+                                <td>Specialized expertise</td>
+                                <td>Quick requests</td>
+                                <td>Centralized context</td>
+                                <td>Specialized tasks</td>
+                                <td>Data access</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center; font-size: 0.7em; margin-top: 15px; color: #94a3b8;">
+                        <!-- <strong>Golden Rule:</strong> Projects say "here's what you need to know" • Skills say "here's how to do things" -->
+                    </p>
+                </section>
+            </section>
+
+            <!-- PART 1: THE CLAUDE FOLDER -->
+            <section>
+                <section>
+                    <h2 style="color: #a78bfa;">Part 1: Anatomy of .claude/</h2>
+                    <p class="quote">The control center for agentic behavior in your project.</p>
+                </section>
+
+                <section>
+                    <h2>The Two Domains</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3><code>your-repo/.claude/</code></h3>
+                            <p><strong>Project-level</strong></p>
+                            <ul>
+                                <li>Committed to Git.</li>
+                                <li>Shared team configuration.</li>
+                                <li>Project-specific rules, agents, and slash commands.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3><code>~/.claude/</code></h3>
+                            <p><strong>Global-level</strong></p>
+                            <ul>
+                                <li>Lives on your local machine.</li>
+                                <li>Personal preferences & overrides.</li>
+                                <li>Global memory and cross-project skills.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>CLAUDE.md: The Instruction Manual</h2>
+                    <ul>
+                        <li>Loaded directly into the system prompt. Dictates behavior.</li>
+                        <li><strong>Keep it under 200 lines</strong> to preserve context and instruction adherence.</li>
+                        <li><strong>DO include:</strong> Run commands (npm run test), architecture (Express/Prisma), strict conventions (use zod, no console.log).</li>
+                        <li><strong>DON'T include:</strong> Linter configs, long theoretical explanations.</li>
+                        <li><em>Pro-tip:</em> Use <code>CLAUDE.local.md</code> for uncommitted personal overrides.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Scaling Rules: <code>.claude/rules/</code></h2>
+                    <p>Avoid a bloated CLAUDE.md by using modular rules scoped by file path.</p>
+                    <div class="code-block">
+---
+paths:
+  - "src/api/**/*.ts"
+  - "src/handlers/**/*.ts"
+---
+# API Design Rules
+- All handlers return { data, error } shape
+- Never expose internal error details to clients
+                    </div>
+                    <p style="margin-top: 10px;">Claude only loads this context when editing matching files.</p>
+                </section>
+
+                <section>
+                    <h2>Agentic Extension: Commands & Skills</h2>
+                    <ul>
+                        <li><strong>Commands (<code>/commands/</code>):</strong> Custom slash commands (e.g., <code>/project:review</code>).<br>
+                            <em>Example: A markdown file that runs <code>git diff</code> and prompts Claude to review for security/performance.</em>
+                        </li>
+                        <li><strong>Skills (<code>/skills/</code>):</strong> Workflows Claude invokes <em>autonomously</em> based on task matching.<br>
+                            Includes a <code>SKILL.md</code> describing when to trigger it (e.g., "Use when reviewing PRs"). Can bundle supporting docs (like <code>DETAILED_GUIDE.md</code>).
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Sub-agents & Permissions</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Agents (<code>/agents/</code>)</h3>
+                            <ul>
+                                <li>Specialized personas with isolated contexts.</li>
+                                <li>Define tool access & model (e.g., a "Code Reviewer" agent restricted to Haiku and Read-only tools).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Settings (<code>settings.json</code>)</h3>
+                            <ul>
+                                <li>Controls what Claude is allowed to do.</li>
+                                <li><strong>Allow List:</strong> <code>Bash(npm run *)</code>, <code>Read</code>, <code>Write</code></li>
+                                <li><strong>Deny List:</strong> <code>Bash(rm -rf *)</code>, <code>Read(./.env)</code></li>
+                                <li>Provides an essential safety net for headless/agentic runs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- PART 2: LIMITS (was Part 1, now Part 2) -->
+            <section>
+                <section>
+                    <h2 style="color: #f87171;">Part 2: The Token Game</h2>
+                    <p class="quote">"Claude doesn't count messages. It counts tokens."</p>
+                </section>
+
+                <section>
+                    <h2>1. The Core Paradigm Shift</h2>
+                    <ul>
+                        <li><strong>The Problem:</strong> Every subsequent message forces Claude to re-read the <em>entire</em> history.</li>
+                        <li>Message 30 costs <span class="highlight-text">31x more</span> tokens than Message 1!</li>
+                        <li><strong>The Fix:</strong> Never send follow-up corrections (e.g., "No, I meant X").</li>
+                        <li>Instead: <span class="highlight-text">Edit your original prompt</span> → Fix it → Regenerate.</li>
+                        <li><em>Rule: Fix the prompt, don't feed the history.</em></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>2. Context Window Management</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Fresh Chats</h3>
+                            <ul>
+                                <li>Start a new chat every <strong>15–20 messages</strong>.</li>
+                                <li>In long chats, 98.5% of tokens are wasted on re-reading history.</li>
+                                <li><em>Workflow:</em> Ask Claude to summarize → Start new chat → Paste summary.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Batch Prompting</h3>
+                            <ul>
+                                <li>Three separate prompts = Three context loads.</li>
+                                <li>One prompt with 3 tasks = <strong>One context load</strong>.</li>
+                                <li>Provides better output because the LLM sees the full picture instantly.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>3. Optimize Features & Memory</h2>
+                    <ul>
+                        <li><strong>Projects (Context Caching):</strong> Upload recurring files (PDFs, docs) to a Project. Claude caches it; it won't re-tokenize on every conversation.</li>
+                        <li><strong>Memory & Preferences:</strong> Save your role, style, and rules in Settings → Memory. Stops you from wasting tokens on "Act as a..." boilerplates.</li>
+                        <li><strong>Disable Unused Tools:</strong> Turn off Web Search, Connectors, and "Advanced Thinking" by default. They eat tokens invisibly.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>4. Model Routing & Time Management</h2>
+                    <ul>
+                        <li><strong>Model Tiering:</strong>
+                            <ul>
+                                <li><span style="color: #4ade80;">Haiku:</span> Drafts, grammar, formatting (Saves 50-70% budget).</li>
+                                <li><span style="color: #facc15;">Sonnet:</span> Real work, coding, medium cost.</li>
+                                <li><span style="color: #f87171;">Opus:</span> Deep thinking, architecture, high cost.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Rolling Window:</strong> Limits operate on a 5-hour rolling window. Spread work into morning/afternoon/late night sessions.</li>
+                        <li><strong>Peak Hours:</strong> Avoid heavy tasks during 5:30 PM–11:30 PM IST (limits drain faster).</li>
+                        <!-- <li><strong>Safety Net:</strong> Enable "Overage" (pay-as-you-go) with a spending limit to prevent workflow blocks.</li> -->
+                    </ul>
+                </section>
+
+                <!-- Conclusion -->
+                <section>
+                    <h2>Summary: The Golden Rules</h2>
+                    <ul>
+                        <li><strong>Treat Tokens like Currency:</strong> Edit prompts, batch tasks, and start fresh chats to preserve your budget and context window.</li>
+                        <li><strong>Right-size your Models:</strong> Default to Haiku, escalate to Sonnet/Opus only when required.</li>
+                        <li><strong>Infrastructure as Prompt:</strong> Treat <code>.claude/</code> as code. Keep <code>CLAUDE.md</code> dense and leverage path-scoped <code>/rules/</code> for scalability.</li>
+                        <li><strong>Guardrails:</strong> Always configure <code>settings.json</code> to deny destructive commands and protect secrets.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- THANK YOU SLIDE -->
+            <section class="thanks-slide">
+                <h2 style="color: #4ade80;">Thank You!</h2>
+                <img src="/shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
+                <p class="connect-text">Feel free to connect with me on LinkedIn</p>
+                <p>Have questions or need help? Don't hesitate to reach out!</p>
+            </section>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: false,
+            history: false,
+            transition: 'fade',
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true
+        });
+    </script>
+</body>
+</html>

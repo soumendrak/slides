@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talks | Soumendra Kumar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        header {
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #f8fafc;
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1em;
+        }
+        
+        .year-section {
+            margin-bottom: 50px;
+        }
+        
+        .year-heading {
+            font-size: 1.5em;
+            color: #60a5fa;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1e293b;
+        }
+        
+        .talk-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .talk-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #334155;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .talk-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: #60a5fa;
+        }
+        
+        .talk-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #f8fafc;
+            margin-bottom: 8px;
+        }
+        
+        .talk-meta {
+            display: flex;
+            gap: 15px;
+            color: #94a3b8;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .talk-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .talk-description {
+            color: #cbd5e1;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .talk-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: #0f172a;
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+        
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .talk-card {
+                padding: 20px;
+            }
+            
+            .talk-title {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Talks</h1>
+            <p class="subtitle">Slides from conferences, meetups, and workshops</p>
+        </header>
+
+        <section class="year-section">
+            <h2 class="year-heading">2026</h2>
+            <div class="talk-grid">
+                <a href="talks/2026/iter-claude-limits/" class="talk-card">
+                    <div class="talk-title">Mastering Claude: Limits & Configuration</div>
+                    <div class="talk-meta">
+                        <span>📅 April 2026</span>
+                        <span>📍 ITER College</span>
+                    </div>
+                    <div class="talk-description">
+                        Exploring Claude AI's capabilities, usage limits, and configuration strategies for optimal productivity.
+                    </div>
+                    <div class="talk-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Claude</span>
+                        <span class="tag">Productivity</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>More talks coming soon • <a href="https://soumendrak.com">soumendrak.com</a></p>
+        </footer>
+    </div>
+</body>
+</html>

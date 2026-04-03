@@ -1,0 +1,5 @@
+# Cloudflare Pages Redirects
+# Format: from to [status]
+
+# Optional: Redirect /talk-name to /talks/year/talk-name/ for short URLs
+# Example: /claude-limits /talks/2026/iter-claude-limits/ 301
