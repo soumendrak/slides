@@ -156,6 +156,41 @@
     .part-label.green  { background: #d1fae5; color: #065f46; }
     .part-label.purple { background: #ede9fe; color: #4c1d95; }
     .part-label.red    { background: #fee2e2; color: #7f1d1d; }
+    .part-label.blue   { background: #dbeafe; color: #1e3a8a; }
+
+    /* Presentation slide cards */
+    .pres-slide {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 2rem 0 0.75rem;
+      background: #fff;
+      padding: 1.75rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .pres-slide-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .pres-slide h3 {
+      margin: 0.25rem 0 0.75rem;
+      font-size: 1.5rem;
+    }
+    .pres-slide ul {
+      padding-left: 1.25rem;
+      margin: 0.75rem 0 0;
+    }
+    .pres-slide ul li {
+      margin-bottom: 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .pres-slide ul li strong { color: var(--ink); }
 
     /* Pull quote */
     blockquote.pull-quote {
@@ -772,6 +807,116 @@ paths:
 
     <div class="callout">
       <strong>The underlying principle:</strong> Claude is a shared resource with a token budget. Every habit here is about spending that budget on work that matters, not on overhead, not on re-reading history, not on boilerplate you've typed a thousand times.
+    </div>
+
+    <!-- BONUS: Karpathy on AI & Fresh Graduates -->
+    <span class="part-label blue">Bonus: Karpathy's Interview</span>
+    <h2>The Graduate, the Agent, and the Loop</h2>
+
+    <p>In a wide-ranging interview, Andrej Karpathy laid out his clearest picture yet of where software engineering is heading and what fresh graduates should actually do about it. His argument is not about fear. It's about a fundamental shift in the unit of work.</p>
+
+    <p>Fresh graduates should still build solid software fundamentals — but also learn to work with AI coding agents and think in terms of orchestrating them rather than writing every line of code by hand. The graduates who internalise this early will compound their advantage. Those who don't will be doing expensive, manual work that agents can handle.</p>
+
+    <div class="video-card" style="margin: 2rem 0;">
+      <iframe src="https://www.youtube.com/embed/kwSVtQ7dziU" frameborder="0" allowfullscreen
+        style="width:100%; aspect-ratio:16/9; border-radius:6px;"></iframe>
+    </div>
+
+    <blockquote class="pull-quote">
+      <p>"The gap is increasingly a skill gap in using these systems well, not a lack of capability."</p>
+      <cite>— Andrej Karpathy</cite>
+    </blockquote>
+
+    <h3>Core technical foundations</h3>
+
+    <p>The foundations haven't gone away. Data structures, algorithms, operating systems, networks, and at least one systems language alongside one scripting language remain the substrate on which agents operate. Equally important: learn how modern LLMs and transformers work at a conceptual level — training loops, loss curves, evaluation metrics — so you can reason about models rather than treating them as oracles.</p>
+
+    <p>Get comfortable with Git, testing, CI, and performance profiling. Many of the highest-value tasks in the agentic world are about measurable improvements: speed, accuracy, cost. These tools are how you prove that improvement happened.</p>
+
+    <h3>Agent and tooling skills</h3>
+
+    <p>Practice using coding agents deeply, not just as autocomplete, but as collaborators you give specifications to and review diffs from. Learn to manage multiple agents working on different repositories or features simultaneously. Karpathy uses the phrase "claws" for this mode: semi-autonomous workers you direct in parallel, not a single conversation you have one turn at a time.</p>
+
+    <p>The skill that unlocks this is spec-writing. Not code. Writing clear problem statements, constraints, definitions of done, and evaluation criteria is how you communicate with agents effectively. A fuzzy instruction produces a fuzzy result. A well-structured specification lets an agent run autonomously with minimal back-and-forth. Build small projects where agents automate end-to-end tasks — refactors, benchmarks, home-automation style workflows — treating yourself as the orchestrator and code reviewer.</p>
+
+    <div class="callout">
+      <strong>Karpathy's signal:</strong> If a task has a clear, objective metric and a fast feedback loop, it is a candidate for agent automation. If it is ambiguous and hard to evaluate, humans still need to be in the loop.
+    </div>
+
+    <h3>Thinking in loops and metrics</h3>
+
+    <p>The most powerful idea in the interview is the closed loop: define a metric, set constraints, and let the system run experiments, evaluate results, and optimise without the human becoming the bottleneck. He describes an AutoResearch pattern where this plays out in ML: validate on a dataset, measure improvement, adjust, repeat — all without stopping to ask permission for each iteration.</p>
+
+    <p>Develop the habit of instrumenting your work. Latency, error rate, accuracy, cost per request — these aren't just monitoring metrics. They're the handles by which agents can improve your systems autonomously. Once the metric exists, the loop can close. Understand experiment design and result analysis so you can supervise auto-research style systems rather than doing every experiment manually.</p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <span class="stat">&#x221E;</span>
+        <span class="stat-label">iterations an agent can run when the eval signal is clear</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat">0</span>
+        <span class="stat-label">useful autonomous loops you can build without a measurable objective</span>
+      </div>
+    </div>
+
+    <h3>The job market is changing, not disappearing</h3>
+
+    <p>Karpathy draws an analogy to ATMs and bank tellers. When ATMs arrived, people expected teller jobs to disappear. Instead, the number of tellers grew because the cost of running a branch fell and banks opened more locations. The dynamic with software may follow the same pattern: as AI makes software cheaper to produce, demand for software expands, and the roles shift toward those who can direct, verify, and compound the output.</p>
+
+    <p>Roles manipulating digital information — software, data, and ML engineering — will see the most change and also the strongest sustained demand. Treat AI as leverage, not competition. Jobs become bundles of tasks where agents speed up some pieces; the valuable skill is combining tools, checking their work, and pushing your own "token throughput."</p>
+
+    <blockquote class="pull-quote">
+      <p>"The winners in the next software era won't just be the best coders; they'll be the best orchestrators of code, agents, metrics, and judgment."</p>
+      <cite>— Synthesis of Karpathy's themes</cite>
+    </blockquote>
+
+    <h3>What to actually do in college</h3>
+
+    <p>Build three to five real projects where you: use an AI coding agent end-to-end, measure a clear metric, and show before-and-after improvements — speedups, quality gains, cost reductions. Contribute to open-source or minimal educational repos, then use agents to explain and refactor them, so you learn both the core algorithm and the new agentic education style.</p>
+
+    <p>Document your projects in clean READMEs and specification-style files. Employers in the agent-heavy engineering world will want to see that you can both build and orchestrate systems. The portfolio of the future is not just working code. It is working code with legible metrics, clear intent, and evidence that you know how to delegate effectively.</p>
+
+    <h2>Two Hackathon-Ready Slides</h2>
+
+    <p>Karpathy's interview distills into two slides that work well for a hackathon audience: one visionary, one practical. The rhythm — here is where the world is going, then here is what you should do on Monday morning — is exactly right for leaving people with both inspiration and a clear next step.</p>
+
+    <div class="pres-slide">
+      <div class="pres-slide-label">Slide 1</div>
+      <h3>Where AI Agents and Tools Are Going</h3>
+      <ul>
+        <li>We are moving from "writing code" to <strong>orchestrating agents</strong> that work in parallel on software, research, and operations.</li>
+        <li>The near future: many persistent "claws" with memory, tools, and autonomy running for long periods without constant human input.</li>
+        <li>The highest-value systems will be <strong>looped</strong>: define an objective, give constraints, let agents experiment, evaluate, and improve continuously.</li>
+        <li>Software UX will shift from app-by-app interfaces to <strong>APIs plus natural-language agent layers</strong> that unify fragmented tools.</li>
+        <li>Closed frontier models may stay ahead, but open models are catching up fast enough that agent-first building will become widely accessible.</li>
+        <li>Digital work changes first; physical robotics follows later — manipulating bits is far easier than manipulating atoms.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Speaker notes (Slide 1):</strong> Start with Karpathy's core argument — the unit of work in software is changing from a human manually implementing functions to a human expressing intent and coordinating agents. Use his smart-home example: an agent found devices on his local network, inferred APIs, and unified control of music, lights, HVAC, pool, shades, and security into one natural-language interface, effectively replacing several separate apps. The durable lesson: APIs become the stable substrate; software on top becomes temporary, composable, and agent-mediated. Connect to AutoResearch: it works because it has a verifiable metric. Close with market structure — frontier models stay ahead, open models trail by months not years, and agent-first building will be broadly accessible.
+    </div>
+
+    <div class="pres-slide" style="margin-top: 2.5rem;">
+      <div class="pres-slide-label">Slide 2</div>
+      <h3>Action Items to Reduce the Skills Gap</h3>
+      <ul>
+        <li>Stop treating AI as only a chatbot; learn to manage multiple agents, tools, prompts, memory, and reviews as one workflow.</li>
+        <li>Practice <strong>spec-writing</strong>: clear instructions, constraints, acceptance criteria, and metrics so agents can execute with less supervision.</li>
+        <li>Build in <strong>measurable loops</strong>: benchmarks, evals, latency, correctness, cost, and quality signals that let agents improve safely over time.</li>
+        <li>Strengthen fundamentals: systems thinking, debugging, testing, APIs, data flow, and architecture still determine whether agent outputs become production value.</li>
+        <li>Learn <strong>human-in-the-loop verification</strong>: review diffs, challenge assumptions, catch failure modes, and know when the model is outside a verifiable domain.</li>
+        <li>Stay current through hands-on building; the gap is a usage and orchestration gap, not just an access gap.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <strong>Speaker notes (Slide 2):</strong> Open with Karpathy's framing: many failures are a "skill issue" — the capability is partly there, but the user hasn't learned to specify the task, shape the memory, connect the tools, and supervise the loop correctly. Walk through each action item: upgrading the mental model from autocomplete to workflow design; spec-writing as the new language of collaboration; measurable loops as what makes autonomous improvement possible; not abandoning fundamentals, because someone still has to evaluate whether agent output is meaningful or dangerous; and verification discipline, because current agents are powerful but jagged. Close with the motivating message: the best way to close the gap is to build — people who experiment continuously with real repos, eval loops, and agent workflows will compound faster than those who debate the future from the sidelines.
+    </div>
+
+    <div class="callout" style="background: #e0f2fe; border-color: #7dd3fc;">
+      <strong>Delivery tip:</strong> Keep Slide 1 visionary and Slide 2 practical. That rhythm creates a good arc for a hackathon audience. Closing line: <em>"The winners in the next software era won't just be the best coders; they'll be the best orchestrators of code, agents, metrics, and judgment."</em>
     </div>
 
   </article>
