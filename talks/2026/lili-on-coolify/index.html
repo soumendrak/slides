@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Building a Personal AI Assistant with OpenClaw on Coolify</title>
     <link rel="icon" href="../../../shared/assets/images/soumendra_avatar.webp">
-    <!-- Reveal.js CSS -->
+    <!-- Reveal.js CSS (load first, custom styles override) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
@@ -51,6 +51,7 @@
             margin-left: 0;
             padding-left: 1.2em;
             font-size: 0.85em;
+            list-style-type: disc;
         }
         .reveal li { 
             font-size: 0.72em;
@@ -62,6 +63,7 @@
         .reveal li li {
             font-size: 0.95em;
             margin-bottom: 0.3em;
+            list-style-type: circle;
         }
         .highlight { 
             color: #facc15; 
@@ -178,6 +180,7 @@
             border-bottom: 1px solid #334155;
             vertical-align: top;
             line-height: 1.4;
+            text-align: left;
         }
         .comparison-table tr:nth-child(even) {
             background: rgba(30, 41, 59, 0.3);
