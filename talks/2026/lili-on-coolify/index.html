@@ -21,21 +21,21 @@
             line-height: 1.2;
             margin-bottom: 0.6em;
         }
-        .reveal h1 { 
-            font-size: 2.2em; 
+        .reveal h1 {
+            font-size: 2.2em;
             font-weight: 700;
             margin-bottom: 0.4em;
         }
-        .reveal h2 { 
-            font-size: 1.5em; 
-            color: #60a5fa; 
+        .reveal h2 {
+            font-size: 1.5em;
+            color: #60a5fa;
             border-bottom: 2px solid #60a5fa;
             padding-bottom: 0.3em;
             margin-bottom: 0.7em;
         }
-        .reveal h3 { 
-            font-size: 1.1em; 
-            color: #93c5fd; 
+        .reveal h3 {
+            font-size: 1.1em;
+            color: #93c5fd;
             font-weight: 500;
             margin-bottom: 0.5em;
         }
@@ -53,7 +53,7 @@
             font-size: 0.85em;
             list-style-type: disc;
         }
-        .reveal li { 
+        .reveal li {
             font-size: 0.72em;
             line-height: 1.6;
             color: #cbd5e1;
@@ -65,8 +65,8 @@
             margin-bottom: 0.3em;
             list-style-type: circle;
         }
-        .highlight { 
-            color: #facc15; 
+        .highlight {
+            color: #facc15;
             font-weight: 600;
             background: rgba(250, 204, 21, 0.1);
             padding: 0.1em 0.3em;
@@ -215,7 +215,7 @@
             font-size: 0.65em;
             color: #94a3b8;
         }
-        .flow-diagram {
+        .flow-diagram { 
             background: #1e293b;
             padding: 20px;
             border-radius: 12px;
@@ -223,10 +223,17 @@
             font-size: 0.55em !important;
             color: #e2e8f0;
             text-align: left;
-            line-height: 1.8;
+            line-height: 1.6;
             border: 1px solid #334155;
+            white-space: pre;
         }
-        .flow-diagram .arrow { color: #facc15; }
+        .flow-diagram .arrow { 
+            color: #facc15; 
+        }
+        .flow-diagram .arrow-dn { 
+            color: #facc15; 
+            display: block;
+        }
         .flow-diagram .component { color: #60a5fa; }
         .flow-diagram .note { color: #94a3b8; font-style: italic; }
     </style>
@@ -234,7 +241,7 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            
+
             <!-- TITLE SLIDE -->
             <section>
                 <h1>Building Lili</h1>
@@ -248,9 +255,9 @@
                 <h2>What is Lili?</h2>
                 <p>A <span class="highlight">persistent AI assistant</span> running on dedicated infrastructure:</p>
                 <ul>
-                    <li>Built on <span class="blue">OpenClaw</span> — an open-source agent framework</li>
+                    <li>Built on <span class="blue">OpenClaw</span> - an open-source agent framework</li>
                     <li>Deployed on <span class="blue">Hetzner CX23</span> (2 vCPU, 4GB RAM, €3.99/mo)</li>
-                    <li>Orchestrated through <span class="blue">Coolify</span> — self-hosted PaaS</li>
+                    <li>Orchestrated through <span class="blue">Coolify</span> - self-hosted PaaS</li>
                     <li>Connected via <span class="blue">Telegram</span> as primary interface</li>
                     <li>Runs a <span class="highlight">DeepSeek V4 Flash</span> reasoning model (1M context, ~$0.14/M tokens)</li>
                     <li>Full <span class="green">Gmail + Google Calendar</span> integration</li>
@@ -263,7 +270,7 @@
                 <div class="agenda-container">
                     <div class="agenda-card">
                         <h3>1. Infrastructure & Architecture</h3>
-                        <p>Hetzner + Coolify + Docker — how everything connects</p>
+                        <p>Hetzner + Coolify + Docker - how everything connects</p>
                     </div>
                     <div class="agenda-card">
                         <h3>2. Files & Workspace Anatomy</h3>
@@ -296,16 +303,16 @@
                     <div class="flow-diagram">
 <span class="component">Telegram</span> (User interface)
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="component">OpenClaw Gateway</span> (Agent runtime, Docker container)
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="component">Hetzner CX23</span> (2 vCPU, 4GB RAM, €3.99/mo)
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="component">Coolify</span> (Docker orchestration, auto-deploys from GitHub)
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="component">Services</span>:
 ├── Google Gmail API (Read + Send)
 ├── Google Calendar API (Events + Reminders)
@@ -322,8 +329,8 @@
                         <div>
                             <h3>Hetzner CX23</h3>
                             <ul>
-                                <li><span class="green">€3.99/mo</span> — cheapest 2 vCPU option</li>
-                                <li>Hourly billing — shutdown anytime</li>
+                                <li><span class="green">€3.99/mo</span> - cheapest 2 vCPU option</li>
+                                <li>Hourly billing - shutdown anytime</li>
                                 <li>No 24-month lock-in (unlike Hostinger)</li>
                                 <li>Nuremberg/Falkenstein DCs, GDPR compliant</li>
                                 <li>40GB SSD, 20TB traffic included</li>
@@ -365,7 +372,7 @@
             <section>
                 <section>
                     <h2 style="color: #a78bfa;">2. Files & Workspace Anatomy</h2>
-                    <p class="quote">"Identity, memory, and tools — everything lives in files."</p>
+                    <p class="quote">"Identity, memory, and tools - everything lives in files."</p>
                 </section>
 
                 <section>
@@ -375,7 +382,7 @@
                             <tr><th>File</th><th>Purpose</th><th>Key Contents</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><span class="blue">SOUL.md</span></td><td>Personality & values</td><td>Core truths, boundaries, communication style — "Be genuinely helpful, not performatively helpful"</td></tr>
+                            <tr><td><span class="blue">SOUL.md</span></td><td>Personality & values</td><td>Core truths, boundaries, communication style - "Be genuinely helpful, not performatively helpful"</td></tr>
                             <tr><td><span class="blue">IDENTITY.md</span></td><td>Who I am</td><td>Name (Lili), creature type, vibe: "straight to the point, no-nonsense"</td></tr>
                             <tr><td><span class="blue">USER.md</span></td><td>About my human</td><td>Soumendra's role, professional context, interests, and preferences</td></tr>
                             <tr><td><span class="blue">MEMORY.md</span></td><td>Long-term memory</td><td>Curated learnings, project context, professional details, key decisions</td></tr>
@@ -399,8 +406,8 @@
                         <div>
                             <h3>Long-term (Files)</h3>
                             <ul>
-                                <li><span class="green">MEMORY.md</span> — curated, distilled notes</li>
-                                <li><span class="green">memory/YYYY-MM-DD.md</span> — daily logs</li>
+                                <li><span class="green">MEMORY.md</span> - curated, distilled notes</li>
+                                <li><span class="green">memory/YYYY-MM-DD.md</span> - daily logs</li>
                                 <li>Survives restarts</li>
                                 <li>Backed up to GitHub + Google Drive</li>
                             </ul>
@@ -416,7 +423,7 @@
                             <tr><th>Script</th><th>Purpose</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><span class="blue">google-control.js</span></td><td>Gmail + Calendar API — send email, read inbox, create events, send attachments</td></tr>
+                            <tr><td><span class="blue">google-control.js</span></td><td>Gmail + Calendar API - send email, read inbox, create events, send attachments</td></tr>
                             <tr><td><span class="blue">email-watcher.js</span></td><td>Polls inbox every 15 min, classifies human vs newsletter, forwards summaries</td></tr>
                             <tr><td><span class="blue">portfolio-tracker.mjs</span></td><td>Yahoo Finance v8 API, 19 tickers, hourly price check, ±5% move alerts</td></tr>
                             <tr><td><span class="blue">html2pdf.mjs</span></td><td>Chrome CDP-based PDF generator with full CSS/color preservation</td></tr>
@@ -431,10 +438,10 @@
                     <h2>Boot Sequence</h2>
                     <div class="flow-diagram">
 <span class="green">Every session:</span>
-1. Read <span class="component">SOUL.md</span> — "who am I?"
-2. Read <span class="component">USER.md</span> — "who am I helping?"
-3. Read <span class="component">memory/YYYY-MM-DD.md</span> — "what happened recently?"
-4. Read <span class="component">MEMORY.md</span> — "what are the long-term decisions?"
+1. Read <span class="component">SOUL.md</span> - "who am I?"
+2. Read <span class="component">USER.md</span> - "who am I helping?"
+3. Read <span class="component">memory/YYYY-MM-DD.md</span> - "what happened recently?"
+4. Read <span class="component">MEMORY.md</span> - "what are the long-term decisions?"
 
 <span class="green">Heartbeat polls (~30-60 min):</span>
 - Check <span class="component">HEARTBEAT.md</span> for pending tasks
@@ -442,7 +449,7 @@
 - Quiet unless something needs attention
 
 <span class="green">File diligence:</span>
-- "Memory is limited — if you want to remember something, WRITE IT"
+- "Memory is limited - if you want to remember something, WRITE IT"
 - Daily notes → weekly consolidation → MEMORY.md curation</div>
                 </section>
             </section>
@@ -464,7 +471,7 @@
                             <tr><td>Email watcher</td><td>Every 15 min</td><td>Polls Gmail, classifies: human emails → alert, newsletters → summarize with action items</td></tr>
                             <tr><td>Portfolio tracker</td><td>Hourly</td><td>Checks 19 stocks via Yahoo Finance, alerts on ±5% moves from last price</td></tr>
                             <tr><td>Market sentiment</td><td>Daily 9 AM IST</td><td>CNN Fear & Greed index, alerts on fear/extreme fear zones</td></tr>
-                            <tr><td>MSD reminder</td><td>Daily 9:15 AM IST</td><td>Minimum Successful Day prompt — OTel infra, meeting artifacts, Claude enablement</td></tr>
+                            <tr><td>MSD reminder</td><td>Daily 9:15 AM IST</td><td>Minimum Successful Day prompt - OTel infra, meeting artifacts, Claude enablement</td></tr>
                             <tr><td>Observability update</td><td>Daily 1:30 PM IST</td><td>Scans OTel/Langfuse/Arize/Grafana for new releases and changes</td></tr>
                             <tr><td>Blogwatcher</td><td>Daily 8 AM IST</td><td>Scans RSS feeds, digests top 5-8 articles with relevance ranking</td></tr>
                             <tr><td>Weekly digest (PDF)</td><td>Sundays 8 PM IST</td><td>8-story observability roundup, styled HTML → PDF via Chrome CDP, emailed</td></tr>
@@ -479,16 +486,16 @@
                     <div class="flow-diagram">
 <span class="component">Gmail Inbox</span>
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="component">email-watcher.js</span> (polls every 15 min via Gmail API)
     <span class="arrow">|</span>
-    <span class="arrow">v</span>
+    <span class="arrow-dn">v</span>
 <span class="green">Classification:</span>
 ├── <span class="highlight">Human email</span> → <span class="component">EMAIL_WATCHER_ALERT</span> → forward to Telegram immediately
 └── <span class="highlight">Newsletter</span> → <span class="component">EMAIL_WATCHER_NEWSLETTER</span> → summarize (2-3 bullets + action items) → Telegram
 
 <span class="note"># Stays silent if nothing needs attention. No "watching" messages.</span>
-<span class="note"># Changed from auto-archive to summarize — better to extract value from newsletters.</span></div>
+<span class="note"># Changed from auto-archive to summarize - better to extract value from newsletters.</span></div>
                 </section>
 
                 <section>
@@ -536,7 +543,7 @@
             <section>
                 <section>
                     <h2 style="color: #38bdf8;">4. Projects & Integrations</h2>
-                    <p class="quote">"Beyond email and alerts — active contributions to Soumendra's ecosystem."</p>
+                    <p class="quote">"Beyond email and alerts - active contributions to Soumendra's ecosystem."</p>
                 </section>
 
                 <section>
@@ -557,7 +564,7 @@
                 </section>
 
                 <section>
-                    <h2>RagWatch — Deep Dive</h2>
+                    <h2>RagWatch - Deep Dive</h2>
                     <div class="two-column">
                         <div>
                             <h3>What it does</h3>
@@ -582,13 +589,13 @@
                 </section>
 
                 <section>
-                    <h2>widescope — Deep Dive</h2>
+                    <h2>widescope - Deep Dive</h2>
                     <div class="two-column">
                         <div>
                             <h3>What it is</h3>
                             <ul>
                                 <li>Browser-native trace viewer for LLM pipelines</li>
-                                <li>Rust compiled to WASM — <span class="highlight">zero backend</span></li>
+                                <li>Rust compiled to WASM - <span class="highlight">zero backend</span></li>
                                 <li>Svelte 5 frontend, Cloudflare Pages hosting</li>
                                 <li>Live: <span class="blue">widescope.soumendrak.com</span></li>
                             </ul>
@@ -597,7 +604,7 @@
                             <h3>Our work</h3>
                             <ul>
                                 <li>Merged PR #5: docs, OG tags, contributing guide</li>
-                                <li>CI: check, clippy, test — clippy enforces <span class="red">-D warnings</span></li>
+                                <li>CI: check, clippy, test - clippy enforces <span class="red">-D warnings</span></li>
                                 <li>Open issue: <code>collapsible_match</code> lint fix needed</li>
                                 <li>Launch strategy drafted for LinkedIn and X</li>
                             </ul>
@@ -611,11 +618,11 @@
                         <div>
                             <h3>Components</h3>
                             <ul>
-                                <li><span class="blue">Buttondown</span> — email newsletter platform</li>
-                                <li><span class="blue">Subscribe page</span> — <code>soumendrak.com/subscribe/</code></li>
-                                <li><span class="blue">Lead magnet</span> — "AI Observability Starter Kit" PDF</li>
-                                <li><span class="blue">CTA shortcode</span> — reusable <code>newsletter_cta.html</code></li>
-                                <li><span class="blue">Welcome email</span> — draft ready</li>
+                                <li><span class="blue">Buttondown</span> - email newsletter platform</li>
+                                <li><span class="blue">Subscribe page</span> - <code>soumendrak.com/subscribe/</code></li>
+                                <li><span class="blue">Lead magnet</span> - "AI Observability Starter Kit" PDF</li>
+                                <li><span class="blue">CTA shortcode</span> - reusable <code>newsletter_cta.html</code></li>
+                                <li><span class="blue">Welcome email</span> - draft ready</li>
                             </ul>
                         </div>
                         <div>
@@ -624,7 +631,7 @@
                                 <li>Subscribe page built (Zola frontmatter, CI/CD fixed)</li>
                                 <li>Removed <code>template = "page"</code> that broke Zola build</li>
                                 <li>Link integrity: warm every link before merge</li>
-                                <li>Zero 404s policy — private repos don't get hyperlinks</li>
+                                <li>Zero 404s policy - private repos don't get hyperlinks</li>
                             </ul>
                         </div>
                     </div>
@@ -635,12 +642,12 @@
             <section>
                 <section>
                     <h2 style="color: #4ade80;">5. Self-Improvement System</h2>
-                    <p class="quote">"An assistant that improves itself — the skills registry."</p>
+                    <p class="quote">"An assistant that improves itself - the skills registry."</p>
                 </section>
 
                 <section>
                     <h2>Skills Registry</h2>
-                    <p>A <span class="highlight">self-documenting capability index</span> — Lili's awareness of what she can do:</p>
+                    <p>A <span class="highlight">self-documenting capability index</span> - Lili's awareness of what she can do:</p>
                     <ul>
                         <li>Read at session startup from <code>skills-registry/</code></li>
                         <li>Each skill: <span class="blue">name</span>, <span class="blue">description</span>, <span class="blue">trigger conditions</span>, <span class="blue">tools required</span></li>
@@ -738,22 +745,22 @@
                 <section>
                     <h2>What Worked</h2>
                     <ul>
-                        <li><span class="green">File-based memory</span> — simple, transparent, version-controlled. Every conversation starts fresh but nothing is lost.</li>
-                        <li><span class="green">Cron-driven automation</span> — isolate complex tasks in isolated sessions. No main session bloat.</li>
-                        <li><span class="green">DeepSeek V4 Flash</span> — 1M context at $0.14/M tokens. Drastically cheaper than Claude/OpenAI for an always-on assistant.</li>
-                        <li><span class="green">Coolify + Docker</span> — one-click updates, zero-downtime deploys, easy rollback.</li>
-                        <li><span class="green">Email watcher</span> — turned inbox noise into structured alerts. Changed from 5 min to 15 min polling to reduce noise.</li>
+                        <li><span class="green">File-based memory</span> - simple, transparent, version-controlled. Every conversation starts fresh but nothing is lost.</li>
+                        <li><span class="green">Cron-driven automation</span> - isolate complex tasks in isolated sessions. No main session bloat.</li>
+                        <li><span class="green">DeepSeek V4 Flash</span> - 1M context at $0.14/M tokens. Drastically cheaper than Claude/OpenAI for an always-on assistant.</li>
+                        <li><span class="green">Coolify + Docker</span> - one-click updates, zero-downtime deploys, easy rollback.</li>
+                        <li><span class="green">Email watcher</span> - turned inbox noise into structured alerts. Changed from 5 min to 15 min polling to reduce noise.</li>
                     </ul>
                 </section>
 
                 <section>
                     <h2>What I'd Do Differently</h2>
                     <ul>
-                        <li><span class="red">Custom provider config took too long</span> — OpenClaw's custom model provider setup required adding the model to both <code>models.providers</code> AND <code>agents.defaults.models</code>. Not documented clearly.</li>
-                        <li><span class="red">PDF via pandoc stripped CSS</span> — wasted time before switching to Chrome CDP. Always test rendering early.</li>
-                        <li><span class="red">Email attachment MIME</span> — the <code>buildRawEmail()</code> function in google-control.js was silently dropping attachments. Had to rewrite multipart/mime encoding.</li>
-                        <li><span class="red">Zola CI/CD quirks</span> — explicit <code>template = "page"</code> breaks Zola builds. Took a CI failure to diagnose.</li>
-                        <li><span class="red">Brave Search rate limits</span> — Free plan (1 req/s, 2000/mo) is too tight for research-heavy sessions.</li>
+                        <li><span class="red">Custom provider config took too long</span> - OpenClaw's custom model provider setup required adding the model to both <code>models.providers</code> AND <code>agents.defaults.models</code>. Not documented clearly.</li>
+                        <li><span class="red">PDF via pandoc stripped CSS</span> - wasted time before switching to Chrome CDP. Always test rendering early.</li>
+                        <li><span class="red">Email attachment MIME</span> - the <code>buildRawEmail()</code> function in google-control.js was silently dropping attachments. Had to rewrite multipart/mime encoding.</li>
+                        <li><span class="red">Zola CI/CD quirks</span> - explicit <code>template = "page"</code> breaks Zola builds. Took a CI failure to diagnose.</li>
+                        <li><span class="red">Brave Search rate limits</span> - Free plan (1 req/s, 2000/mo) is too tight for research-heavy sessions.</li>
                     </ul>
                 </section>
             </section>
@@ -767,13 +774,13 @@
                 <section>
                     <h2>Roadmap</h2>
                     <ul>
-                        <li><span class="highlight">Buttondown newsletter</span> — complete signup, launch first issue</li>
-                        <li><span class="highlight">Spotify playback</span> — cookie auth from browser, then spogo integration</li>
-                        <li><span class="highlight">RagWatch v0.2</span> — Hermes Agent instrumentation, richer span attributes</li>
-                        <li><span class="highlight">widescope launch</span> — LinkedIn + X campaign</li>
-                        <li><span class="highlight">Hermes Agent on Coolify</span> — deploy alongside Lili for cross-agent observability research</li>
-                        <li><span class="highlight">Weekly observability digest</span> — scale from internal email to public newsletter</li>
-                        <li><span class="highlight">Oracle Cloud free tier evaluation</span> — testing ARM instances as cost optimization experiment</li>
+                        <li><span class="highlight">Buttondown newsletter</span> - complete signup, launch first issue</li>
+                        <li><span class="highlight">Spotify playback</span> - cookie auth from browser, then spogo integration</li>
+                        <li><span class="highlight">RagWatch v0.2</span> - Hermes Agent instrumentation, richer span attributes</li>
+                        <li><span class="highlight">widescope launch</span> - LinkedIn + X campaign</li>
+                        <li><span class="highlight">Hermes Agent on Coolify</span> - deploy alongside Lili for cross-agent observability research</li>
+                        <li><span class="highlight">Weekly observability digest</span> - scale from internal email to public newsletter</li>
+                        <li><span class="highlight">Oracle Cloud free tier evaluation</span> - testing ARM instances as cost optimization experiment</li>
                     </ul>
                 </section>
             </section>
@@ -792,11 +799,11 @@
                         </thead>
                         <tbody>
                             <tr><td><span class="blue">github.com/soumendrak/website-v2</span></td><td>Personal website (Zola), weekly notes, newsletter subscribe page</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/AgentWiki</span></td><td>Private Obsidian vault — personal knowledge base</td></tr>
+                            <tr><td><span class="blue">github.com/soumendrak/AgentWiki</span></td><td>Private Obsidian vault - personal knowledge base</td></tr>
                             <tr><td><span class="blue">github.com/soumendrak/ragwatch</span></td><td>OTel-native Python SDK for RAG observability</td></tr>
                             <tr><td><span class="blue">github.com/soumendrak/widescope</span></td><td>Browser-native LLM trace viewer (Rust/WASM)</td></tr>
                             <tr><td><span class="blue">github.com/soumendrak/slides</span></td><td>Presentations repo (this talk!)</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/lili-backup</span></td><td>Private — memory and config backup</td></tr>
+                            <tr><td><span class="blue">github.com/soumendrak/lili-backup</span></td><td>Private - memory and config backup</td></tr>
                             <tr><td><span class="blue">github.com/soumendrak/soumendrak</span></td><td>README profile repo</td></tr>
                         </tbody>
                     </table>
