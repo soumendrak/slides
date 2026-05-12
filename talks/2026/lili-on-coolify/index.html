@@ -104,28 +104,28 @@
         .agenda-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
             align-items: center;
-            margin-top: 25px;
+            margin-top: 8px;
         }
         .agenda-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 15px 22px;
-            border-radius: 12px;
-            width: 75%;
+            padding: 8px 18px;
+            border-radius: 10px;
+            width: 80%;
             border: 1px solid rgba(96, 165, 250, 0.2);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .agenda-card h3 {
-            margin: 0 0 5px 0;
+            margin: 0 0 3px 0;
             color: #60a5fa;
-            font-size: 0.95em;
+            font-size: 0.85em;
         }
         .agenda-card p {
             margin: 0;
             text-align: center;
             color: #94a3b8;
-            font-size: 0.72em;
+            font-size: 0.65em;
         }
         .thanks-slide img {
             max-width: 200px;
@@ -217,17 +217,19 @@
         }
         .flow-diagram {
             background: #1e293b;
-            padding: 15px 18px;
+            padding: 10px 14px;
             border-radius: 12px;
             font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-            font-size: 0.5em !important;
+            font-size: 0.42em !important;
             color: #e2e8f0;
             text-align: left;
-            line-height: 1.5;
+            line-height: 1.35;
             border: 1px solid #334155;
             white-space: pre-wrap;
             word-break: break-word;
             overflow-wrap: break-word;
+            max-height: 62vh;
+            overflow-y: auto;
         }
         .flow-diagram .arrow {
             color: #facc15;
@@ -238,6 +240,143 @@
         }
         .flow-diagram .component { color: #60a5fa; }
         .flow-diagram .note { color: #94a3b8; font-style: italic; }
+
+        /* Stack flow */
+        .stack-flow {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 22px;
+        }
+        .stack-node {
+            background: #1e293b;
+            border: 1px solid #60a5fa;
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            flex: 1;
+        }
+        .stack-node .stack-label {
+            color: #60a5fa;
+            font-weight: 600;
+            font-size: 0.62em;
+        }
+        .stack-node .stack-desc {
+            color: #94a3b8;
+            font-size: 0.46em;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        .stack-arrow {
+            color: #facc15;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .services-section {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px dashed #334155;
+        }
+        .services-label {
+            font-size: 0.48em;
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            justify-content: center;
+        }
+        .service-chip {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 4px 11px;
+            font-size: 0.46em;
+            color: #94a3b8;
+        }
+
+        /* Pipeline flow */
+        .pipeline-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .pipeline-node {
+            border-radius: 10px;
+            padding: 12px 18px;
+            text-align: center;
+        }
+        .pipeline-node.source { background: #1e293b; border: 1px solid #60a5fa; }
+        .pipeline-node.processor { background: #1e293b; border: 1px solid #a78bfa; }
+        .pipeline-node.classifier { background: #1e293b; border: 1px solid #facc15; }
+        .pipeline-node .p-label {
+            font-weight: 600;
+            font-size: 0.58em;
+            color: #e2e8f0;
+        }
+        .pipeline-node .p-desc {
+            font-size: 0.44em;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .p-arrow {
+            color: #facc15;
+            font-size: 1.4em;
+            flex-shrink: 0;
+        }
+        .pipeline-branches {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: #0f172a;
+            border-radius: 10px;
+            border: 1px solid #1e293b;
+        }
+        .branch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .branch-tag {
+            font-size: 0.48em;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            min-width: 85px;
+            text-align: center;
+        }
+        .branch-tag.human { background: rgba(250,204,21,0.12); color: #facc15; border: 1px solid rgba(250,204,21,0.3); }
+        .branch-tag.nl { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+        .branch-arrow { color: #475569; font-size: 0.9em; flex-shrink: 0; }
+        .branch-step {
+            font-size: 0.46em;
+            color: #94a3b8;
+            background: #1e293b;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .branch-step.code { color: #a78bfa; }
+        .pipeline-note {
+            font-size: 0.46em !important;
+            color: #475569 !important;
+            text-align: center !important;
+            margin-top: 12px !important;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -302,27 +441,39 @@
 
                 <section>
                     <h2>The Stack</h2>
-                    <div class="flow-diagram">
-<span class="component">Telegram</span> (User interface)
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="component">OpenClaw Gateway</span> (Agent runtime, Docker container)
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="component">Hetzner CX23</span> (2 vCPU, 4GB RAM, €3.99/mo)
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="component">Coolify</span> (Docker orchestration, auto-deploys from GitHub)
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="component">Services</span>:
-├── Google Gmail API (Read + Send)
-├── Google Calendar API (Events + Reminders)
-├── Brave Search API (Web research)
-├── Yahoo Finance v8 API (Portfolio tracking)
-├── GitHub CLI (PRs, issues, repos)
-├── Chrome CDP (PDF generation)
-└── Rclone + Google Drive (Backup)</div>
+                    <div class="stack-flow">
+                        <div class="stack-node">
+                            <div class="stack-label">Telegram</div>
+                            <div class="stack-desc">User interface</div>
+                        </div>
+                        <div class="stack-arrow">→</div>
+                        <div class="stack-node">
+                            <div class="stack-label">OpenClaw Gateway</div>
+                            <div class="stack-desc">Agent runtime, Docker container</div>
+                        </div>
+                        <div class="stack-arrow">→</div>
+                        <div class="stack-node">
+                            <div class="stack-label">Hetzner CX23</div>
+                            <div class="stack-desc">2 vCPU, 4GB RAM, €3.99/mo</div>
+                        </div>
+                        <div class="stack-arrow">→</div>
+                        <div class="stack-node">
+                            <div class="stack-label">Coolify</div>
+                            <div class="stack-desc">Docker orchestration, auto-deploys from GitHub</div>
+                        </div>
+                    </div>
+                    <div class="services-section">
+                        <div class="services-label">Connected Services</div>
+                        <div class="services-grid">
+                            <div class="service-chip">Gmail API</div>
+                            <div class="service-chip">Google Calendar API</div>
+                            <div class="service-chip">Brave Search API</div>
+                            <div class="service-chip">Yahoo Finance v8 API</div>
+                            <div class="service-chip">GitHub CLI</div>
+                            <div class="service-chip">Chrome CDP</div>
+                            <div class="service-chip">Rclone + Google Drive</div>
+                        </div>
+                    </div>
                 </section>
 
                 <section>
@@ -485,19 +636,37 @@
 
                 <section>
                     <h2>Email Pipeline</h2>
-                    <div class="flow-diagram">
-<span class="component">Gmail Inbox</span>
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="component">email-watcher.js</span> (polls every 15 min via Gmail API)
-    <span class="arrow">|</span>
-    <span class="arrow-dn">v</span>
-<span class="green">Classification:</span>
-├── <span class="highlight">Human email</span> → <span class="component">EMAIL_WATCHER_ALERT</span> → forward to Telegram immediately
-└── <span class="highlight">Newsletter</span> → <span class="component">EMAIL_WATCHER_NEWSLETTER</span> → summarize (2-3 bullets + action items) → Telegram
-
-<span class="note"># Stays silent if nothing needs attention. No "watching" messages.</span>
-<span class="note"># Changed from auto-archive to summarize - better to extract value from newsletters.</span></div>
+                    <div class="pipeline-top">
+                        <div class="pipeline-node source">
+                            <div class="p-label">Gmail Inbox</div>
+                        </div>
+                        <div class="p-arrow">→</div>
+                        <div class="pipeline-node processor">
+                            <div class="p-label">email-watcher.js</div>
+                            <div class="p-desc">polls every 15 min via Gmail API</div>
+                        </div>
+                        <div class="p-arrow">→</div>
+                        <div class="pipeline-node classifier">
+                            <div class="p-label">Classification</div>
+                        </div>
+                    </div>
+                    <div class="pipeline-branches">
+                        <div class="branch">
+                            <div class="branch-tag human">Human email</div>
+                            <div class="branch-arrow">→</div>
+                            <div class="branch-step code">EMAIL_WATCHER_ALERT</div>
+                            <div class="branch-arrow">→</div>
+                            <div class="branch-step">Forward to Telegram immediately</div>
+                        </div>
+                        <div class="branch">
+                            <div class="branch-tag nl">Newsletter</div>
+                            <div class="branch-arrow">→</div>
+                            <div class="branch-step code">EMAIL_WATCHER_NEWSLETTER</div>
+                            <div class="branch-arrow">→</div>
+                            <div class="branch-step">Summarize (2-3 bullets + action items) → Telegram</div>
+                        </div>
+                    </div>
+                    <p class="pipeline-note">Silent if nothing needs attention. No "watching" messages.</p>
                 </section>
 
                 <section>

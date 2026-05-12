@@ -11,13 +11,14 @@ A static site template for hosting reveal.js presentations on Cloudflare Pages. 
 
 1. **Fork this repository**
 
-2. **Install dependencies** (none required - pure static HTML)
-
-3. **Start local server:**
+2. **Install dependencies:**
    ```bash
-   python -m http.server 8000
-   # or
-   npx serve .
+   just install
+   ```
+
+3. **Start local dev server with hot reload:**
+   ```bash
+   just dev
    ```
 
 4. **Open** `http://localhost:8000`
