@@ -2,8 +2,4 @@
 
 # Start local dev server with hot reload
 dev:
-    pnpm dev
-
-# Install dependencies
-install:
-    pnpm install
+    npx live-server . --port=8000
