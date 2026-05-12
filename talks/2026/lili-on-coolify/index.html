@@ -471,7 +471,33 @@
                             <div class="service-chip">Yahoo Finance v8 API</div>
                             <div class="service-chip">GitHub CLI</div>
                             <div class="service-chip">Chrome CDP</div>
+                            <div class="service-chip">SigNoz (OTel traces)</div>
                             <div class="service-chip">Rclone + Google Drive</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Observability: OTel → SigNoz</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Pipeline</h3>
+                            <ul>
+                                <li>OpenClaw emits <span class="highlight">OTLP traces</span> via diagnostics-otel plugin</li>
+                                <li>SigNoz ingests OTel natively over HTTPS</li>
+                                <li>Traces: model calls with token count, latency, cost</li>
+                                <li>Metrics: cumulative usage and cost over time</li>
+                                <li>All running on Coolify alongside Lili</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Live Demo</h3>
+                            <ul>
+                                <li>Open SigNoz dashboard during the talk</li>
+                                <li>Send a message to Lili → trace appears live</li>
+                                <li>Shows model, provider, input/output tokens, duration</li>
+                                <li>Directly demonstrates AI observability in action</li>
+                            </ul>
                         </div>
                     </div>
                 </section>
@@ -625,7 +651,7 @@
                             <tr><td>Portfolio tracker</td><td>Hourly</td><td>Checks 19 stocks via Yahoo Finance, alerts on ±5% moves from last price</td></tr>
                             <tr><td>Market sentiment</td><td>Daily 9 AM IST</td><td>CNN Fear & Greed index, alerts on fear/extreme fear zones</td></tr>
                             <tr><td>MSD reminder</td><td>Daily 9:15 AM IST</td><td>Minimum Successful Day prompt - OTel infra, meeting artifacts, Claude enablement</td></tr>
-                            <tr><td>Observability update</td><td>Daily 1:30 PM IST</td><td>Scans OTel/Langfuse/Arize/Grafana for new releases and changes</td></tr>
+                            <tr><td>Observability update</td><td>Daily 1:30 PM IST</td><td>Scans OTel/SigNoz/Arize/Grafana for new releases and changes</td></tr>
                             <tr><td>Blogwatcher</td><td>Daily 8 AM IST</td><td>Scans RSS feeds, digests top 5-8 articles with relevance ranking</td></tr>
                             <tr><td>Weekly digest (PDF)</td><td>Sundays 8 PM IST</td><td>8-story observability roundup, styled HTML → PDF via Chrome CDP, emailed</td></tr>
                             <tr><td>Weekly digest (email)</td><td>Thursdays</td><td>Lighter HTML email version sent to soumendra.s@outlook.com</td></tr>
