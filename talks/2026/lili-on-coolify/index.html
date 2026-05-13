@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building a Personal AI Assistant with OpenClaw on Coolify</title>
+    <title>Building Lili & Nini — Two Agents, One Stack</title>
     <link rel="icon" href="../../../shared/assets/images/soumendra_avatar.webp">
-    <!-- Reveal.js CSS (load first, custom styles override) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
-    <style>
+<style>
         .reveal {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
@@ -383,664 +382,358 @@
     <div class="reveal">
         <div class="slides">
 
-            <!-- TITLE SLIDE -->
+            <!-- ═══════════════════════════════════════════════════════════ -->
+            <!-- MAIN PRESENTATION (10 slides, 25 min)                    -->
+            <!-- ═══════════════════════════════════════════════════════════ -->
+
+            <!-- SLIDE 1: TITLE -->
             <section>
-                <h1>Building Lili</h1>
-                <h3>A Personal AI Assistant with OpenClaw on Coolify</h3>
+                <h1>Building Lili & Nini</h1>
+                <h3>Two AI Agents. One Stack. Full Observability.</h3>
                 <p style="text-align: center; margin-top: 2em; font-style: italic;">By Soumendra Kumar Sahoo</p>
-                <p style="text-align: center; font-size: 0.6em; color: #64748b;">Team AI Observability, PepsiCo</p>
+                <p style="text-align: center; font-size: 0.6em; color: #64748b;">AI Observability, PepsiCo</p>
             </section>
 
-            <!-- INTRO SLIDE -->
+            <!-- SLIDE 2: LILI VS NINI COMPARISON -->
             <section>
-                <h2><s>What</s> Who is Lili?</h2>
-                <p>A <span class="highlight">persistent AI assistant</span> running on dedicated infrastructure:</p>
-                <ul>
-                    <li>Built on <span class="blue">OpenClaw</span> - an open-source agent framework</li>
-                    <li>Deployed on <span class="blue">Hetzner CX23</span> (2 vCPU, 4GB RAM, €3.99/mo)</li>
-                    <li>Orchestrated through <span class="blue">Coolify</span> - self-hosted PaaS</li>
-                    <li>Connected via <span class="blue">Telegram</span> as primary interface</li>
-                    <li>Runs a <span class="highlight">DeepSeek V4 Flash</span> reasoning model (1M context, ~$0.14/M tokens)</li>
-                    <li>Full <span class="green">Gmail + Google Calendar</span> integration</li>
-                </ul>
+                <h2>Lili vs Nini</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th></th><th>Lili</th><th>Nini</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Platform</strong></td><td>OpenClaw</td><td>Hermes Agent</td></tr>
+                        <tr><td><strong>Role</strong></td><td>Operations & Delivery</td><td>Research & Exploration</td></tr>
+                        <tr><td><strong>Model</strong></td><td>DeepSeek V4 Flash</td><td>DeepSeek V4 Flash</td></tr>
+                        <tr><td><strong>What it does</strong></td><td>Email, calendar, backups, portfolio tracking, newsletter digest, cron jobs</td><td>Agent arch documentation, mental model research, RagWatch review, Ekathi gaming design</td></tr>
+                        <tr><td><strong>Self-improvement</strong></td><td>File-based skills registry + MEMORY.md curation</td><td>Native skill creation loop + Honcho dialectic modeling</td></tr>
+                        <tr><td><strong>Communication</strong></td><td>Telegram (primary), HTTP to Nini</td><td>Telegram, HTTP API, nini-research repo</td></tr>
+                        <tr><td><strong>Outputs</strong></td><td>Weekly notes, newsletters, slide decks, scripts</td><td>Research reports (13+ produced), architecture analyses</td></tr>
+                        <tr><td><strong>Max context</strong></td><td>1M tokens</td><td>~16K tokens per session</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 10px; font-size: 0.5em; color: #94a3b8; text-align: center;">Two agents cost the same as one. The only marginal cost is the second Telegram bot.</p>
             </section>
 
-            <!-- AGENDA -->
+            <!-- SLIDE 3: THE STACK -->
             <section>
-                <h2>Agenda</h2>
-                <div class="agenda-container">
-                    <div class="agenda-card">
-                        <h3>1. Infrastructure & Architecture</h3>
-                        <p>Hetzner + Coolify + Docker - how everything connects</p>
+                <h2>The Stack</h2>
+                <div class="stack-flow">
+                    <div class="stack-node">
+                        <div class="stack-label">Telegram</div>
+                        <div class="stack-desc">User interface for both agents</div>
                     </div>
-                    <div class="agenda-card">
-                        <h3>2. Files & Workspace Anatomy</h3>
-                        <p>Identity, memory, automation scripts, and tooling</p>
+                    <div class="stack-arrow">→</div>
+                    <div class="stack-node">
+                        <div class="stack-label">Lili (OpenClaw)</div>
+                        <div class="stack-desc">Operations agent, Docker container</div>
                     </div>
-                    <div class="agenda-card">
-                        <h3>3. Workflow Automation</h3>
-                        <p>9+ cron jobs: email, portfolio, market, newsletters, observability</p>
+                    <div class="stack-arrow">→</div>
+                    <div class="stack-node">
+                        <div class="stack-label">Nini (Hermes Agent)</div>
+                        <div class="stack-desc">Research agent, Docker container</div>
                     </div>
-                    <div class="agenda-card">
-                        <h3>4. Projects & Integrations</h3>
-                        <p>RagWatch, widescope, Hermes Agent, AgentWiki, website-v2</p>
+                    <div class="stack-arrow">→</div>
+                    <div class="stack-node">
+                        <div class="stack-label">Hetzner CX43</div>
+                        <div class="stack-desc">8 vCPU, 16 GB RAM, €11.99/mo</div>
                     </div>
-                    <div class="agenda-card">
-                        <h3>5. Self-Improvement System</h3>
-                        <p>Skills registry, memory consolidation, weekly backup</p>
+                </div>
+                <div class="services-section">
+                    <div class="services-label">Connected Services</div>
+                    <div class="services-grid">
+                        <div class="service-chip">Coolify</div>
+                        <div class="service-chip">SigNoz (OTel)</div>
+                        <div class="service-chip">Gmail API</div>
+                        <div class="service-chip">Google Calendar</div>
+                        <div class="service-chip">Brave Search</div>
+                        <div class="service-chip">Yahoo Finance</div>
+                        <div class="service-chip">GitHub</div>
+                        <div class="service-chip">Chrome CDP</div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 1: INFRASTRUCTURE -->
+            <!-- SLIDE 4: COST BREAKDOWN -->
             <section>
-                <section>
-                    <h2 style="color: #4ade80;">1. Infrastructure</h2>
-                    <p class="quote">"A personal AI needs a home. Here's the stack."</p>
-                </section>
-
-                <section>
-                    <h2>The Stack</h2>
-                    <div class="stack-flow">
-                        <div class="stack-node">
-                            <div class="stack-label">Telegram</div>
-                            <div class="stack-desc">User interface</div>
-                        </div>
-                        <div class="stack-arrow">→</div>
-                        <div class="stack-node">
-                            <div class="stack-label">OpenClaw Gateway</div>
-                            <div class="stack-desc">Agent runtime, Docker container</div>
-                        </div>
-                        <div class="stack-arrow">→</div>
-                        <div class="stack-node">
-                            <div class="stack-label">Hetzner CX23</div>
-                            <div class="stack-desc">2 vCPU, 4GB RAM, €3.99/mo</div>
-                        </div>
-                        <div class="stack-arrow">→</div>
-                        <div class="stack-node">
-                            <div class="stack-label">Coolify</div>
-                            <div class="stack-desc">Docker orchestration, auto-deploys from GitHub</div>
-                        </div>
-                    </div>
-                    <div class="services-section">
-                        <div class="services-label">Connected Services</div>
-                        <div class="services-grid">
-                            <div class="service-chip">Gmail API</div>
-                            <div class="service-chip">Google Calendar API</div>
-                            <div class="service-chip">Brave Search API</div>
-                            <div class="service-chip">Yahoo Finance v8 API</div>
-                            <div class="service-chip">GitHub CLI</div>
-                            <div class="service-chip">Chrome CDP</div>
-                            <div class="service-chip">SigNoz (OTel traces)</div>
-                            <div class="service-chip">Rclone + Google Drive</div>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>Observability: OTel → SigNoz</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>Pipeline</h3>
-                            <ul>
-                                <li>OpenClaw emits <span class="highlight">OTLP traces</span> via diagnostics-otel plugin</li>
-                                <li>SigNoz ingests OTel natively over HTTPS</li>
-                                <li>Traces: model calls with token count, latency, cost</li>
-                                <li>Metrics: cumulative usage and cost over time</li>
-                                <li>All running on Coolify alongside Lili</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Live Demo</h3>
-                            <ul>
-                                <li>Open SigNoz dashboard during the talk</li>
-                                <li>Send a message to Lili → trace appears live</li>
-                                <li>Shows model, provider, input/output tokens, duration</li>
-                                <li>Directly demonstrates AI observability in action</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>Why Hetzner + Coolify?</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>Hetzner CX23</h3>
-                            <ul>
-                                <li><span class="green">€3.99/mo</span> - cheapest 2 vCPU option</li>
-                                <li>Hourly billing - shutdown anytime</li>
-                                <li>No 24-month lock-in (unlike Hostinger)</li>
-                                <li>Nuremberg/Falkenstein DCs, GDPR compliant</li>
-                                <li>40GB SSD, 20TB traffic included</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Coolify</h3>
-                            <ul>
-                                <li>Self-hosted PaaS alternative to Heroku</li>
-                                <li>One-click OpenClaw service template</li>
-                                <li>Auto-deploy from GitHub on push</li>
-                                <li>Docker Compose management via UI</li>
-                                <li>Built-in proxy, SSL, health checks</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>Cost Breakdown</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Item</th><th>Cost</th><th>Notes</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Hetzner CX23</td><td>€3.99/mo</td><td>2 vCPU, 4GB RAM, 40GB SSD</td></tr>
-                            <tr><td>DeepSeek V4 Flash API</td><td>~$0.14/M tokens</td><td>~$5-10/mo for active use</td></tr>
-                            <tr><td>Brave Search API</td><td>Free</td><td>2000 queries/mo limit</td></tr>
-                            <tr><td>Gmail API</td><td>Free</td><td>15GB storage included</td></tr>
-                            <tr><td>GitHub</td><td>Free</td><td>Public + private repos</td></tr>
-                            <tr><td>Cloudflare Pages</td><td>Free</td><td>website-v2 hosting</td></tr>
-                            <tr><td><strong>Total</strong></td><td><strong>~€10-15/mo</strong></td><td>All-inclusive operating cost</td></tr>
-                        </tbody>
-                    </table>
-                </section>
+                <h2>Cost Breakdown</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Item</th><th>Cost</th><th>Notes</th></tr></thead>
+                    <tbody>
+                        <tr><td>Hetzner CX43</td><td>€11.99/mo</td><td>8 vCPU, 16 GB RAM, 160 GB SSD</td></tr>
+                        <tr><td>DeepSeek V4 Flash API</td><td>~$10-20/mo</td><td>Active use for 2 agents</td></tr>
+                        <tr><td>Brave Search API</td><td>Free</td><td>2000 queries/mo limit</td></tr>
+                        <tr><td>Gmail + Calendar</td><td>Free</td><td>15GB storage</td></tr>
+                        <tr><td>SigNoz (self-hosted)</td><td>Free</td><td>On same CX43</td></tr>
+                        <tr><td><strong>Total</strong></td><td><strong>~€15-20/mo</strong></td><td>Two agents + full observability</td></tr>
+                    </tbody>
+                </table>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.55em; color: #94a3b8;">Cost of running Lili alone on a CX23: €8/mo. Adding Nini: ~€4 extra.</p>
             </section>
 
-            <!-- SECTION 2: FILES & WORKSPACE -->
+            <!-- SLIDE 5: LIVE DEMO — SIGNOZ -->
             <section>
-                <section>
-                    <h2 style="color: #a78bfa;">2. Files & Workspace Anatomy</h2>
-                    <p class="quote">"Identity, memory, and tools - everything lives in files."</p>
-                </section>
-
-                <section>
-                    <h2>Core Identity Files</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>File</th><th>Purpose</th><th>Key Contents</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><span class="blue">SOUL.md</span></td><td>Personality & values</td><td>Core truths, boundaries, communication style - "Be genuinely helpful, not performatively helpful"</td></tr>
-                            <tr><td><span class="blue">IDENTITY.md</span></td><td>Who I am</td><td>Name (Lili), creature type, vibe: "straight to the point, no-nonsense"</td></tr>
-                            <tr><td><span class="blue">USER.md</span></td><td>About my human</td><td>Soumendra's role, professional context, interests, and preferences</td></tr>
-                            <tr><td><span class="blue">MEMORY.md</span></td><td>Long-term memory</td><td>Curated learnings, project context, professional details, key decisions</td></tr>
-                            <tr><td><span class="blue">TOOLS.md</span></td><td>Tool configuration</td><td>Camera labels, SSH hosts, TTS voice preferences</td></tr>
-                            <tr><td><span class="blue">AGENTS.md</span></td><td>Boot protocol</td><td>Session startup routine, memory rules, safety guidelines</td></tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <h2>Memory Architecture</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>Short-term (Session)</h3>
-                            <ul>
-                                <li>Live conversation context (<span class="highlight">200K tokens</span>)</li>
-                                <li>Auto-compacts at ~80K tokens</li>
-                                <li>Lost on session restart</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Long-term (Files)</h3>
-                            <ul>
-                                <li><span class="green">MEMORY.md</span> - curated, distilled notes</li>
-                                <li><span class="green">memory/YYYY-MM-DD.md</span> - daily logs</li>
-                                <li>Survives restarts</li>
-                                <li>Backed up to GitHub + Google Drive</li>
-                            </ul>
-                        </div>
+                <h2 style="color: #4ade80;">Live Demo: SigNoz Traces</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Pipeline</h3>
+                        <ul>
+                            <li>Every interaction generates a <span class="highlight">multi-span trace</span></li>
+                            <li>Correlated <span class="green">traces + metrics + logs</span> with shared traceId</li>
+                            <li>Shows model, token counts, latency, cost</li>
+                            <li>Input/output text visible in span attributes</li>
+                        </ul>
                     </div>
-                    <p style="margin-top: 15px;"><span class="highlight">Rule:</span> "If you want to remember something, WRITE IT TO A FILE. 'Mental notes' don't survive restarts."</p>
-                </section>
-
-                <section>
-                    <h2>Automation Scripts</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Script</th><th>Purpose</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><span class="blue">google-control.js</span></td><td>Gmail + Calendar API - send email, read inbox, create events, send attachments</td></tr>
-                            <tr><td><span class="blue">email-watcher.js</span></td><td>Polls inbox every 15 min, classifies human vs newsletter, forwards summaries</td></tr>
-                            <tr><td><span class="blue">portfolio-tracker.mjs</span></td><td>Yahoo Finance v8 API, 19 tickers, hourly price check, ±5% move alerts</td></tr>
-                            <tr><td><span class="blue">html2pdf.mjs</span></td><td>Chrome CDP-based PDF generator with full CSS/color preservation</td></tr>
-                            <tr><td><span class="blue">send-digest-email.mjs</span></td><td>Weekly observability digest email with PDF attachment</td></tr>
-                            <tr><td><span class="blue">backup-lili.sh</span></td><td>Daily backup: GitHub push + rclone to Google Drive</td></tr>
-                            <tr><td><span class="blue">market-sentiment.mjs</span></td><td>CNN Fear & Greed index, daily market pulse</td></tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <h2>Boot Sequence</h2>
-                    <div class="flow-diagram">
-<span class="green">Every session:</span>
-1. Read <span class="component">SOUL.md</span> - "who am I?"
-2. Read <span class="component">USER.md</span> - "who am I helping?"
-3. Read <span class="component">memory/YYYY-MM-DD.md</span> - "what happened recently?"
-4. Read <span class="component">MEMORY.md</span> - "what are the long-term decisions?"
-
-<span class="green">Heartbeat polls (~30-60 min):</span>
-- Check <span class="component">HEARTBEAT.md</span> for pending tasks
-- Batch efficiency check: email + calendar + news
-- Quiet unless something needs attention
-
-<span class="green">File diligence:</span>
-- "Memory is limited - if you want to remember something, WRITE IT"
-- Daily notes → weekly consolidation → MEMORY.md curation</div>
-                </section>
+                    <div>
+                        <h3>During the talk</h3>
+                        <ul>
+                            <li>Open SigNoz dashboard on the projector</li>
+                            <li>Send a message to Lili from your phone</li>
+                            <li>Trace appears in <span class="highlight">real-time</span></li>
+                            <li>Demonstrates AI observability live</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 15px; font-size: 0.55em; color: #64748b;">Previously attempted with Langfuse (failed — needed S3/MinIO). SigNoz ingested OTLP natively.</p>
             </section>
 
-            <!-- SECTION 3: WORKFLOW AUTOMATION -->
+            <!-- SLIDE 6: AUTOMATION -->
             <section>
-                <section>
-                    <h2 style="color: #facc15;">3. Workflow Automation</h2>
-                    <p class="quote">"Cron jobs doing the boring work so Soumendra doesn't have to."</p>
-                </section>
-
-                <section>
-                    <h2>Active Cron Jobs</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Job</th><th>Schedule</th><th>What it does</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Email watcher</td><td>Every 15 min</td><td>Polls Gmail, classifies: human emails → alert, newsletters → summarize with action items</td></tr>
-                            <tr><td>Portfolio tracker</td><td>Hourly</td><td>Checks 19 stocks via Yahoo Finance, alerts on ±5% moves from last price</td></tr>
-                            <tr><td>Market sentiment</td><td>Daily 9 AM IST</td><td>CNN Fear & Greed index, alerts on fear/extreme fear zones</td></tr>
-                            <tr><td>MSD reminder</td><td>Daily 9:15 AM IST</td><td>Minimum Successful Day prompt - OTel infra, meeting artifacts, Claude enablement</td></tr>
-                            <tr><td>Observability update</td><td>Daily 1:30 PM IST</td><td>Scans OTel/SigNoz/Arize/Grafana for new releases and changes</td></tr>
-                            <tr><td>Blogwatcher</td><td>Daily 8 AM IST</td><td>Scans RSS feeds, digests top 5-8 articles with relevance ranking</td></tr>
-                            <tr><td>Weekly digest (PDF)</td><td>Sundays 8 PM IST</td><td>8-story observability roundup, styled HTML → PDF via Chrome CDP, emailed</td></tr>
-                            <tr><td>Weekly digest (email)</td><td>Thursdays</td><td>Lighter HTML email version sent to soumendra.s@outlook.com</td></tr>
-                            <tr><td>Daily backup</td><td>3 AM IST</td><td>GitHub push + Google Drive sync of all core files</td></tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <h2>Email Pipeline</h2>
-                    <div class="pipeline-top">
-                        <div class="pipeline-node source">
-                            <div class="p-label">Gmail Inbox</div>
-                        </div>
-                        <div class="p-arrow">→</div>
-                        <div class="pipeline-node processor">
-                            <div class="p-label">email-watcher.js</div>
-                            <div class="p-desc">polls every 15 min via Gmail API</div>
-                        </div>
-                        <div class="p-arrow">→</div>
-                        <div class="pipeline-node classifier">
-                            <div class="p-label">Classification</div>
-                        </div>
-                    </div>
-                    <div class="pipeline-branches">
-                        <div class="branch">
-                            <div class="branch-tag human">Human email</div>
-                            <div class="branch-arrow">→</div>
-                            <div class="branch-step code">EMAIL_WATCHER_ALERT</div>
-                            <div class="branch-arrow">→</div>
-                            <div class="branch-step">Forward to Telegram immediately</div>
-                        </div>
-                        <div class="branch">
-                            <div class="branch-tag nl">Newsletter</div>
-                            <div class="branch-arrow">→</div>
-                            <div class="branch-step code">EMAIL_WATCHER_NEWSLETTER</div>
-                            <div class="branch-arrow">→</div>
-                            <div class="branch-step">Summarize (2-3 bullets + action items) → Telegram</div>
-                        </div>
-                    </div>
-                    <p class="pipeline-note">Silent if nothing needs attention. No "watching" messages.</p>
-                </section>
-
-                <section>
-                    <h2>Portfolio Tracker</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>US + India stocks tracked</h3>
-                            <ul>
-                                <li>NASDAQ, NYSE, and NSE listed stocks</li>
-                                <li>Cost basis configured per holding</li>
-                                <li>Hourly auto-refresh</li>
-                                <li>No share quantities stored (privacy-first)</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>How it works</h3>
-                            <ul>
-                                <li>Yahoo Finance <span class="highlight">v8 API</span> (<code>query1.finance.yahoo.com/v8/finance/chart</code>)</li>
-                                <li>Compares current price to <code>lastPrice</code> in store</li>
-                                <li><span class="red">±5% move</span> → Telegram alert</li>
-                                <li>Silent otherwise (no "nothing changed" messages)</li>
-                                <li>P&L against cost basis tracked</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>Observability Digest Pipeline</h2>
-                    <div class="flow-diagram">
-<span class="green">Weekly Sunday 8PM IST:</span>
-
-1. <span class="component">Web search</span> → 8 stories (OTel, LLM monitoring, AI agents, Datadog, open source)
-2. <span class="component">Build HTML</span> → blue header, story cards, orange "Top 3 Priorities" box
-3. <span class="component">html2pdf.mjs</span> → Chrome CDP renders HTML with full CSS → PDF
-4. <span class="component">send-digest-email.mjs</span> → email to soumendra.s@outlook.com with PDF attachment
-5. Clean up temp files
-
-<span class="note"># Previously used pandoc for PDF (stripped CSS). Switched to Chrome CDP for color/format preservation.</span>
-<span class="note"># Daily observability Telegram updates → consolidated into this weekly email.</span></div>
-                </section>
+                <h2>Automation</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Job</th><th>Schedule</th><th>What it does</th></tr></thead>
+                    <tbody>
+                        <tr><td>Email watcher</td><td>Every 15 min</td><td>Classifies human vs newsletter, forwards summaries</td></tr>
+                        <tr><td>Portfolio tracker</td><td>Hourly</td><td>19 tickers, ±5% move alerts via Yahoo Finance</td></tr>
+                        <tr><td>Observability update</td><td>Daily 1:30 PM</td><td>OTel/SigNoz/Arize/Grafana release scans</td></tr>
+                        <tr><td>Blogwatcher</td><td>Daily 8 AM</td><td>RSS feeds → top 5-8 article digest</td></tr>
+                        <tr><td>MSD reminder</td><td>Daily 9:15 AM</td><td>Minimum Successful Day prompt</td></tr>
+                        <tr><td>Weekly digest PDF</td><td>Sundays 8 PM</td><td>Styled HTML → Chrome CDP → PDF → emailed</td></tr>
+                        <tr><td>Nini research sync</td><td>Every 6 hrs</td><td>Pulls from nini-research → updates AgentWiki</td></tr>
+                        <tr><td>Nini inbox check</td><td>Every 15 min</td><td>Lili polls Nini's inbox for messages</td></tr>
+                    </tbody>
+                </table>
             </section>
 
-            <!-- SECTION 4: PROJECTS -->
+            <!-- SLIDE 7: AGENT BRIDGE -->
             <section>
-                <section>
-                    <h2 style="color: #38bdf8;">4. Projects & Integrations</h2>
-                    <p class="quote">"Beyond email and alerts - active contributions to Soumendra's ecosystem."</p>
-                </section>
+                <h2>Lili ↔ Nini Bridge</h2>
+                <p>Two agents need to coordinate. HTTP API was the simplest path:</p>
+                <div class="flow-diagram">
+<span class="green">Lili → Nini:</span>
+  HTTP POST to http://nini.ekathi.com:8642/v1/chat/completions
+  Bearer auth with API key
+  Nini processes and responds
 
-                <section>
-                    <h2>Active Projects</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Project</th><th>Role</th><th>Recent Work</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><span class="blue">RagWatch</span></td><td>SDK maintenance</td><td>OTel-native Python SDK for RAG observability. v0.1.7 on PyPI. LangGraph + CrewAI adapters, 22 test files, 13 docs. Fixed clippy lints.</td></tr>
-                            <tr><td><span class="blue">widescope</span></td><td>Contributor</td><td>Browser-native LLM trace viewer (Rust → WASM, Svelte 5, Cloudflare Pages). PR #5 merged: docs, OG tags, contributing guide.</td></tr>
-                            <tr><td><span class="blue">website-v2</span></td><td>Content + CI/CD</td><td>Weekly notes (Week 19 published), link integrity automation, newsletter subscribe page, theme updates</td></tr>
-                            <tr><td><span class="blue">AgentWiki</span></td><td>Knowledge base</td><td>Private Obsidian vault. 50+ pages across 8 categories. Research notes on AI agents, Hermes Agent, and technology topics.</td></tr>
-                            <tr><td><span class="blue">Skills Registry</span></td><td>Self-improvement</td><td>Boot protocol for skills discovery. Session startup reads skills-registry for capability awareness.</td></tr>
-                            <tr><td><span class="blue">Hermes Agent</span></td><td>Research</td><td>Wiki page created. Self-improving agent by Nous Research. Studied for architecture patterns (memory FTS5, Honcho modeling).</td></tr>
-                        </tbody>
-                    </table>
-                </section>
+<span class="green">Nini → Lili:</span>
+  Push messages to nini-research/inbox/YYYY-MM-DD-ID.md
+  Lili polls every 15 minutes via cron
 
-                <section>
-                    <h2>RagWatch - Deep Dive</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>What it does</h3>
-                            <ul>
-                                <li>OTel-native Python SDK for instrumenting RAG pipelines</li>
-                                <li>Auto-instruments LangGraph, CrewAI, LangChain</li>
-                                <li>Captures retrieval precision, context quality, hallucination scores</li>
-                                <li>Exports OpenTelemetry traces for downstream analysis</li>
-                            </ul>
-                            <p style="margin-top: 10px;"><span class="green">github.com/soumendrak/ragwatch</span></p>
-                        </div>
-                        <div>
-                            <h3>Architecture</h3>
-                            <ul>
-                                <li>Spans: <span class="highlight">retrieval</span>, <span class="highlight">context-construction</span>, <span class="highlight">generation</span></li>
-                                <li>Attributes: chunk count, relevance scores, token usage</li>
-                                <li>Events: retrieval candidates, context truncation</li>
-                                <li>Auto-instrumentation via monkey-patching</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>widescope - Deep Dive</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>What it is</h3>
-                            <ul>
-                                <li>Browser-native trace viewer for LLM pipelines</li>
-                                <li>Rust compiled to WASM - <span class="highlight">zero backend</span></li>
-                                <li>Svelte 5 frontend, Cloudflare Pages hosting</li>
-                                <li>Live: <span class="blue">widescope.soumendrak.com</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Our work</h3>
-                            <ul>
-                                <li>Merged PR #5: docs, OG tags, contributing guide</li>
-                                <li>CI: check, clippy, test - clippy enforces <span class="red">-D warnings</span></li>
-                                <li>Open issue: <code>collapsible_match</code> lint fix needed</li>
-                                <li>Launch strategy drafted for LinkedIn and X</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <section>
-                    <h2>Newsletter System</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>Components</h3>
-                            <ul>
-                                <li><span class="blue">Buttondown</span> - email newsletter platform</li>
-                                <li><span class="blue">Subscribe page</span> - <code>soumendrak.com/subscribe/</code></li>
-                                <li><span class="blue">Lead magnet</span> - "AI Observability Starter Kit" PDF</li>
-                                <li><span class="blue">CTA shortcode</span> - reusable <code>newsletter_cta.html</code></li>
-                                <li><span class="blue">Welcome email</span> - draft ready</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>PR work</h3>
-                            <ul>
-                                <li>Subscribe page built (Zola frontmatter, CI/CD fixed)</li>
-                                <li>Removed <code>template = "page"</code> that broke Zola build</li>
-                                <li>Link integrity: warm every link before merge</li>
-                                <li>Zero 404s policy - private repos don't get hyperlinks</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+<span class="green">Shared tasking:</span>
+  GitHub Issues + Projects (agents-board repo)
+  23 issues created, 12 completed
+  Labels: P0 (existential), P1 (important), P2 (side hustle)</div>
+                <p style="font-size: 0.5em; color: #94a3b8; margin-top: 8px; text-align: center;">Nini wrote a blueprint for a webhook bridge (port 8644) — pending implementation.</p>
             </section>
 
-            <!-- SECTION 5: SELF-IMPROVEMENT SYSTEM -->
+            <!-- SLIDE 8: KEY LESSONS -->
             <section>
                 <section>
-                    <h2 style="color: #4ade80;">5. Self-Improvement System</h2>
-                    <p class="quote">"An assistant that improves itself - the skills registry."</p>
+                    <h2 style="color: #f87171;">Key Lessons</h2>
                 </section>
-
-                <section>
-                    <h2>Skills Registry</h2>
-                    <p>A <span class="highlight">self-documenting capability index</span> - Lili's awareness of what she can do:</p>
-                    <ul>
-                        <li>Read at session startup from <code>skills-registry/</code></li>
-                        <li>Each skill: <span class="blue">name</span>, <span class="blue">description</span>, <span class="blue">trigger conditions</span>, <span class="blue">tools required</span></li>
-                        <li>Skills are added autonomously after completing complex tasks</li>
-                        <li>Periodic consolidation from daily notes → curated MEMORY.md</li>
-                        <li>Boot protocol reads skills-registry at startup → discovers own capabilities</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>Memory Consolidation Loop</h2>
-                    <div class="flow-diagram">
-<span class="green">Every few days (heartbeat-driven):</span>
-
-1. Read through recent <span class="component">memory/YYYY-MM-DD.md</span> files
-2. Identify significant events, lessons, insights
-3. Update <span class="component">MEMORY.md</span> with distilled learnings
-4. Remove outdated info
-
-<span class="green">Weekly:</span>
-- GitHub backup auto-pushes changes
-- Google Drive sync via rclone
-
-<span class="note"># Daily files = raw notes. MEMORY.md = curated wisdom.</span>
-<span class="note"># "Think of it like a human reviewing their journal and updating their mental model."</span></div>
-                </section>
-
-                <section>
-                    <h2>Backup & Recovery</h2>
-                    <div class="two-column">
-                        <div>
-                            <h3>GitHub</h3>
-                            <ul>
-                                <li>Private repo: <span class="blue">soumendrak/lili-backup</span></li>
-                                <li>Auto-pushes daily at 3 AM IST</li>
-                                <li>Files: MEMORY.md, SOUL.md, USER.md, IDENTITY.md, TOOLS.md, AGENTS.md, daily memory logs, Spotify creds</li>
-                                <li>Last backup: <span class="green">successful</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Google Drive</h3>
-                            <ul>
-                                <li>rclone sync to <span class="blue">lili-backups/workspace/</span></li>
-                                <li>Same files + scripts (google-control.js, email-watcher.js)</li>
-                                <li>7 daily memory files archived</li>
-                                <li>Secondary redundancy layer</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-            <!-- KEY METRICS -->
-            <section>
-                <section>
-                    <h2>Key Metrics & Impact</h2>
-                </section>
-
-                <section>
-                    <div class="metric-grid">
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">9+</h3>
-                            <p>Active cron jobs running 24/7</p>
-                        </div>
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">€10-15</h3>
-                            <p>Total monthly operating cost</p>
-                        </div>
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">200K</h3>
-                            <p>Token session context window</p>
-                        </div>
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">1M</h3>
-                            <p>Token model context (DeepSeek V4)</p>
-                        </div>
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">50+</h3>
-                            <p>AgentWiki knowledge pages</p>
-                        </div>
-                        <div class="metric-card">
-                            <h3 style="color: #60a5fa;">19</h3>
-                            <p>Portfolio tickers tracked hourly</p>
-                        </div>
-                    </div>
-                </section>
-            </section>
-
-            <!-- KEY LEARNINGS -->
-            <section>
-                <section>
-                    <h2 style="color: #f87171;">Key Learnings</h2>
-                </section>
-
                 <section>
                     <h2>What Worked</h2>
                     <ul>
-                        <li><span class="green">File-based memory</span> - simple, transparent, version-controlled. Every conversation starts fresh but nothing is lost.</li>
-                        <li><span class="green">Cron-driven automation</span> - isolate complex tasks in isolated sessions. No main session bloat.</li>
-                        <li><span class="green">DeepSeek V4 Flash</span> - 1M context at $0.14/M tokens. Drastically cheaper than Claude/OpenAI for an always-on assistant.</li>
-                        <li><span class="green">Coolify + Docker</span> - one-click updates, zero-downtime deploys, easy rollback.</li>
-                        <li><span class="green">Email watcher</span> - turned inbox noise into structured alerts. Changed from 5 min to 15 min polling to reduce noise.</li>
+                        <li><span class="green">File-based memory</span> — simple, transparent, version-controlled</li>
+                        <li><span class="green">Cron-driven automation</span> — isolated tasks in isolated sessions</li>
+                        <li><span class="green">DeepSeek V4 Flash</span> — 1M context at $0.14/M tokens</li>
+                        <li><span class="green">SigNoz over Langfuse</span> — native OTLP, no S3/MinIO needed</li>
+                        <li><span class="green">Two agents, one infra</span> — marginal cost of second agent is almost zero</li>
                     </ul>
                 </section>
-
                 <section>
                     <h2>What I'd Do Differently</h2>
                     <ul>
-                        <li><span class="red">Custom provider config took too long</span> - OpenClaw's custom model provider setup required adding the model to both <code>models.providers</code> AND <code>agents.defaults.models</code>. Not documented clearly.</li>
-                        <li><span class="red">PDF via pandoc stripped CSS</span> - wasted time before switching to Chrome CDP. Always test rendering early.</li>
-                        <li><span class="red">Email attachment MIME</span> - the <code>buildRawEmail()</code> function in google-control.js was silently dropping attachments. Had to rewrite multipart/mime encoding.</li>
-                        <li><span class="red">Zola CI/CD quirks</span> - explicit <code>template = "page"</code> breaks Zola builds. Took a CI failure to diagnose.</li>
-                        <li><span class="red">Brave Search rate limits</span> - Free plan (1 req/s, 2000/mo) is too tight for research-heavy sessions.</li>
+                        <li><span class="red">OTel plugin took too long</span> — had to patch OpenClaw source for OTel SDK v2 API changes</li>
+                        <li><span class="red">PDF via pandoc stripped CSS</span> — switched to Chrome CDP, lesson: test rendering early</li>
+                        <li><span class="red">Email attachment MIME bug</span> — silently dropped attachments, had to rewrite</li>
+                        <li><span class="red">Oracle Cloud free tier</span> — wasted an hour on ARM capacity issues. Hetzner just works.</li>
+                        <li><span class="red">Langfuse S3 dependency</span> — required MinIO for blob storage. SigNoz doesn't.</li>
                     </ul>
                 </section>
             </section>
 
-            <!-- WHAT'S NEXT -->
+            <!-- SLIDE 9: ROADMAP -->
             <section>
-                <section>
-                    <h2 style="color: #38bdf8;">What's Next</h2>
-                </section>
-
-                <section>
-                    <h2>Roadmap</h2>
-                    <ul>
-                        <li><span class="highlight">Buttondown newsletter</span> - complete signup, launch first issue</li>
-                        <li><span class="highlight">Spotify playback</span> - cookie auth from browser, then spogo integration</li>
-                        <li><span class="highlight">RagWatch v0.2</span> - Hermes Agent instrumentation, richer span attributes</li>
-                        <li><span class="highlight">widescope launch</span> - LinkedIn + X campaign</li>
-                        <li><span class="highlight">Hermes Agent on Coolify</span> - deploy alongside Lili for cross-agent observability research</li>
-                        <li><span class="highlight">Weekly observability digest</span> - scale from internal email to public newsletter</li>
-                        <li><span class="highlight">Oracle Cloud free tier evaluation</span> - testing ARM instances as cost optimization experiment</li>
-                    </ul>
-                </section>
+                <h2 style="color: #38bdf8;">What's Next</h2>
+                <ul>
+                    <li><span class="highlight">Nini research pipeline</span> — 23 tasks assigned, weekly brief cron enabled</li>
+                    <li><span class="highlight">Multi-agent content pipeline</span> — blog → newsletter → social automation</li>
+                    <li><span class="highlight">Ekathi multiplayer gaming</span> — PartyKit-powered real-time game rooms</li>
+                    <li><span class="highlight">Career transition</span> — EM-track, BBSR relocation, expert networks</li>
+                    <li><span class="highlight">Third agent?</span> — If coordination pattern works, another agent joins</li>
+                </ul>
             </section>
 
-            <!-- APPENDIX -->
-            <section>
-                <section>
-                    <h2 style="color: #94a3b8;">Appendix: Tech Details</h2>
-                </section>
-
-                <section>
-                    <h2>Repository Map</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Repo</th><th>Description</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><span class="blue">github.com/soumendrak/website-v2</span></td><td>Personal website (Zola), weekly notes, newsletter subscribe page</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/AgentWiki</span></td><td>Private Obsidian vault - personal knowledge base</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/ragwatch</span></td><td>OTel-native Python SDK for RAG observability</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/widescope</span></td><td>Browser-native LLM trace viewer (Rust/WASM)</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/slides</span></td><td>Presentations repo (this talk!)</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/lili-backup</span></td><td>Private - memory and config backup</td></tr>
-                            <tr><td><span class="blue">github.com/soumendrak/soumendrak</span></td><td>README profile repo</td></tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <h2>Open Source Stack</h2>
-                    <table class="comparison-table">
-                        <thead>
-                            <tr><th>Tool</th><th>License</th><th>Used For</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>OpenClaw</td><td>MIT</td><td>Agent framework, gateway, tool execution</td></tr>
-                            <tr><td>Coolify</td><td>Apache 2.0</td><td>Docker orchestration, auto-deploy</td></tr>
-                            <tr><td>DeepSeek V4 Flash</td><td>API</td><td>Reasoning model via OpenCode Go</td></tr>
-                            <tr><td>Zola</td><td>MIT</td><td>Static site generator (website-v2)</td></tr>
-                            <tr><td>Reveal.js</td><td>MIT</td><td>Presentation framework</td></tr>
-                            <tr><td>Rclone</td><td>MIT</td><td>Cloud backup sync</td></tr>
-                            <tr><td>Reveal.js / Night theme</td><td>MIT</td><td>This slide deck</td></tr>
-                        </tbody>
-                    </table>
-                </section>
-            </section>
-
-            <!-- THANK YOU -->
+            <!-- SLIDE 10: THANK YOU -->
             <section class="thanks-slide">
-                <h2 style="color: #4ade80;">Thank You!</h2>
+                <h2 style="color: #4ade80;">Thank You</h2>
                 <img src="/shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
-                <p class="connect-text">Feel free to connect on LinkedIn</p>
+                <p class="connect-text">Connect on LinkedIn</p>
                 <p>Questions? Let's talk AI agents and observability.</p>
-                <p style="font-size: 0.65em; margin-top: 20px; color: #64748b;">
-                    Slides: <span class="blue">slides.soumendrak.com/talks/2026/lili-on-coolify/</span>
-                </p>
+                <p style="font-size: 0.55em; margin-top: 15px; color: #64748b;">
+                    Slides: slides.soumendrak.com/talks/2026/lili-on-coolify/</p>
+                <p style="font-size: 0.45em; color: #475569; margin-top: 5px;">
+                    ↓ Scroll down for appendix — deep-dive slides on architecture, projects, and metrics</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════════ -->
+            <!-- APPENDIX — Extended slides for deeper browsing            -->
+            <!-- ═══════════════════════════════════════════════════════════ -->
+
+            <!-- APPENDIX: WHAT IS LILI -->
+            <section>
+                <h2>Appendix: What is Lili?</h2>
+                <ul>
+                    <li>Built on <span class="blue">OpenClaw</span> — open-source agent framework</li>
+                    <li>Deployed on <span class="blue">Hetzner CX43</span> with Coolify</li>
+                    <li>Connected via <span class="blue">Telegram</span> as primary interface</li>
+                    <li>Runs <span class="highlight">DeepSeek V4 Flash</span> — 1M context, $0.14/M tokens</li>
+                    <li>Full <span class="green">Gmail + Google Calendar</span> integration</li>
+                </ul>
+            </section>
+
+            <!-- APPENDIX: FILES & WORKSPACE -->
+            <section>
+                <h2>Appendix: Core Identity Files</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td>SOUL.md</td><td>Personality & values</td></tr>
+                        <tr><td>IDENTITY.md</td><td>Who I am</td></tr>
+                        <tr><td>USER.md</td><td>About my human</td></tr>
+                        <tr><td>MEMORY.md</td><td>Long-term curated memory</td></tr>
+                        <tr><td>TOOLS.md</td><td>Tool configuration</td></tr>
+                        <tr><td>AGENTS.md</td><td>Boot protocol</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- APPENDIX: AUTOMATION SCRIPTS -->
+            <section>
+                <h2>Appendix: Automation Scripts</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Script</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td>google-control.js</td><td>Gmail + Calendar API</td></tr>
+                        <tr><td>email-watcher.js</td><td>Polls inbox every 15 min</td></tr>
+                        <tr><td>portfolio-tracker.mjs</td><td>Yahoo Finance, 19 tickers, hourly</td></tr>
+                        <tr><td>html2pdf.mjs</td><td>Chrome CDP PDF generator</td></tr>
+                        <tr><td>signoz-trace.mjs</td><td>Post-response trace hook</td></tr>
+                        <tr><td>lili-nini-bridge.mjs</td><td>Kanban board + Nini communicator</td></tr>
+                        <tr><td>backup-lili.sh</td><td>Daily GitHub + Google Drive backup</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- APPENDIX: EMAIL PIPELINE -->
+            <section>
+                <h2>Appendix: Email Pipeline</h2>
+                <div class="pipeline-top">
+                    <div class="pipeline-node source">
+                        <div class="p-label">Gmail Inbox</div>
+                    </div>
+                    <div class="p-arrow">→</div>
+                    <div class="pipeline-node processor">
+                        <div class="p-label">email-watcher.js</div>
+                        <div class="p-desc">polls every 15 min</div>
+                    </div>
+                    <div class="p-arrow">→</div>
+                    <div class="pipeline-node classifier">
+                        <div class="p-label">Classification</div>
+                    </div>
+                </div>
+                <div class="pipeline-branches">
+                    <div class="branch">
+                        <div class="branch-tag human">Human email</div>
+                        <div class="branch-arrow">→</div>
+                        <div class="branch-step code">EMAIL_WATCHER_ALERT</div>
+                        <div class="branch-arrow">→</div>
+                        <div class="branch-step">Forward to Telegram</div>
+                    </div>
+                    <div class="branch">
+                        <div class="branch-tag nl">Newsletter</div>
+                        <div class="branch-arrow">→</div>
+                        <div class="branch-step code">EMAIL_WATCHER_NEWSLETTER</div>
+                        <div class="branch-arrow">→</div>
+                        <div class="branch-step">Summarize → Telegram</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- APPENDIX: NINI RESEARCH DEEP-DIVE -->
+            <section>
+                <h2>Appendix: Nini's Research Output</h2>
+                <p>In 24 hours, Nini produced <span class="highlight">13 reports</span> across 5 domains:</p>
+                <table class="comparison-table">
+                    <thead><tr><th>Domain</th><th>Reports</th></tr></thead>
+                    <tbody>
+                        <tr><td>Agent Architecture</td><td>Hermes self-documentation, MCP bridge design, content pipeline</td></tr>
+                        <tr><td>AI Observability</td><td>RagWatch review, trace comparison (Lili vs Nini), mental models mapping</td></tr>
+                        <tr><td>Ekathi Gaming</td><td>PartyKit research, Connections MP design, leaderboards, Odia UX</td></tr>
+                        <tr><td>Portfolio</td><td>Rebalancing system design</td></tr>
+                        <tr><td>Bonus</td><td>AI image detection research</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- APPENDIX: ACTIVE PROJECTS -->
+            <section>
+                <h2>Appendix: Active Projects</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Project</th><th>Recent Work</th></tr></thead>
+                    <tbody>
+                        <tr><td>RagWatch</td><td>OTel-native Python SDK for RAG observability. v0.1.7 on PyPI.</td></tr>
+                        <tr><td>widescope</td><td>Browser-native LLM trace viewer (Rust → WASM). PR #5 merged.</td></tr>
+                        <tr><td>website-v2</td><td>Weekly notes, newsletter subscribe page, link integrity automation.</td></tr>
+                        <tr><td>AgentWiki</td><td>Private Obsidian vault, 50+ pages across 8 categories.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- APPENDIX: KEY METRICS -->
+            <section>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">8+</h3>
+                        <p>Active cron jobs</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">€15-20</h3>
+                        <p>Monthly operating cost</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">1M</h3>
+                        <p>Token model context (DeepSeek V4)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">23</h3>
+                        <p>Issues on agents-board</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">13</h3>
+                        <p>Nini research reports</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="color: #60a5fa;">19</h3>
+                        <p>Portfolio tickers tracked</p>
+                    </div>
+                </div>
             </section>
 
         </div>
     </div>
-
-    <!-- Reveal.js Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
     <script>
         Reveal.initialize({
             hash: false,
