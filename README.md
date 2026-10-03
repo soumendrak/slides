@@ -11,12 +11,7 @@ A static site template for hosting reveal.js presentations on Cloudflare Pages. 
 
 1. **Fork this repository**
 
-2. **Install dependencies:**
-   ```bash
-   just install
-   ```
-
-3. **Start local dev server with hot reload:**
+2. **Start local dev server with hot reload:**
    ```bash
    just dev
    ```
@@ -57,6 +52,7 @@ slides/
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/night.css">
+       <link rel="stylesheet" href="../../../shared/styles/slides.css">
    </head>
    <body>
        <div class="reveal">
@@ -68,7 +64,7 @@ slides/
            </div>
        </div>
        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
-       <script>Reveal.initialize();</script>
+       <script src="../../../shared/scripts/slides.js"></script>
    </body>
    </html>
    ```
@@ -82,6 +78,8 @@ slides/
 ## Reveal.js Tips
 
 - **Navigate:** Arrow keys, space, or click
+- **Skip to next/previous section:** `Shift + →` / `Shift + ←` (skips vertical detail slides and consecutive split-slide parts)
+- Load `shared/scripts/slides.js` in every presentation to use the shared navigation and keyboard help.
 - **Overview mode:** Press `Esc`
 - **Fullscreen:** Press `F`
 - **Speaker notes:** Press `S`

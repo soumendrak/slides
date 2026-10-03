@@ -8,375 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
-<style>
-        .reveal {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            color: #e2e8f0;
-            text-transform: none;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            margin-bottom: 0.6em;
-        }
-        .reveal h1 {
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 0.4em;
-        }
-        .reveal h2 {
-            font-size: 1.5em;
-            color: #60a5fa;
-            border-bottom: 2px solid #60a5fa;
-            padding-bottom: 0.3em;
-            margin-bottom: 0.7em;
-        }
-        .reveal h3 {
-            font-size: 1.1em;
-            color: #93c5fd;
-            font-weight: 500;
-            margin-bottom: 0.5em;
-        }
-        .reveal p {
-            font-size: 0.72em;
-            line-height: 1.6;
-            color: #cbd5e1;
-            text-align: left;
-            margin-bottom: 0.8em;
-        }
-        .reveal ul {
-            display: block;
-            margin-left: 0;
-            padding-left: 1.1em;
-            font-size: 0.78em;
-            list-style-type: disc;
-        }
-        .reveal li { 
-            font-size: 0.68em;
-            line-height: 1.5;
-            color: #cbd5e1;
-            text-align: left;
-            margin-bottom: 0.4em;
-        }
-        .reveal li li {
-            font-size: 0.95em;
-            margin-bottom: 0.3em;
-            list-style-type: circle;
-        }
-        .highlight {
-            color: #facc15;
-            font-weight: 600;
-            background: rgba(250, 204, 21, 0.1);
-            padding: 0.1em 0.3em;
-            border-radius: 4px;
-        }
-        .green { color: #4ade80; font-weight: 600; }
-        .blue { color: #60a5fa; font-weight: 600; }
-        .red { color: #f87171; font-weight: 600; }
-        .code-block {
-            background: #1e293b;
-            padding: 12px 18px;
-            border-radius: 8px;
-            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-            font-size: 0.65em !important;
-            color: #a78bfa;
-            text-align: left;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border-left: 3px solid #a78bfa;
-            line-height: 1.5;
-        }
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: start;
-        }
-        .two-column > div {
-            text-align: left;
-        }
-        .two-column h3 {
-            font-size: 0.95em;
-            margin-bottom: 0.6em;
-            color: #60a5fa;
-        }
-        .agenda-container {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            align-items: center;
-            margin-top: 8px;
-        }
-        .agenda-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 8px 18px;
-            border-radius: 10px;
-            width: 80%;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .agenda-card h3 {
-            margin: 0 0 3px 0;
-            color: #60a5fa;
-            font-size: 0.85em;
-        }
-        .agenda-card p {
-            margin: 0;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.65em;
-        }
-        .thanks-slide img {
-            max-width: 200px;
-            border-radius: 12px;
-            margin: 15px 0;
-            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.3);
-        }
-        .thanks-slide p {
-            font-size: 0.85em;
-            color: #94a3b8;
-            margin-top: 10px;
-        }
-        .thanks-slide .connect-text {
-            font-size: 0.95em;
-            color: #60a5fa;
-            margin-top: 8px;
-        }
-        .quote {
-            font-size: 1em;
-            font-style: italic;
-            color: #94a3b8;
-            margin-top: 1.2em;
-            text-align: center;
-        }
-        .badge {
-            display: inline-block;
-            padding: 0.2em 0.5em;
-            font-size: 0.5em;
-            background: #3b82f6;
-            color: white;
-            border-radius: 4px;
-            vertical-align: middle;
-            margin-left: 8px;
-            font-weight: 500;
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.42em;
-            margin-top: 0.8em;
-        }
-        .comparison-table th {
-            background: #1e293b;
-            color: #60a5fa;
-            padding: 10px 12px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #60a5fa;
-        }
-        .comparison-table td {
-            padding: 8px 12px;
-            border-bottom: 1px solid #334155;
-            vertical-align: top;
-            line-height: 1.4;
-            text-align: left;
-        }
-        .comparison-table tr:nth-child(even) {
-            background: rgba(30, 41, 59, 0.3);
-        }
-        .comparison-table td:first-child {
-            color: #e2e8f0;
-            font-weight: 500;
-            width: 20%;
-        }
-        .comparison-table td:not(:first-child) {
-            color: #94a3b8;
-        }
-        .metric-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .metric-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #334155;
-        }
-        .metric-card h3 {
-            font-size: 1.1em;
-            margin-bottom: 5px;
-        }
-        .metric-card p {
-            text-align: center;
-            font-size: 0.65em;
-            color: #94a3b8;
-        }
-        .flow-diagram {
-            background: #1e293b;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-            font-size: 0.42em !important;
-            color: #e2e8f0;
-            text-align: left;
-            line-height: 1.35;
-            border: 1px solid #334155;
-            white-space: pre-wrap;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            max-height: 62vh;
-            overflow-y: auto;
-        }
-        .flow-diagram .arrow {
-            color: #facc15;
-        }
-        .flow-diagram .arrow-dn {
-            color: #facc15;
-            display: block;
-        }
-        .flow-diagram .component { color: #60a5fa; }
-        .flow-diagram .note { color: #94a3b8; font-style: italic; }
-
-        /* Stack flow */
-        .stack-flow {
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 22px;
-        }
-        .stack-node {
-            background: #1e293b;
-            border: 1px solid #60a5fa;
-            border-radius: 10px;
-            padding: 14px 12px;
-            text-align: center;
-            flex: 1;
-        }
-        .stack-node .stack-label {
-            color: #60a5fa;
-            font-weight: 600;
-            font-size: 0.62em;
-        }
-        .stack-node .stack-desc {
-            color: #94a3b8;
-            font-size: 0.46em;
-            margin-top: 5px;
-            line-height: 1.4;
-        }
-        .stack-arrow {
-            color: #facc15;
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .services-section {
-            margin-top: 18px;
-            padding-top: 14px;
-            border-top: 1px dashed #334155;
-        }
-        .services-label {
-            font-size: 0.48em;
-            color: #64748b;
-            text-align: center;
-            margin-bottom: 10px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-        .services-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            justify-content: center;
-        }
-        .service-chip {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            padding: 4px 11px;
-            font-size: 0.46em;
-            color: #94a3b8;
-        }
-
-        /* Pipeline flow */
-        .pipeline-top {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 18px;
-        }
-        .pipeline-node {
-            border-radius: 10px;
-            padding: 12px 18px;
-            text-align: center;
-        }
-        .pipeline-node.source { background: #1e293b; border: 1px solid #60a5fa; }
-        .pipeline-node.processor { background: #1e293b; border: 1px solid #a78bfa; }
-        .pipeline-node.classifier { background: #1e293b; border: 1px solid #facc15; }
-        .pipeline-node .p-label {
-            font-weight: 600;
-            font-size: 0.58em;
-            color: #e2e8f0;
-        }
-        .pipeline-node .p-desc {
-            font-size: 0.44em;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-        .p-arrow {
-            color: #facc15;
-            font-size: 1.4em;
-            flex-shrink: 0;
-        }
-        .pipeline-branches {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 16px;
-            padding: 14px 18px;
-            background: #0f172a;
-            border-radius: 10px;
-            border: 1px solid #1e293b;
-        }
-        .branch {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .branch-tag {
-            font-size: 0.48em;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 6px;
-            white-space: nowrap;
-            min-width: 85px;
-            text-align: center;
-        }
-        .branch-tag.human { background: rgba(250,204,21,0.12); color: #facc15; border: 1px solid rgba(250,204,21,0.3); }
-        .branch-tag.nl { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
-        .branch-arrow { color: #475569; font-size: 0.9em; flex-shrink: 0; }
-        .branch-step {
-            font-size: 0.46em;
-            color: #94a3b8;
-            background: #1e293b;
-            padding: 4px 10px;
-            border-radius: 6px;
-            white-space: nowrap;
-        }
-        .branch-step.code { color: #a78bfa; }
-        .pipeline-note {
-            font-size: 0.46em !important;
-            color: #475569 !important;
-            text-align: center !important;
-            margin-top: 12px !important;
-            font-style: italic;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../shared/styles/slides.css">
 </head>
 <body>
     <div class="reveal">
@@ -387,32 +19,31 @@
             <!-- ═══════════════════════════════════════════════════════════ -->
 
             <!-- SLIDE 1: TITLE -->
-            <section>
+            <section class="title-slide">
                 <h1>Building Lili & Nini</h1>
                 <h3>Two AI Agents. One Stack. Full Observability.</h3>
                 <p style="text-align: center; margin-top: 2em; font-style: italic;">By Soumendra Kumar Sahoo</p>
-                <p style="text-align: center; font-size: 0.6em; color: #64748b;">AI Observability, PepsiCo</p>
+                <p style="text-align: center; color: #cbd5e1;">AI Observability, PepsiCo</p>
             </section>
 
             <!-- SLIDE 2: LILI VS NINI COMPARISON -->
             <section>
-                <h2>Lili vs Nini</h2>
+                <h2>Lili vs Nini (1/2)</h2>
                 <table class="comparison-table">
                     <thead>
                         <tr><th></th><th>Lili</th><th>Nini</th></tr>
                     </thead>
-                    <tbody>
-                        <tr><td><strong>Platform</strong></td><td>OpenClaw</td><td>Hermes Agent</td></tr>
-                        <tr><td><strong>Role</strong></td><td>Operations & Delivery</td><td>Research & Exploration</td></tr>
-                        <tr><td><strong>Model</strong></td><td>DeepSeek V4 Flash</td><td>DeepSeek V4 Flash</td></tr>
-                        <tr><td><strong>What it does</strong></td><td>Email, calendar, backups, portfolio tracking, newsletter digest, cron jobs</td><td>Agent arch documentation, mental model research, RagWatch review, Ekathi gaming design</td></tr>
-                        <tr><td><strong>Self-improvement</strong></td><td>File-based skills registry + MEMORY.md curation</td><td>Native skill creation loop + Honcho dialectic modeling</td></tr>
-                        <tr><td><strong>Communication</strong></td><td>Telegram (primary), HTTP to Nini</td><td>Telegram, HTTP API, nini-research repo</td></tr>
-                        <tr><td><strong>Outputs</strong></td><td>Weekly notes, newsletters, slide decks, scripts</td><td>Research reports (13+ produced), architecture analyses</td></tr>
-                        <tr><td><strong>Max context</strong></td><td>1M tokens</td><td>1M tokens (same model)</td></tr>
-                    </tbody>
+                    <tbody><tr><td><strong>Platform</strong></td><td>OpenClaw</td><td>Hermes Agent</td></tr><tr><td><strong>Role</strong></td><td>Operations & Delivery</td><td>Research & Exploration</td></tr><tr><td><strong>Model</strong></td><td>DeepSeek V4 Flash</td><td>DeepSeek V4 Flash</td></tr><tr><td><strong>What it does</strong></td><td>Email, calendar, backups, portfolio tracking, newsletter digest, cron jobs</td><td>Agent arch documentation, mental model research, RagWatch review, Ekathi gaming design</td></tr></tbody>
+                </table></section>
+<section>
+                <h2>Lili vs Nini (2/2)</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th></th><th>Lili</th><th>Nini</th></tr>
+                    </thead>
+                    <tbody><tr><td><strong>Self-improvement</strong></td><td>File-based skills registry + MEMORY.md curation</td><td>Native skill creation loop + Honcho dialectic modeling</td></tr><tr><td><strong>Communication</strong></td><td>Telegram (primary), HTTP to Nini</td><td>Telegram, HTTP API, nini-research repo</td></tr><tr><td><strong>Outputs</strong></td><td>Weekly notes, newsletters, slide decks, scripts</td><td>Research reports (13+ produced), architecture analyses</td></tr><tr><td><strong>Max context</strong></td><td>1M tokens</td><td>1M tokens (same model)</td></tr></tbody>
                 </table>
-                <p style="margin-top: 10px; font-size: 0.5em; color: #94a3b8; text-align: center;">Two agents cost the same as one. The only marginal cost is the second Telegram bot.</p>
+                <p style="margin-top: 10px; color: #94a3b8; text-align: center;">Two agents cost the same as one. The only marginal cost is the second Telegram bot.</p>
             </section>
 
             <!-- SLIDE 3: THE STACK -->
@@ -425,9 +56,9 @@
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
-                    <span style="color: #facc15; font-size: 1.2em;">↙</span>
-                    <span style="color: #475569; font-size: 0.7em; padding: 0 30px;">parallel agents</span>
-                    <span style="color: #facc15; font-size: 1.2em;">↘</span>
+                    <span style="color: #facc15; ">↙</span>
+                    <span style="color: #cbd5e1; padding: 0 30px;">parallel agents</span>
+                    <span style="color: #facc15; ">↘</span>
                 </div>
                 <div class="stack-flow">
                     <div class="stack-node">
@@ -440,7 +71,7 @@
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
-                    <span style="color: #facc15; font-size: 1.5em; transform: rotate(90deg); display: inline-block;">→</span>
+                    <span style="color: #facc15; transform: rotate(90deg); display: inline-block;">→</span>
                 </div>
                 <div class="stack-flow">
                     <div class="stack-node">
@@ -465,19 +96,18 @@
 
             <!-- SLIDE 4: COST BREAKDOWN -->
             <section>
-                <h2>Cost Breakdown</h2>
+                <h2>Cost Breakdown (1/2)</h2>
                 <table class="comparison-table">
                     <thead><tr><th>Item</th><th>Cost</th><th>Notes</th></tr></thead>
-                    <tbody>
-                        <tr><td>Hetzner CX43</td><td>€11.99/mo</td><td>8 vCPU, 16 GB RAM, 160 GB SSD</td></tr>
-                        <tr><td>DeepSeek V4 Flash API</td><td>~$10-20/mo</td><td>Active use for 2 agents</td></tr>
-                        <tr><td>Brave Search API</td><td>Free</td><td>2000 queries/mo limit</td></tr>
-                        <tr><td>Gmail + Calendar</td><td>Free</td><td>15GB storage</td></tr>
-                        <tr><td>SigNoz (self-hosted)</td><td>Free</td><td>On same CX43</td></tr>
-                        <tr><td><strong>Total</strong></td><td><strong>~€15-20/mo</strong></td><td>Two agents + full observability</td></tr>
-                    </tbody>
+                    <tbody><tr><td>Hetzner CX43</td><td>€11.99/mo</td><td>8 vCPU, 16 GB RAM, 160 GB SSD</td></tr><tr><td>DeepSeek V4 Flash API</td><td>~$10-20/mo</td><td>Active use for 2 agents</td></tr><tr><td>Brave Search API</td><td>Free</td><td>2000 queries/mo limit</td></tr><tr><td>Gmail + Calendar</td><td>Free</td><td>15GB storage</td></tr></tbody>
+                </table></section>
+<section>
+                <h2>Cost Breakdown (2/2)</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Item</th><th>Cost</th><th>Notes</th></tr></thead>
+                    <tbody><tr><td>SigNoz (self-hosted)</td><td>Free</td><td>On same CX43</td></tr><tr><td><strong>Total</strong></td><td><strong>~€15-20/mo</strong></td><td>Two agents + full observability</td></tr></tbody>
                 </table>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.55em; color: #94a3b8;">Cost of running Lili alone on a CX23: €8/mo. Adding Nini: ~€4 extra.</p>
+                <p style="text-align: center; margin-top: 15px; color: #94a3b8;">Cost of running Lili alone on a CX23: €8/mo. Adding Nini: ~€4 extra.</p>
             </section>
 
             <!-- SLIDE 5: LIVE DEMO — SIGNOZ -->
@@ -503,24 +133,21 @@
                         </ul>
                     </div>
                 </div>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.55em; color: #64748b;">Previously attempted with Langfuse (failed — needed S3/MinIO). SigNoz ingested OTLP natively.</p>
+                <p style="text-align: center; margin-top: 15px; color: #cbd5e1;">Previously attempted with Langfuse (failed — needed S3/MinIO). SigNoz ingested OTLP natively.</p>
             </section>
 
             <!-- SLIDE 6: AUTOMATION -->
             <section>
-                <h2>Automation</h2>
+                <h2>Automation (1/2)</h2>
                 <table class="comparison-table">
                     <thead><tr><th>Job</th><th>Schedule</th><th>What it does</th></tr></thead>
-                    <tbody>
-                        <tr><td>Email watcher</td><td>Every 15 min</td><td>Classifies human vs newsletter, forwards summaries</td></tr>
-                        <tr><td>Portfolio tracker</td><td>Hourly</td><td>19 tickers, ±5% move alerts via Yahoo Finance</td></tr>
-                        <tr><td>Observability update</td><td>Daily 1:30 PM</td><td>OTel/SigNoz/Arize/Grafana release scans</td></tr>
-                        <tr><td>Blogwatcher</td><td>Daily 8 AM</td><td>RSS feeds → top 5-8 article digest</td></tr>
-                        <tr><td>MSD reminder</td><td>Daily 9:15 AM</td><td>Minimum Successful Day prompt</td></tr>
-                        <tr><td>Weekly digest PDF</td><td>Sundays 8 PM</td><td>Styled HTML → Chrome CDP → PDF → emailed</td></tr>
-                        <tr><td>Nini research sync</td><td>Every 6 hrs</td><td>Pulls from nini-research → updates AgentWiki</td></tr>
-                        <tr><td>Nini inbox check</td><td>Every 15 min</td><td>Lili polls Nini's inbox for messages</td></tr>
-                    </tbody>
+                    <tbody><tr><td>Email watcher</td><td>Every 15 min</td><td>Classifies human vs newsletter, forwards summaries</td></tr><tr><td>Portfolio tracker</td><td>Hourly</td><td>19 tickers, ±5% move alerts via Yahoo Finance</td></tr><tr><td>Observability update</td><td>Daily 1:30 PM</td><td>OTel/SigNoz/Arize/Grafana release scans</td></tr><tr><td>Blogwatcher</td><td>Daily 8 AM</td><td>RSS feeds → top 5-8 article digest</td></tr></tbody>
+                </table></section>
+<section>
+                <h2>Automation (2/2)</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Job</th><th>Schedule</th><th>What it does</th></tr></thead>
+                    <tbody><tr><td>MSD reminder</td><td>Daily 9:15 AM</td><td>Minimum Successful Day prompt</td></tr><tr><td>Weekly digest PDF</td><td>Sundays 8 PM</td><td>Styled HTML → Chrome CDP → PDF → emailed</td></tr><tr><td>Nini research sync</td><td>Every 6 hrs</td><td>Pulls from nini-research → updates AgentWiki</td></tr><tr><td>Nini inbox check</td><td>Every 15 min</td><td>Lili polls Nini's inbox for messages</td></tr></tbody>
                 </table>
             </section>
 
@@ -542,7 +169,7 @@
   GitHub Issues + Projects (agents-board repo)
   23 issues created, 12 completed
   Labels: P0 (existential), P1 (important), P2 (side hustle)</div>
-                <p style="font-size: 0.5em; color: #94a3b8; margin-top: 8px; text-align: center;">Nini wrote a blueprint for a webhook bridge (port 8644) — pending implementation.</p>
+                <p style="color: #94a3b8; margin-top: 8px; text-align: center;">Nini wrote a blueprint for a webhook bridge (port 8644) — pending implementation.</p>
             </section>
 
             <!-- SLIDE 8: KEY LESSONS -->
@@ -588,12 +215,12 @@
             <!-- SLIDE 10: THANK YOU -->
             <section class="thanks-slide">
                 <h2 style="color: #4ade80;">Thank You</h2>
-                <img src="/shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
+                <img src="../../../shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
                 <p class="connect-text">Connect on LinkedIn</p>
                 <p>Questions? Let's talk AI agents and observability.</p>
-                <p style="font-size: 0.55em; margin-top: 15px; color: #64748b;">
+                <p style="margin-top: 15px; color: #cbd5e1;">
                     Slides: slides.soumendrak.com/talks/2026/lili-on-coolify/</p>
-                <p style="font-size: 0.45em; color: #475569; margin-top: 5px;">
+                <p style="color: #cbd5e1; margin-top: 5px;">
                     ↓ Scroll down for appendix — deep-dive slides on architecture, projects, and metrics</p>
             </section>
 
@@ -615,34 +242,31 @@
 
             <!-- APPENDIX: FILES & WORKSPACE -->
             <section>
-                <h2>Appendix: Core Identity Files</h2>
+                <h2>Appendix: Core Identity Files (1/2)</h2>
                 <table class="comparison-table">
                     <thead><tr><th>File</th><th>Purpose</th></tr></thead>
-                    <tbody>
-                        <tr><td>SOUL.md</td><td>Personality & values</td></tr>
-                        <tr><td>IDENTITY.md</td><td>Who I am</td></tr>
-                        <tr><td>USER.md</td><td>About my human</td></tr>
-                        <tr><td>MEMORY.md</td><td>Long-term curated memory</td></tr>
-                        <tr><td>TOOLS.md</td><td>Tool configuration</td></tr>
-                        <tr><td>AGENTS.md</td><td>Boot protocol</td></tr>
-                    </tbody>
+                    <tbody><tr><td>SOUL.md</td><td>Personality & values</td></tr><tr><td>IDENTITY.md</td><td>Who I am</td></tr><tr><td>USER.md</td><td>About my human</td></tr><tr><td>MEMORY.md</td><td>Long-term curated memory</td></tr></tbody>
+                </table></section>
+<section>
+                <h2>Appendix: Core Identity Files (2/2)</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+                    <tbody><tr><td>TOOLS.md</td><td>Tool configuration</td></tr><tr><td>AGENTS.md</td><td>Boot protocol</td></tr></tbody>
                 </table>
             </section>
 
             <!-- APPENDIX: AUTOMATION SCRIPTS -->
             <section>
-                <h2>Appendix: Automation Scripts</h2>
+                <h2>Appendix: Automation Scripts (1/2)</h2>
                 <table class="comparison-table">
                     <thead><tr><th>Script</th><th>Purpose</th></tr></thead>
-                    <tbody>
-                        <tr><td>google-control.js</td><td>Gmail + Calendar API</td></tr>
-                        <tr><td>email-watcher.js</td><td>Polls inbox every 15 min</td></tr>
-                        <tr><td>portfolio-tracker.mjs</td><td>Yahoo Finance, 19 tickers, hourly</td></tr>
-                        <tr><td>html2pdf.mjs</td><td>Chrome CDP PDF generator</td></tr>
-                        <tr><td>signoz-trace.mjs</td><td>Post-response trace hook</td></tr>
-                        <tr><td>lili-nini-bridge.mjs</td><td>Kanban board + Nini communicator</td></tr>
-                        <tr><td>backup-lili.sh</td><td>Daily GitHub + Google Drive backup</td></tr>
-                    </tbody>
+                    <tbody><tr><td>google-control.js</td><td>Gmail + Calendar API</td></tr><tr><td>email-watcher.js</td><td>Polls inbox every 15 min</td></tr><tr><td>portfolio-tracker.mjs</td><td>Yahoo Finance, 19 tickers, hourly</td></tr><tr><td>html2pdf.mjs</td><td>Chrome CDP PDF generator</td></tr></tbody>
+                </table></section>
+<section>
+                <h2>Appendix: Automation Scripts (2/2)</h2>
+                <table class="comparison-table">
+                    <thead><tr><th>Script</th><th>Purpose</th></tr></thead>
+                    <tbody><tr><td>signoz-trace.mjs</td><td>Post-response trace hook</td></tr><tr><td>lili-nini-bridge.mjs</td><td>Kanban board + Nini communicator</td></tr><tr><td>backup-lili.sh</td><td>Daily GitHub + Google Drive backup</td></tr></tbody>
                 </table>
             </section>
 
@@ -744,16 +368,7 @@
         </div>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-    <script>
-        Reveal.initialize({
-            hash: false,
-            history: false,
-            transition: 'fade',
-            slideNumber: true,
-            controls: true,
-            progress: true,
-            center: true
-        });
-    </script>
+
+    <script src="../../../shared/scripts/slides.js"></script>
 </body>
 </html>

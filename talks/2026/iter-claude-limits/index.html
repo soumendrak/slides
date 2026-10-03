@@ -9,206 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
-    <style>
-        .reveal {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            color: #e2e8f0;
-            text-transform: none;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-            margin-bottom: 0.6em;
-        }
-        .reveal h1 { 
-            font-size: 2.4em; 
-            font-weight: 700;
-            margin-bottom: 0.4em;
-        }
-        .reveal h2 { 
-            font-size: 1.6em; 
-            color: #60a5fa; 
-            border-bottom: 2px solid #60a5fa;
-            padding-bottom: 0.3em;
-            margin-bottom: 0.8em;
-        }
-        .reveal h3 { 
-            font-size: 1.15em; 
-            color: #93c5fd; 
-            font-weight: 500;
-            margin-bottom: 0.5em;
-        }
-        .reveal p {
-            font-size: 0.75em;
-            line-height: 1.6;
-            color: #cbd5e1;
-            text-align: left;
-            margin-bottom: 0.8em;
-        }
-        .reveal ul {
-            display: block;
-            margin-left: 0;
-            padding-left: 1.2em;
-            font-size: 0.9em;
-        }
-        .reveal li { 
-            font-size: 0.75em;
-            line-height: 1.6;
-            color: #cbd5e1;
-            text-align: left;
-            margin-bottom: 0.6em;
-        }
-        .reveal li li {
-            font-size: 0.95em;
-            margin-bottom: 0.4em;
-        }
-        .highlight-text { 
-            color: #facc15; 
-            font-weight: 600;
-            background: rgba(250, 204, 21, 0.1);
-            padding: 0.1em 0.3em;
-            border-radius: 4px;
-        }
-        .code-block {
-            background: #1e293b;
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
-            font-size: 0.7em !important;
-            color: #a78bfa;
-            text-align: left;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border-left: 3px solid #a78bfa;
-            line-height: 1.5;
-        }
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: start;
-        }
-        .two-column > div {
-            text-align: left;
-        }
-        .two-column h3 {
-            font-size: 1em;
-            margin-bottom: 0.6em;
-            color: #60a5fa;
-        }
-        .two-column h3 code {
-            font-size: 0.9em;
-            color: #a78bfa;
-            background: rgba(167, 139, 250, 0.1);
-            padding: 0.15em 0.4em;
-            border-radius: 4px;
-        }
-        .agenda-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            margin-top: 30px;
-        }
-        .agenda-card {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            padding: 18px 25px;
-            border-radius: 12px;
-            width: 70%;
-            border: 1px solid rgba(96, 165, 250, 0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .agenda-card h3 {
-            margin: 0 0 6px 0;
-            color: #60a5fa;
-            font-size: 1em;
-        }
-        .agenda-card p {
-            margin: 0;
-            text-align: center;
-            color: #94a3b8;
-            font-size: 0.75em;
-            line-height: 1.4;
-        }
-        .thanks-slide img {
-            max-width: 200px;
-            border-radius: 12px;
-            margin: 20px 0;
-            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.3);
-        }
-        .thanks-slide p {
-            font-size: 0.9em;
-            color: #94a3b8;
-            margin-top: 15px;
-        }
-        .thanks-slide .connect-text {
-            font-size: 1em;
-            color: #60a5fa;
-            margin-top: 10px;
-        }
-        .quote {
-            font-size: 1.1em;
-            font-style: italic;
-            color: #94a3b8;
-            margin-top: 1.5em;
-        }
-        .badge {
-            display: inline-block;
-            padding: 0.25em 0.6em;
-            font-size: 0.55em;
-            background: #3b82f6;
-            color: white;
-            border-radius: 4px;
-            vertical-align: middle;
-            margin-left: 10px;
-            font-weight: 500;
-        }
-        .reveal section > p:first-of-type strong {
-            color: #f87171;
-        }
-        .reveal ul ul {
-            margin-top: 0.4em;
-            margin-bottom: 0.6em;
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.55em;
-            margin-top: 1em;
-        }
-        .comparison-table th {
-            background: #1e293b;
-            color: #60a5fa;
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #60a5fa;
-        }
-        .comparison-table td {
-            padding: 10px 15px;
-            border-bottom: 1px solid #334155;
-            vertical-align: top;
-            line-height: 1.5;
-        }
-        .comparison-table tr:nth-child(even) {
-            background: rgba(30, 41, 59, 0.3);
-        }
-        .comparison-table td:first-child {
-            color: #e2e8f0;
-            font-weight: 500;
-            width: 18%;
-        }
-        .comparison-table td:not(:first-child) {
-            color: #94a3b8;
-        }
-    </style>
+    <link rel="stylesheet" href="../../../shared/styles/slides.css">
 </head>
 <body>
     <div class="reveal">
         <div class="slides">
             
             <!-- Slide 1: Title -->
-            <section>
+            <section class="title-slide">
                 <h1>Tips & Tricks for Claude</h1>
                 <h3>Workspace Anatomy & Token Optimization</h3>
                 <p style="text-align: center; margin-top: 2em; font-style: italic;">By Soumendra Kumar Sahoo</p>
@@ -242,7 +50,7 @@
 
             <!-- PART 0: INTRODUCTORY CONCEPTS -->
             <section>
-                <section>
+                <section class="chapter-slide">
                     <h2 style="color: #4ade80;">Part 0: Introductory Concepts</h2>
                     <p class="quote">Understanding the building blocks of the Claude ecosystem</p>
                 </section>
@@ -312,78 +120,48 @@
                 </section>
 
                 <section>
-                    <h2>How They Work Together</h2>
-                    <table class="comparison-table" style="font-size: 0.5em;">
+                    <h2>How They Work Together: Knowledge &amp; context</h2>
+                    <table class="comparison-table">
                         <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Skills</th>
-                                <th>Prompts</th>
-                                <th>Projects</th>
-                                <th>Subagents</th>
-                                <th>MCP</th>
-                            </tr>
+                            <tr><th>Feature</th><th>Skills</th><th>Prompts</th><th>Projects</th></tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><strong>What it provides</strong></td>
-                                <td>Procedural knowledge</td>
-                                <td>Moment-to-moment instructions</td>
-                                <td>Background knowledge</td>
-                                <td>Task delegation</td>
-                                <td>Tool connectivity</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Persistence</strong></td>
-                                <td>Across conversations</td>
-                                <td>Single conversation</td>
-                                <td>Within project</td>
-                                <td>Across sessions</td>
-                                <td>Continuous connection</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Contains</strong></td>
-                                <td>Instructions + code + assets</td>
-                                <td>Natural language</td>
-                                <td>Documents + context</td>
-                                <td>Full agent logic</td>
-                                <td>Tool definitions</td>
-                            </tr>
-                            <tr>
-                                <td><strong>When it loads</strong></td>
-                                <td>Dynamically, as needed</td>
-                                <td>Each turn</td>
-                                <td>Always in project</td>
-                                <td>When invoked</td>
-                                <td>Always available</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Can include code</strong></td>
-                                <td>Yes</td>
-                                <td>No</td>
-                                <td>No</td>
-                                <td>Yes</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Best for</strong></td>
-                                <td>Specialized expertise</td>
-                                <td>Quick requests</td>
-                                <td>Centralized context</td>
-                                <td>Specialized tasks</td>
-                                <td>Data access</td>
-                            </tr>
+                            <tr><td><strong>What it provides</strong></td><td>Procedural knowledge</td><td>Moment-to-moment instructions</td><td>Background knowledge</td></tr>
+                            <tr><td><strong>Persistence</strong></td><td>Across conversations</td><td>Single conversation</td><td>Within project</td></tr>
+                            <tr><td><strong>Contains</strong></td><td>Instructions + code + assets</td><td>Natural language</td><td>Documents + context</td></tr>
+                            <tr><td><strong>When it loads</strong></td><td>Dynamically, as needed</td><td>Each turn</td><td>Always in project</td></tr>
+                            <tr><td><strong>Can include code</strong></td><td>Yes</td><td>No</td><td>No</td></tr>
+                            <tr><td><strong>Best for</strong></td><td>Specialized expertise</td><td>Quick requests</td><td>Centralized context</td></tr>
                         </tbody>
                     </table>
-                    <p style="text-align: center; font-size: 0.7em; margin-top: 15px; color: #94a3b8;">
-                        <!-- <strong>Golden Rule:</strong> Projects say "here's what you need to know" • Skills say "here's how to do things" -->
-                    </p>
+                    <p style="text-align: center; margin-top: 15px; color: #94a3b8;">
+<!-- <strong>Golden Rule:</strong> Projects say "here's what you need to know" • Skills say "here's how to do things" -->
+</p>
+                </section>
+                <section>
+                    <h2>How They Work Together: Delegation &amp; tools</h2>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Feature</th><th>Subagents</th><th>MCP</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>What it provides</strong></td><td>Task delegation</td><td>Tool connectivity</td></tr>
+                            <tr><td><strong>Persistence</strong></td><td>Across sessions</td><td>Continuous connection</td></tr>
+                            <tr><td><strong>Contains</strong></td><td>Full agent logic</td><td>Tool definitions</td></tr>
+                            <tr><td><strong>When it loads</strong></td><td>When invoked</td><td>Always available</td></tr>
+                            <tr><td><strong>Can include code</strong></td><td>Yes</td><td>Yes</td></tr>
+                            <tr><td><strong>Best for</strong></td><td>Specialized tasks</td><td>Data access</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center; margin-top: 15px; color: #94a3b8;">
+<!-- <strong>Golden Rule:</strong> Projects say "here's what you need to know" • Skills say "here's how to do things" -->
+</p>
                 </section>
             </section>
 
             <!-- PART 1: THE CLAUDE FOLDER -->
             <section>
-                <section>
+                <section class="chapter-slide">
                     <h2 style="color: #a78bfa;">Part 1: Anatomy of .claude/</h2>
                     <p class="quote">The control center for agentic behavior in your project.</p>
                 </section>
@@ -435,7 +213,7 @@ paths:
 # API Design Rules
 - All handlers return { data, error } shape
 - Never expose internal error details to clients
-                    </div>
+</div>
                     <p style="margin-top: 10px;">Claude only loads this context when editing matching files.</p>
                 </section>
 
@@ -471,13 +249,13 @@ paths:
                 </section>
 
                 <section>
-                    <h1 style="font-size: 2.8em; color: #f87171; text-align: center;">Do not update these files manually</h1>
+                    <h1 style="color: #f87171; text-align: center;">Do not update these files manually</h1>
                 </section>
             </section>
 
             <!-- PART 2: LIMITS (was Part 1, now Part 2) -->
             <section>
-                <section>
+                <section class="chapter-slide">
                     <h2 style="color: #f87171;">Part 2: The Token Game</h2>
                     <p class="quote">"Claude doesn't count messages. It counts tokens."</p>
                 </section>
@@ -554,10 +332,10 @@ paths:
 
             <!-- BONUS: KARPATHY SLIDES -->
             <section>
-                <section>
+                <section class="chapter-slide">
                     <h2 style="color: #facc15;">Bonus: Karpathy on AI &amp; Fresh Graduates</h2>
                     <p class="quote">"The gap is increasingly a skill gap in using these systems well, not a lack of capability."</p>
-                    <p style="text-align: center; margin-top: 1em; font-size: 0.65em; color: #64748b;">
+                    <p style="text-align: center; margin-top: 1em; color: #cbd5e1;">
                         <a href="https://www.youtube.com/watch?v=kwSVtQ7dziU" target="_blank" style="color: #60a5fa;">youtube.com/watch?v=kwSVtQ7dziU</a>
                     </p>
                 </section>
@@ -575,11 +353,16 @@ paths:
                 </section>
 
                 <section>
-                    <h2>Action Items to Reduce the Skills Gap</h2>
+                    <h2>Action Items to Reduce the Skills Gap (1/2)</h2>
                     <ul>
                         <li>Stop treating AI as only a chatbot - learn to <strong>manage agents, tools, prompts, memory, and reviews</strong> as one workflow.</li>
                         <li>Practice <span class="highlight-text">spec-writing</span>: instructions, constraints, acceptance criteria, and metrics so agents can execute with less supervision.</li>
                         <li>Build in <span class="highlight-text">measurable loops</span>: benchmarks, evals, latency, correctness, cost, and quality signals.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Action Items to Reduce the Skills Gap (2/2)</h2>
+                    <ul>
                         <li>Strengthen fundamentals: systems thinking, debugging, testing, APIs, and data flow still determine whether agent outputs become production value.</li>
                         <li>Learn <strong>human-in-the-loop verification</strong>: review diffs, catch failure modes, know when the model is outside a verifiable domain.</li>
                         <li>Stay current through <strong>hands-on building</strong> - the gap is a usage and orchestration gap, not just an access gap.</li>
@@ -590,7 +373,7 @@ paths:
             <!-- THANK YOU SLIDE -->
             <section class="thanks-slide">
                 <h2 style="color: #4ade80;">Thank You!</h2>
-                <img src="/shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code" style="max-width: 400px;">
+                <img src="../../../shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code" style="max-width: 400px;">
                 <p class="connect-text">Feel free to connect with me on LinkedIn</p>
                 <p>Have questions or need help? Don't hesitate to reach out!</p>
             </section>
@@ -599,7 +382,7 @@ paths:
             <!-- REFERENCES SLIDE -->
             <section>
                 <h2>References</h2>
-                <ul style="font-size: 0.65em; line-height: 2;">
+                <ul style="line-height: 2;">
                     <li><a href="https://www.markdown.engineering/learn-claude-code" target="_blank" style="color: #60a5fa;">markdown.engineering/learn-claude-code</a></li>
                     <li><a href="https://x.com/0x_kaize/article/2038286026284667239" target="_blank" style="color: #60a5fa;">x.com/0x_kaize/article/2038286026284667239</a></li>
                     <li><a href="https://blog.dailydoseofds.com/p/anatomy-of-the-claude-folder" target="_blank" style="color: #60a5fa;">blog.dailydoseofds.com/p/anatomy-of-the-claude-folder</a></li>
@@ -609,18 +392,11 @@ paths:
                 </ul>
             </section>
 
+        </div>
+    </div>
+
     <!-- Reveal.js Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-    <script>
-        Reveal.initialize({
-            hash: false,
-            history: false,
-            transition: 'fade',
-            slideNumber: true,
-            controls: true,
-            progress: true,
-            center: true
-        });
-    </script>
+    <script src="../../../shared/scripts/slides.js"></script>
 </body>
 </html>

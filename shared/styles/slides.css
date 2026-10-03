@@ -1,0 +1,191 @@
+/* One type scale for every deck. Values are canvas pixels before Reveal scaling. */
+:root {
+  --deck-bg: #0f172a;
+  --deck-surface: #1e293b;
+  --deck-border: #334155;
+  --deck-text: #f1f5f9;
+  --deck-muted: #cbd5e1;
+  --deck-blue: #60a5fa;
+  --deck-mono: "SF Mono", Monaco, "Cascadia Code", monospace;
+  --deck-ease: cubic-bezier(0.2, 0, 0, 1);
+  --deck-fast: 120ms;
+  --deck-transition: 200ms;
+}
+body { background: var(--deck-bg); color: var(--deck-text); }
+.reveal {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 30px;
+  line-height: 1.45;
+  color: var(--deck-text);
+  background: var(--deck-bg);
+  height: calc(100% - 56px);
+  top: 56px;
+}
+.reveal .slides { text-align: left; }
+.reveal .slides section { box-sizing: border-box; }
+.reveal .slides section:not(.stack) { padding: 36px 44px; }
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: inherit;
+  text-transform: none;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--deck-text);
+  margin: 0 0 24px;
+  overflow-wrap: anywhere;
+}
+.reveal h1 { font-size: 76px; font-weight: 750; }
+.reveal h2 { font-size: 52px; color: var(--deck-blue); padding-bottom: 20px; border-bottom: 1px solid var(--deck-border); }
+.reveal h3, .reveal h4 { font-size: 32px; color: #93c5fd; margin-bottom: 18px; }
+.reveal p { font-size: 30px; line-height: 1.45; color: var(--deck-muted); margin: 0 0 22px; }
+.reveal ul, .reveal ol { display: block; font-size: inherit; margin: 0; padding-left: 1.15em; }
+.reveal li { font-size: inherit; line-height: 1.45; color: var(--deck-muted); margin: 0 0 16px; }
+.reveal li li { font-size: inherit; margin-bottom: 10px; }
+.reveal ul ul, .reveal ol ol { margin-top: 12px; }
+.reveal strong { color: var(--deck-text); font-weight: 650; }
+.reveal a { color: #93c5fd; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.reveal code { font-family: var(--deck-mono); font-size: 0.88em; color: #c4b5fd; overflow-wrap: anywhere; }
+.reveal .two-column { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; align-items: start; }
+.reveal .two-column > div { min-width: 0; }
+.reveal .two-column h3 { font-size: 32px; }
+.reveal .two-column li { font-size: 28px; }
+.reveal .two-column h3 code { font-size: inherit; }
+.reveal .code-block, .reveal .flow-diagram {
+  background: var(--deck-surface);
+  border: 1px solid var(--deck-border);
+  border-left: 3px solid #a78bfa;
+  border-radius: 10px;
+  padding: 22px 26px;
+  font-family: var(--deck-mono);
+  font-size: 24px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+  color: #e2e8f0;
+  margin: 0 0 20px;
+}
+.reveal .code-block { color: #c4b5fd; }
+.highlight, .highlight-text { color: #fde047; font-weight: 600; background: #facc1514; padding: 0.08em 0.22em; border-radius: 4px; }
+.green { color: #86efac; font-weight: 600; }
+.blue, .component { color: #93c5fd; font-weight: 600; }
+.red { color: #fca5a5; font-weight: 600; }
+.arrow, .arrow-dn, .stack-arrow, .p-arrow { color: #fde047; }
+.note { color: var(--deck-muted); font-style: italic; }
+.reveal .comparison-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 24px; margin: 10px 0 0; }
+.reveal .comparison-table th, .reveal .comparison-table td { padding: 14px 16px; text-align: left; vertical-align: top; line-height: 1.4; overflow-wrap: anywhere; border-bottom: 1px solid var(--deck-border); }
+.reveal .comparison-table:has(th:nth-child(3):last-child) th:first-child { width: 23%; }
+.reveal .comparison-table:has(th:nth-child(3):last-child) th:nth-child(2) { width: 22%; }
+.reveal .comparison-table th { color: #93c5fd; background: var(--deck-surface); font-weight: 650; }
+.reveal .comparison-table td { color: var(--deck-muted); }
+.reveal .comparison-table td:first-child { color: var(--deck-text); font-weight: 500; }
+.reveal .comparison-table tr:nth-child(even) { background: #1e293b66; }
+.reveal .agenda-container { display: grid; gap: 12px; margin-top: 8px; }
+.reveal .agenda-card { background: var(--deck-surface); border: 1px solid var(--deck-border); border-left: 3px solid var(--deck-blue); border-radius: 10px; padding: 16px 24px; }
+.reveal .agenda-card h3 { font-size: 30px; margin: 0 0 6px; }
+.reveal .agenda-card p { font-size: 24px; margin: 0; }
+.reveal .title-slide, .reveal .chapter-slide, .reveal .thanks-slide { text-align: center; }
+.reveal .title-slide h3 { max-width: 1000px; margin: 26px auto; font-size: 38px; line-height: 1.35; }
+.reveal .chapter-slide h2 { font-size: 64px; border: 0; }
+.reveal .quote { font-size: 34px; text-align: center; font-style: italic; margin-top: 28px; }
+.reveal .thanks-slide p { text-align: center; }
+.reveal .thanks-slide img { width: 260px; max-height: 300px; object-fit: contain; border-radius: 12px; margin: 12px auto 24px; }
+.reveal .connect-text { color: #93c5fd; }
+.reveal .badge { display: inline-block; padding: 5px 12px; font-size: 22px; background: #2563eb; color: white; border-radius: 6px; vertical-align: middle; }
+.reveal .metric-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.reveal .metric-card { border: 1px solid var(--deck-border); background: var(--deck-surface); border-radius: 12px; padding: 28px 24px; text-align: center; }
+.reveal .metric-card h3 { font-size: 56px; margin: 0 0 12px; }
+.reveal .metric-card p { font-size: 24px; margin: 0; }
+.reveal .stack-flow, .reveal .pipeline-top { display: flex; align-items: stretch; gap: 12px; margin: 24px 0; }
+.reveal .stack-node, .reveal .pipeline-node { flex: 1; min-width: 0; background: var(--deck-surface); border: 1px solid var(--deck-blue); border-radius: 10px; padding: 24px 18px; text-align: center; }
+.reveal .stack-label, .reveal .p-label { font-size: 28px; color: #93c5fd; font-weight: 650; overflow-wrap: anywhere; }
+.reveal .stack-desc, .reveal .p-desc { font-size: 24px; color: var(--deck-muted); margin-top: 12px; }
+.reveal .stack-arrow, .reveal .p-arrow { font-size: 36px; display: flex; align-items: center; }
+.reveal .pipeline-node.processor { border-color: #a78bfa; }
+.reveal .pipeline-node.classifier { border-color: #facc15; }
+.reveal .services-section { border-top: 1px dashed var(--deck-border); padding-top: 24px; margin-top: 30px; }
+.reveal .services-label { color: var(--deck-muted); font-size: 24px; margin-bottom: 18px; }
+.reveal .services-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.reveal .service-chip { font-size: 24px; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--deck-border); color: var(--deck-muted); }
+.reveal .pipeline-branches { display: grid; gap: 18px; margin-top: 24px; }
+.reveal .branch { display: flex; align-items: center; gap: 12px; }
+.reveal .branch-tag, .reveal .branch-step { font-size: 24px; border-radius: 6px; padding: 12px; background: var(--deck-surface); color: var(--deck-muted); min-width: 0; overflow-wrap: anywhere; }
+.reveal .branch-tag { flex: 0 0 170px; font-weight: 650; }
+.reveal .branch-step { flex: 1; }
+.reveal .branch-tag.human { color: #fde047; }
+.reveal .branch-tag.nl { color: #93c5fd; }
+.reveal .branch-step.code { color: #c4b5fd; font-family: var(--deck-mono); font-size: 22px; }
+.reveal .branch-arrow { color: #94a3b8; }
+.reveal .pipeline-note { font-size: 24px; text-align: center; margin-top: 24px; color: var(--deck-muted); }
+.reveal .slides section[data-transition] { transition-timing-function: var(--deck-ease); }
+.reveal .slides section { transition-duration: var(--deck-transition) !important; transition-timing-function: var(--deck-ease) !important; }
+.reveal .controls { color: #93c5fd; }
+.reveal .slide-number { font: 16px/1.2 var(--deck-mono); right: 120px; bottom: 26px; background: transparent; color: var(--deck-muted); }
+.reveal .progress { height: 4px; color: var(--deck-blue); }
+.deck-toolbar, .deck-toolbar * { box-sizing: border-box; }
+.deck-toolbar { position: fixed; inset: 0 0 auto; height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 20px; border-bottom: 1px solid var(--deck-border); background: var(--deck-bg); z-index: 30; font: 14px/1.3 system-ui, sans-serif; }
+.deck-toolbar a, .deck-toolbar button { color: var(--deck-muted); text-decoration: none; background: transparent; border: 1px solid var(--deck-border); border-radius: 7px; padding: 9px 12px; cursor: pointer; font: inherit; white-space: nowrap; transition: color var(--deck-fast) var(--deck-ease), background-color var(--deck-fast) var(--deck-ease); }
+.deck-toolbar a:hover, .deck-toolbar button:hover { background: var(--deck-surface); color: white; }
+.deck-toolbar button[aria-pressed="true"] { border-color: var(--deck-blue); color: #93c5fd; }
+.deck-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #94a3b8; }
+.deck-toolbar :focus-visible, .reveal :focus-visible, .deck-help :focus-visible { outline: 3px solid #93c5fd; outline-offset: 4px; }
+.deck-help { max-width: min(440px, calc(100vw - 40px)); margin: auto; padding: 28px; border: 1px solid var(--deck-border); border-radius: 14px; background: var(--deck-bg); color: var(--deck-text); font: 16px/1.6 system-ui, sans-serif; }
+.deck-help::backdrop { background: #020617cc; }
+.deck-help h2 { font-size: 24px; margin: 0 0 16px; }
+.deck-help dl { display: grid; grid-template-columns: 100px 1fr; gap: 12px; }
+.deck-help dd { margin: 0; color: var(--deck-muted); }
+.deck-help button { background: var(--deck-surface); color: white; border: 1px solid var(--deck-border); padding: 10px 20px; border-radius: 8px; margin-top: 20px; font: inherit; cursor: pointer; }
+.deck-index { width: 520px; max-height: calc(100dvh - 80px); overflow-y: auto; }
+.deck-index ol { list-style: none; padding: 0; margin: 0; }
+.deck-index li button { width: 100%; margin-top: 8px; text-align: left; }
+.deck-index button[aria-current="true"] { border-color: var(--deck-blue); }
+/* Reveal's fixed canvas is replaced with a scrollable, unscaled current slide on phones. */
+@media screen and (max-width: 760px) {
+  html:not(.print-pdf) .reveal { font-size: 20px; }
+  html:not(.print-pdf) .reveal .slides { width: 100% !important; height: 100% !important; inset: 0 !important; transform: none !important; perspective: none; }
+  html:not(.print-pdf) .reveal .slides section:not(.stack) { padding: 28px 22px 100px; height: 100%; overflow-y: auto; top: 0 !important; scrollbar-width: thin; }
+  html:not(.print-pdf) .reveal .slides section.stack { height: 100%; top: 0 !important; }
+  html:not(.print-pdf) .reveal h1 { font-size: 42px; }
+  html:not(.print-pdf) .reveal h2 { font-size: 32px; padding-bottom: 16px; }
+  html:not(.print-pdf) .reveal h3, html:not(.print-pdf) .reveal .two-column h3 { font-size: 24px; }
+  html:not(.print-pdf) .reveal p, html:not(.print-pdf) .reveal li, html:not(.print-pdf) .reveal .two-column li { font-size: 20px; }
+  html:not(.print-pdf) .reveal .two-column, html:not(.print-pdf) .reveal .metric-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  html:not(.print-pdf) .reveal .title-slide h3, html:not(.print-pdf) .reveal .quote { font-size: 24px; }
+  html:not(.print-pdf) .reveal .chapter-slide h2 { font-size: 38px; }
+  html:not(.print-pdf) .reveal .agenda-card h3 { font-size: 22px; }
+  html:not(.print-pdf) .reveal .agenda-card p, html:not(.print-pdf) .reveal .metric-card p { font-size: 18px; }
+  html:not(.print-pdf) .reveal .code-block, html:not(.print-pdf) .reveal .flow-diagram { font-size: 17px; padding: 18px; }
+  html:not(.print-pdf) .reveal .comparison-table, html:not(.print-pdf) .reveal .comparison-table tbody { display: block; font-size: 18px; }
+  html:not(.print-pdf) .reveal .comparison-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  html:not(.print-pdf) .reveal .comparison-table tbody tr { display: block; background: var(--deck-surface); border: 1px solid var(--deck-border); border-radius: 8px; padding: 14px; margin-bottom: 16px; }
+  html:not(.print-pdf) .reveal .comparison-table td { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr); gap: 14px; padding: 8px 0; border: 0; }
+  html:not(.print-pdf) .reveal .comparison-table td::before { content: attr(data-label); color: #93c5fd; font-size: 16px; font-weight: 600; }
+  html:not(.print-pdf) .reveal .comparison-table td > * { min-width: 0; }
+  html:not(.print-pdf) .reveal .comparison-table td:first-child { border-bottom: 1px solid var(--deck-border); padding-bottom: 14px; margin-bottom: 6px; }
+  html:not(.print-pdf) .reveal .stack-flow, html:not(.print-pdf) .reveal .pipeline-top, html:not(.print-pdf) .reveal .branch { flex-direction: column; }
+  html:not(.print-pdf) .reveal .stack-arrow, html:not(.print-pdf) .reveal .p-arrow, html:not(.print-pdf) .reveal .branch-arrow { align-self: center; transform: rotate(90deg); }
+  html:not(.print-pdf) .reveal .branch-tag { flex-basis: auto; }
+  html:not(.print-pdf) .reveal .branch-step { width: 100%; box-sizing: border-box; }
+  html:not(.print-pdf) .reveal .stack-label, html:not(.print-pdf) .reveal .p-label { font-size: 22px; }
+  html:not(.print-pdf) .reveal .stack-desc, html:not(.print-pdf) .reveal .p-desc, html:not(.print-pdf) .reveal .services-label, html:not(.print-pdf) .reveal .service-chip, html:not(.print-pdf) .reveal .branch-tag, html:not(.print-pdf) .reveal .branch-step, html:not(.print-pdf) .reveal .pipeline-note { font-size: 18px; }
+  .deck-toolbar { gap: 6px; padding: 0 10px; }
+  .deck-toolbar a, .deck-toolbar button { min-height: 44px; padding: 8px; }
+  .deck-title { display: none; }
+  .deck-toolbar button:first-of-type { margin-left: auto; }
+  html:not(.print-pdf) .reveal .controls { background: var(--deck-bg); border-radius: 12px; }
+  html:not(.print-pdf) .reveal .slide-number { background: var(--deck-bg); padding: 6px 10px; }
+}
+.deck-toolbar button:disabled { cursor: default; color: #94a3b8; }
+@media (prefers-reduced-motion: reduce) {
+  :root { --deck-fast: 0ms; --deck-transition: 0ms; }
+  .reveal *, .reveal *::before, .reveal *::after { animation: none !important; transition-duration: 0ms !important; }
+}
+html[data-motion="off"] { --deck-fast: 0ms; --deck-transition: 0ms; }
+html[data-motion="off"] .reveal * { animation: none !important; transition-duration: 0ms !important; }
+/* Print/PDF is still managed by Reveal; keep presentation chrome out of exports. */
+html.print-pdf .deck-toolbar, html.print-pdf .deck-help { display: none; }
+html.print-pdf .reveal { top: 0; height: 100%; }
+@media print {
+  .deck-toolbar, .deck-help { display: none; }
+  .reveal { top: 0; height: 100%; }
+}
