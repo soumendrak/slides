@@ -12,6 +12,9 @@ http.createServer((req, res) => {
   if (!file.startsWith(root)) return res.writeHead(403).end();
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
   if (!fs.existsSync(file)) return res.writeHead(404).end();
-  res.writeHead(200, { 'content-type': types[path.extname(file)] || 'application/octet-stream' });
+  const headers = { 'content-type': types[path.extname(file)] || 'application/octet-stream' };
+  // ?sandbox serves the page in an opaque origin, so its messages arrive as 'null'.
+  if (new URL(req.url, 'http://x').searchParams.has('sandbox')) headers['content-security-policy'] = 'sandbox allow-scripts';
+  res.writeHead(200, headers);
   fs.createReadStream(file).pipe(res);
 }).listen(Number(process.env.PORT || 4173));

@@ -55,6 +55,17 @@ for (const deckPath of decks) {
     expect(await deckState(page)).toEqual({ h: 0, controls: true, lightbox: false });
   });
 
+  test(`a null-origin page the deck opened cannot drive ${deckPath}`, async ({ page }) => {
+    await page.goto(deckBase + deckPath);
+    await ready(page);
+    const [opened] = await Promise.all([page.waitForEvent('popup'), page.evaluate(url => { open(url, 'sandboxed'); }, `${sender}?sandbox`)]);
+    await opened.waitForLoadState();
+    expect(await opened.evaluate(() => origin)).toBe('null');
+    await opened.evaluate(messages => messages.forEach(m => send(m)), drive);
+    await pause(1000);
+    expect(await deckState(page)).toEqual({ h: 0, controls: true, lightbox: false });
+  });
+
   test(`null-origin frame cannot drive ${deckPath}`, async ({ page, context }) => {
     await page.goto(sender);
     const [deck] = await Promise.all([
@@ -79,9 +90,29 @@ test.describe('notes plugin', () => {
   });
 
   const fileUrl = pathToFileURL(path.resolve(import.meta.dirname, 'fixtures/notes-deck.html')).href;
+  const fileSender = pathToFileURL(path.resolve(import.meta.dirname, 'fixtures/sender.html')).href;
+
+  test('on file://, a local page framing the deck cannot drive it', async ({ page }) => {
+    await page.goto(`${fileSender}?frame=${encodeURIComponent(fileUrl)}`);
+    const frame = await expect.poll(() => page.frames().find(f => f.url().startsWith(fileUrl))).toBeTruthy()
+      .then(() => page.frames().find(f => f.url().startsWith(fileUrl)));
+    await frame.waitForFunction(() => window.Reveal?.isReady());
+    await page.evaluate(messages => messages.forEach(m => send(m)), drive);
+    await pause(1000);
+    expect(await deckState(frame)).toEqual({ h: 0, controls: true, lightbox: false });
+  });
+
+  test('on file://, a web page the deck opened cannot drive it', async ({ page }) => {
+    await page.goto(fileUrl);
+    await ready(page);
+    const [opened] = await Promise.all([page.waitForEvent('popup'), page.evaluate(url => { open(url, 'web'); }, sender)]);
+    await opened.waitForLoadState();
+    await opened.evaluate(messages => messages.forEach(m => send(m)), drive);
+    await pause(1000);
+    expect(await deckState(page)).toEqual({ h: 0, controls: true, lightbox: false });
+  });
 
   test('on file://, another local page that opened the deck cannot drive it', async ({ page }) => {
-    const fileSender = pathToFileURL(path.resolve(import.meta.dirname, 'fixtures/sender.html')).href;
     const [deck] = await Promise.all([page.waitForEvent('popup'), page.goto(`${fileSender}?deck=${encodeURIComponent(fileUrl)}`)]);
     await ready(deck);
     await page.evaluate(messages => messages.forEach(m => send(m)), drive);
