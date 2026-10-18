@@ -25,7 +25,7 @@ slides/
 
 ## Tech Stack
 
-- **Framework:** reveal.js 4.3.1 (via CDN)
+- **Framework:** reveal.js 6.0.2 (via CDN)
 - **Theme:** night (dark background, consistent across all talks)
 - **Styling:** Custom CSS with Tailwind-like color palette (#0f172a, #1e293b, #60a5fa, etc.)
 - **Hosting:** Cloudflare Pages
@@ -59,9 +59,9 @@ slides/
     <meta charset="UTF-8">
     <title>Talk Title</title>
     <link rel="icon" href="../../../shared/assets/images/soumendra_avatar.webp">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/theme/night.min.css">
     <style>
         /* Custom styles matching existing talks */
         .reveal { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -76,7 +76,7 @@ slides/
             <section>...</section>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reveal.min.js"></script>
     <script>Reveal.initialize();</script>
 </body>
 </html>

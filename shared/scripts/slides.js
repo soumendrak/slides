@@ -1,5 +1,11 @@
-/* Shared presentation defaults for Reveal.js 4.3.1. */
+/* Shared presentation defaults for Reveal.js 6.0.2. */
 (() => {
+  // reveal.js runs any API method a postMessage names without checking the sender's
+  // origin, and its notes plugin answers any window's heartbeat. Only same-origin
+  // windows (the speaker view and its slide previews) may talk to a deck.
+  window.addEventListener('message', event => {
+    if (event.origin !== location.origin) event.stopImmediatePropagation();
+  }, true);
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const smallScreen = window.matchMedia('(max-width: 760px)');

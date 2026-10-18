@@ -36,7 +36,7 @@ slides/
 
 ## Tech Stack
 
-- **Framework:** reveal.js 4.3.1 (via CDN)
+- **Framework:** reveal.js 6.0.2 (via CDN)
 - **Theme:** night (dark background)
 - **Hosting:** Cloudflare Pages
 - **Domain:** slides.soumendrak.com
