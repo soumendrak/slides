@@ -6,8 +6,17 @@
 <script>
   window.received = [];
   window.addEventListener('message', event => window.received.push(event.data));
-  const deckUrl = new URLSearchParams(location.search).get('deck');
-  if (deckUrl) window.deck = window.open(deckUrl, 'deck');
+  const params = new URLSearchParams(location.search);
+  if (params.get('deck')) window.deck = window.open(params.get('deck'), 'deck');
+  // ?frame=<url> embeds the deck instead of opening it.
+  if (params.get('frame')) {
+    const frame = document.createElement('iframe');
+    frame.src = params.get('frame');
+    frame.width = 1280;
+    frame.height = 800;
+    document.documentElement.append(frame);
+    window.deck = frame.contentWindow;
+  }
   // Opened by a deck instead: talk back to it.
   window.send = message => (window.deck || window.opener).postMessage(JSON.stringify(message), '*');
   // Same messages from an opaque ('null') origin: a sandboxed frame opens its own copy.
