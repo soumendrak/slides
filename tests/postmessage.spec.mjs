@@ -9,7 +9,7 @@ import { pathToFileURL } from 'node:url';
 const deckBase = process.env.DECK_BASE || 'http://127.0.0.1:4173';
 const sender = 'http://localhost:4173/tests/fixtures/sender.html';
 const notesDeck = '/tests/fixtures/notes-deck.html';
-const decks = ['/talks/2026/lili-on-coolify/', '/talks/2026/iter-claude-limits/'];
+const decks = ['/talks/2026/lili-on-coolify/', '/talks/2026/iter-claude-limits/', '/talks/2026/zero-to-hero-agent-observability/'];
 if (!process.env.DECK_BASE) decks.push(notesDeck);
 
 const ready = page => page.waitForFunction(() => window.Reveal?.isReady());
