@@ -4,14 +4,12 @@
   // origin, and its notes plugin answers any window's heartbeat. Only same-origin
   // windows (the speaker view and its slide previews) may talk to a deck.
   // A deck opened from disk sees every message's origin as 'null', so there it only
-  // accepts the speaker window it opened, or the speaker window that frames it.
+  // accepts the speaker window it opened, or, when it is one of the speaker view's
+  // previews (loaded with ?receiver), the speaker window that frames it.
   function fromOwnSpeakerView(event) {
-    if (location.protocol !== 'file:' || event.origin !== 'null' || !event.source) return false;
-    try {
-      return event.source.opener === window || (window.parent !== window && event.source === window.parent);
-    } catch {
-      return false;
-    }
+    if (location.protocol !== 'file:' || event.origin !== 'null') return false;
+    const isPreview = new URLSearchParams(location.search).has('receiver');
+    return event.source?.opener === window || (isPreview && event.source === window.parent);
   }
   window.addEventListener('message', event => {
     if (event.origin !== location.origin && !fromOwnSpeakerView(event)) event.stopImmediatePropagation();
