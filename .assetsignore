@@ -1,0 +1,7 @@
+# Allowlist: nothing in the repo root ships unless re-included below.
+/*
+!/index.html
+!/shared
+!/talks
+# Junk that can appear inside the allowed folders.
+**/.DS_Store
