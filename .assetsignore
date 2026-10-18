@@ -1,0 +1,14 @@
+# Repo files the site never loads. Keep talk folders, shared/, index.html,
+# _redirects (read by Cloudflare as config) and speaker notes served.
+.git
+.wrangler
+.claude
+CLAUDE.md
+README.md
+LICENSE
+justfile
+.cfignore
+.gitignore
+.assetsignore
+wrangler.jsonc
+**/.DS_Store
