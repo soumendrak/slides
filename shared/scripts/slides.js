@@ -3,8 +3,18 @@
   // reveal.js runs any API method a postMessage names without checking the sender's
   // origin, and its notes plugin answers any window's heartbeat. Only same-origin
   // windows (the speaker view and its slide previews) may talk to a deck.
+  // A deck opened from disk sees every message's origin as 'null', so there it only
+  // accepts the speaker window it opened, or the speaker window that frames it.
+  function fromOwnSpeakerView(event) {
+    if (location.protocol !== 'file:' || event.origin !== 'null' || !event.source) return false;
+    try {
+      return event.source.opener === window || (window.parent !== window && event.source === window.parent);
+    } catch {
+      return false;
+    }
+  }
   window.addEventListener('message', event => {
-    if (event.origin !== location.origin) event.stopImmediatePropagation();
+    if (event.origin !== location.origin && !fromOwnSpeakerView(event)) event.stopImmediatePropagation();
   }, true);
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');

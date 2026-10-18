@@ -57,11 +57,13 @@ slides/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talk Title</title>
     <link rel="icon" href="../../../shared/assets/images/soumendra_avatar.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/theme/night.min.css">
+    <link rel="stylesheet" href="../../../shared/styles/slides.css">
     <style>
         /* Custom styles matching existing talks */
         .reveal { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -77,7 +79,8 @@ slides/
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reveal.min.js"></script>
-    <script>Reveal.initialize();</script>
+    <!-- slides.js calls Reveal.initialize and drops postMessages from other origins. Don't initialize reveal.js inline. -->
+    <script src="../../../shared/scripts/slides.js"></script>
 </body>
 </html>
 ```

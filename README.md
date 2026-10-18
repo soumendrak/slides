@@ -79,7 +79,7 @@ slides/
 
 - **Navigate:** Arrow keys, space, or click
 - **Skip to next/previous section:** `Shift + →` / `Shift + ←` (skips vertical detail slides and consecutive split-slide parts)
-- Load `shared/scripts/slides.js` in every presentation to use the shared navigation and keyboard help.
+- Load `shared/scripts/slides.js` in every presentation, after reveal.js. It calls `Reveal.initialize`, adds the shared navigation and keyboard help, and drops postMessages from other origins. Don't call `Reveal.initialize` yourself.
 - **Overview mode:** Press `Esc`
 - **Fullscreen:** Press `F`
 - **Speaker notes:** Press `S`
