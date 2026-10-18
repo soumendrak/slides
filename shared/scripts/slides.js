@@ -36,7 +36,7 @@
     <dt>Shift + →</dt><dd>Jump to next section</dd>
     <dt>Shift + ←</dt><dd>Jump to previous section</dd>
     <dt>Esc</dt><dd>Overview / close help</dd><dt>F</dt><dd>Fullscreen</dd>
-    <dt>Home / End</dt><dd>First / last slide</dd></dl>
+    <dt>Home / End</dt><dd>First / last slide</dd>${window.RevealNotes ? '<dt>S</dt><dd>Speaker notes</dd>' : ''}</dl>
     <p>On phones, scroll inside a slide to read the rest. Use the arrows to continue.</p>
     <form method="dialog"><button>Close</button></form>`;
   const slideIndex = document.createElement('dialog');

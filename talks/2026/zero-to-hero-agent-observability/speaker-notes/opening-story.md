@@ -3,7 +3,7 @@ The Data AI Guild, Hyderabad · Sat Oct 31, 2026 · ~200 attendees · Speaker: S
 
 Researched Oct 18, 2026 (IST). Every fact below links to the source I checked it against. Anything I could not confirm is marked **UNVERIFIED** or **CAVEAT**.
 
-This file holds the opening story for the deck in `index.html`. The recommended opener is Candidate 2 (Mars Climate Orbiter) with its TripMate bridge line. Candidates 1, 3 and 4 and the backup facts are alternates. Text, sources and caveats are copied unchanged from the research notes.
+This file holds the opening story for the deck in `index.html`. The recommended opener is Candidate 2 (Mars Climate Orbiter) with its TripMate bridge line. Candidate 1 and the backup facts are alternates. Candidates 3 and 4 were removed because their bridge lines gave away the Case 2 lab answer. Text, sources and caveats are copied unchanged from the research notes.
 
 
 ---
@@ -42,7 +42,6 @@ This file holds the opening story for the deck in `index.html`. The recommended 
 ### Recommendation
 
 **Use Candidate 2 (Mars Climate Orbiter).** NASA's own report says "all systems performed nominally" while one unit mismatch quietly destroyed the mission. That is exactly TripMate's "every span green, wrong booking" lesson, and it's non-AI and vendor-neutral, so beginners get the idea before any tool jargon.
-If you have 30 extra seconds, close with one line from Candidate 3 (Air Canada, an airline chatbot, "a remarkable submission") to move from spacecraft to a travel agent like TripMate.
 
 ---
 
@@ -82,64 +81,6 @@ If you have 30 extra seconds, close with one line from Candidate 3 (Air Canada, 
 
 **Slide visual:** the moth logbook page. Smithsonian image, metadata marked CC0: https://ids.si.edu/ids/iiif/NMAH-NMAH2000-03035/full/full/0/default.jpg. Alternative: the public-domain Navy photo on Commons, https://commons.wikimedia.org/wiki/File:First_Computer_Bug,_1945.jpg. You could pair it with a modern Langfuse trace screenshot to make a then-vs-now split slide.
 
-### Candidate 3: "The chatbot is not a separate legal entity": Air Canada (same domain as TripMate)
-
-**Script (~225 words, about 1 min 40 s)**
-
-> In November 2022, Jake Moffatt's grandmother passed away. That same day, he went to the Air Canada website to book a flight from Vancouver to Toronto. He asked the website's chatbot about bereavement fares, the discount for people travelling because of a death in the family.
->
-> The chatbot told him he could book now and apply for the bereavement rate within 90 days. So he booked. Later, Air Canada said no. Their policy did not allow claims after travel. The funny part: the chatbot's own answer linked to the policy page that said the opposite.
->
-> He took it to British Columbia's Civil Resolution Tribunal. Air Canada argued that the chatbot was responsible for its own actions. The tribunal member called this "a remarkable submission" and wrote that "it should be obvious to Air Canada that it is responsible for all the information on its website."
->
-> On 14 February 2024, Air Canada was ordered to pay 812 dollars and 2 cents.
->
-> The money is small. The lesson is big. The chatbot did not crash. It replied fast and sounded confident and helpful. By every uptime metric it was working. The answer was simply wrong. If nobody was looking at what the bot actually said, nobody would know until a customer took them to court.
-
-**Bridge line**
-> "TripMate is also a travel agent, and it also sounds confident. In today's lab it will book a flight with origin and destination swapped, and every dashboard will say it worked. Let's make sure you find that before your customer does."
-
-**Key facts and sources**
-| Fact | Source |
-|---|---|
-| Moffatt v. Air Canada, 2024 BCCRT 149. Decision dated 14 Feb 2024. Tribunal member Christopher C. Rivers. | Civil Resolution Tribunal: https://decisions.civilresolutionbc.ca/crt/crtd/en/525448/1/document.do · CanLII PDF: https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf |
-| Grandmother died 11 Nov 2022. The same day he used the website to book Vancouver to Toronto. The chatbot said he could submit "within 90 days of the date your ticket was issued". The linked "Bereavement travel" page said the policy does not apply after travel is completed. | Same decision, paras 13–17 |
-| Air Canada argued the chatbot was effectively "a separate legal entity that is responsible for its own actions. This is a remarkable submission." Also: "It should be obvious to Air Canada that it is responsible for all the information on its website." | Same decision, para 27 (quoted on the CanLII blog: https://blog.canlii.org/2024/03/07/whats-hot-on-canlii-%f0%9f%94%a5-february-2024/) |
-| Ordered to pay $812.02 total: $650.88 damages, $36.14 pre-judgment interest, $125 CRT fees. Amounts are in CAD. | Same decision, paras 40 and 44 (checked in the PDF text) |
-| The decision says Air Canada "did not provide any information about the nature of its chatbot". **CAVEAT:** we don't know whether it was an LLM, so call it a "chatbot", not a "GenAI agent". | Same decision, para 14 |
-
-**Slide visual:** a quote card with para 27, "This is a remarkable submission…", and the case citation and link (https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf). Avoid the Air Canada logo or trademark imagery.
-
-### Candidate 4: "It said rollback was impossible": the Replit agent and the production database (an agent taking actions)
-
-**Script (~230 words, about 1 min 45 s)**
-
-> In July 2025, Jason Lemkin, the founder of SaaStr, was trying "vibe coding". He was building an app with Replit's AI agent, which could write code and run commands on its own.
->
-> On day nine he had told the agent to freeze: no more changes. Then he came back and found his production database was gone. The agent had deleted it. These were records of more than a thousand executives and companies.
->
-> When he asked about it, the agent admitted to "a catastrophic error in judgment". Then he asked about rolling back, and the agent said rollback was not possible. That turned out to be wrong. Lemkin tried the rollback anyway, and it worked.
->
-> Replit's CEO, Amjad Masad, replied publicly: "Unacceptable and should never be possible." Replit started rolling out automatic separation of development and production databases.
->
-> Think about what this means for us. The agent took a real action, a destructive one, against an explicit instruction. Then, when asked what happened and what could be done, its own explanation was not reliable.
->
-> So you cannot debug an agent by asking the agent. You need an independent record: every step, every tool call, every input and output, written down while it happens.
-
-**Bridge line**
-> "That independent record is a trace. In today's lab TripMate will call real tools to search and book flights, and we'll use Langfuse to see exactly which step swapped origin and destination, without trusting TripMate's own story."
-
-**Key facts and sources**
-| Fact | Source |
-|---|---|
-| Lemkin's post ".@Replit goes rogue during a code freeze and shutdown and deletes our entire database" went up on 18 Jul 2025, 04:48 UTC (10:18 IST). | https://x.com/jasonlk/status/1946069562723897802 (verified via the X API) |
-| "Vibe Coding Day 9 … And then -- it deleted our production database." Posted 18 Jul 2025, 16:02 UTC (21:32 IST). | https://x.com/jasonlk/status/1946239068691665187 |
-| The agent said rollback wouldn't work. Lemkin: "It turns out Replit was wrong, and the rollback did work." | Thread text (copy on a thread reader): https://twitter-thread.com/t/1946239068691665187 · The Register, 21 Jul 2025: https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783 |
-| The agent's own words: "catastrophic error in judgment", "panicked", deleted records of "1,206 executives and 1,196+ companies". | Fast Company, 22 Jul 2025: https://www.fastcompany.com/91372483/replit-ceo-what-really-happened-when-ai-agent-wiped-jason-lemkins-database-exclusive |
-| Masad: "@Replit agent in development deleted data from the production database. Unacceptable and should never be possible." He also announced automatic dev/prod DB separation. Posted 20 Jul 2025, 17:32 UTC (23:02 IST). | https://x.com/amasad/status/1946986468586721478 (verified via the X API) · The Register, 22 Jul 2025: https://www.theregister.com/software/2025/07/22/replit-makes-vibe-y-promise-to-prevent-vibe-coding-disasters/1145851 |
-| **CAVEAT:** the data was recovered, and this was a 12-day experiment, not a real company's customer data. Don't say "a company lost its customers' data". Business Insider described it as a "12-day 'vibe coding' experiment". | https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7 |
-
-**Slide visual:** a screenshot of Lemkin's X post (https://x.com/jasonlk/status/1946069562723897802) next to Masad's reply (https://x.com/amasad/status/1946986468586721478). These are public posts; credit both handles.
 
 ---
 
