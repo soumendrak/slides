@@ -1,0 +1,25 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Other-origin sender</title>
+<!-- Opens a deck from another origin and posts only navigation, configure and notes
+     handshake messages to it. Replies are recorded so tests can check nothing came back. -->
+<script>
+  window.received = [];
+  window.addEventListener('message', event => window.received.push(event.data));
+  const deckUrl = new URLSearchParams(location.search).get('deck');
+  if (deckUrl) window.deck = window.open(deckUrl, 'deck');
+  // Opened by a deck instead: talk back to it.
+  window.send = message => (window.deck || window.opener).postMessage(JSON.stringify(message), '*');
+  // Same messages from an opaque ('null') origin: a sandboxed frame opens its own copy.
+  window.sendFromNullOrigin = (deckUrl, messages) => {
+    const frame = document.createElement('iframe');
+    frame.sandbox = 'allow-scripts allow-popups allow-popups-to-escape-sandbox';
+    frame.srcdoc = `<script>
+      const deck = window.open(${JSON.stringify(deckUrl)}, 'null-origin-deck');
+      const messages = ${JSON.stringify(messages.map(m => JSON.stringify(m)))};
+      setInterval(() => messages.forEach(m => deck.postMessage(m, '*')), 250);
+    <\/script>`;
+    document.body.append(frame);
+  };
+</script>
+<body></body>

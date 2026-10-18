@@ -49,9 +49,9 @@ slides/
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>Your Talk Title</title>
        <link rel="icon" href="../../shared/assets/images/your-avatar.webp">
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/night.css">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reset.css">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.css">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/theme/night.css">
        <link rel="stylesheet" href="../../../shared/styles/slides.css">
    </head>
    <body>
@@ -63,7 +63,7 @@ slides/
                </section>
            </div>
        </div>
-       <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.2/dist/reveal.js"></script>
        <script src="../../../shared/scripts/slides.js"></script>
    </body>
    </html>
@@ -79,7 +79,7 @@ slides/
 
 - **Navigate:** Arrow keys, space, or click
 - **Skip to next/previous section:** `Shift + →` / `Shift + ←` (skips vertical detail slides and consecutive split-slide parts)
-- Load `shared/scripts/slides.js` in every presentation to use the shared navigation and keyboard help.
+- Load `shared/scripts/slides.js` in every presentation, after reveal.js. It calls `Reveal.initialize`, adds the shared navigation and keyboard help, and drops postMessages from other origins. Don't call `Reveal.initialize` yourself.
 - **Overview mode:** Press `Esc`
 - **Fullscreen:** Press `F`
 - **Speaker notes:** Press `S`
@@ -116,7 +116,7 @@ Replace or remove the analytics script in `index.html`:
 
 ## Tech Stack
 
-- **[reveal.js](https://revealjs.com/)** 4.3.1 - HTML presentation framework
+- **[reveal.js](https://revealjs.com/)** 6.0.2 - HTML presentation framework
 - **Theme:** night (dark background)
 - **Hosting:** Cloudflare Pages (or any static host)
 
