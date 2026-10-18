@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero to Hero on AI Agent Observability</title>
+    <link rel="icon" href="../../../shared/assets/images/soumendra_avatar.webp">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+    <link rel="stylesheet" href="../../../shared/styles/slides.css">
+    <style>
+        .reveal figure { margin: 0 auto; text-align: center; }
+        .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
+        .reveal figcaption { font-size: 0.55em; color: #cbd5e1; margin-top: 6px; }
+        .reveal figcaption a { word-break: break-all; }
+        .reveal .lab-tag { color: #facc15; font-weight: 600; }
+        .reveal .placeholder { border: 2px dashed #475569; padding: 18px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Speaker notes live in <aside class="notes"> on every slide (press S).
+                 The opening story with all alternates and sources is in speaker-notes/opening-story.md.
+                 This deck is public: no lab answers, reference fixes or TA answer sheet content. -->
+
+            <!-- TITLE -->
+            <section class="title-slide">
+                <h1>Zero to hero on AI agent observability</h1>
+                <h3>A 3-hour hands-on workshop with Langfuse</h3>
+                <p style="text-align: center; margin-top: 2em; font-style: italic;">By Soumendra Kumar Sahoo</p>
+                <p style="text-align: center; color: #cbd5e1;">The Data AI Guild, Hyderabad · Saturday 31 Oct 2026 · 180 min</p>
+                <aside class="notes">
+                    Block 1 (00:00). Put this up while people sit down. Wifi and chat details go on the next slides.
+                    Event page: https://luma.com/dil7wq7j
+                </aside>
+            </section>
+
+            <!-- OPENER: MARS CLIMATE ORBITER -->
+            <section>
+                <section>
+                    <h2>"All systems performed nominally"</h2>
+                    <figure>
+                        <img src="assets/mco-figure4-encounter-diagram.webp" alt="NASA schematic of the Mars Climate Orbiter encounter: the estimated trajectory passes 226 km above Mars, the actual trajectory 57 km">
+                        <figcaption>Figure 4, "Schematic MCO Encounter Diagram", Mars Climate Orbiter Mishap Investigation Board Phase I Report, NASA, 10 Nov 1999, p. 14.<br>
+                            Source: <a href="https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf">https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf</a></figcaption>
+                    </figure>
+                    <p style="font-size: 0.75em;">One ground file reported thruster data in pound-force-seconds. Navigation expected newton-seconds. <span class="red">lbf-s ≠ N-s</span></p>
+                    <aside class="notes">
+                        Recommended opener: Candidate 2. Full script, alternates and every caveat: speaker-notes/opening-story.md.
+
+                        Script (~230 words, about 1 min 45 s):
+                        On 11 December 1998, NASA launched the Mars Climate Orbiter. It was supposed to be the first weather satellite for another planet. Together with its sister lander, the project cost 327.6 million dollars.
+                        For nine months it flew towards Mars. On 23 September 1999 it fired its engine to go into orbit. NASA's investigation report says: "All systems performed nominally" until the spacecraft went behind Mars. The signal never came back.
+                        What went wrong? One ground software file, called "Small Forces", gave thruster data in pound-seconds. The navigation software expected newton-seconds. Nothing crashed and no alarm went off. Every number looked like a valid number. But each one was off by a factor of 4.45. Small errors added up over nine months. The spacecraft came in about 170 kilometres lower than planned and was lost.
+                        Here is the painful part. For months, people on the team had noticed that the navigation numbers did not agree. The report says these were "only informally reported", sorted out over e-mail, and "not resolved".
+                        So the system was healthy and the outcome was wrong. Every component said "I'm fine." Nobody was checking whether the answer made sense.
+
+                        Sources:
+                        - Launch 11 Dec 1998; "All systems performed nominally until Mars's occultation loss of signal"; Small Forces in lbf-s vs N-s, factor 4.45; about 170 km lower than planned; 57 km periapsis vs 80 km survivable; "only informally reported", "not resolved", "relied on e-mail": NASA MIB Phase I Report, https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf (also NASA LLIS lesson 641, https://llis.nasa.gov/lesson/641)
+                        - CAVEAT: $327.6M is "total for both orbiter and lander (not including Deep Space 2)". It covers the orbiter plus the Mars Polar Lander, not the orbiter alone. Say "the project" or "the two missions together". https://web.archive.org/web/20121003073752/http://mars.jpl.nasa.gov/msp98/orbiter/fact.html
+                        - Figure 4 is on page 14 of the same report. It shows the estimated trajectory (226 km) against the actual one (57 km). Not to scale.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Every span is green. The booking is still wrong.</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Mars Climate Orbiter, 1999</h3>
+                            <ul>
+                                <li>Every system reported nominal</li>
+                                <li>Navigation numbers disagreed for months</li>
+                                <li>Nobody checked the outcome against the intent</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>TripMate, today</h3>
+                            <ul>
+                                <li>Every span is green</li>
+                                <li>Every tool call returns OK</li>
+                                <li>The customer still gets the wrong flight</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        Bridge line (Candidate 2): "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns 200 OK, and it books Hyderabad to Delhi when you asked for Delhi to Hyderabad. Today you'll learn to catch the swapped units before the spacecraft is gone."
+                        Optional 30 s close from Candidate 3 (Air Canada, "a remarkable submission"), to move from spacecraft to a travel agent: see speaker-notes/opening-story.md.
+                        MCO facts: https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf
+                        TripMate is the workshop's synthetic agent; no external source needed.
+                    </aside>
+                </section>
+            </section>
+
+            <!-- PHASE 1: OPENING AND FIRST TRACE (B1-B4, 00:00-00:20) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #4ade80;">Part 1: Opening and first trace</h2>
+                    <p class="quote">00:00 to 00:20 · your first trace by minute 15</p>
+                    <aside class="notes">Blocks 1 to 4. Checkpoint 1 at 00:15 to 00:20: trace visible.</aside>
+                </section>
+                <section>
+                    <h2>Setup check</h2>
+                    <ul>
+                        <li>Wifi and chat: <span class="highlight">[fill in on the day]</span></li>
+                        <li>Repo QR: <span class="highlight">[add when the repo is public]</span></li>
+                        <li>Run this while I talk: <code>uv run ws doctor</code></li>
+                        <li>Pairing on one laptop is fine and encouraged</li>
+                        <li>Green sticky: ready. Red sticky: need help.</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 1 (00:00 to 00:05). Hands up: traced an LLM app before? Saw READY at home?
+                        TAs count greens; reds get help; locked laptops pair with a ready neighbour. If behind, skip the poll.
+                        No factual claims on this slide.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Today's loop</h2>
+                    <div class="agenda-container">
+                        <div class="agenda-card"><h3>Trace</h3><p>See every step an agent takes</p></div>
+                        <div class="agenda-card"><h3>Diagnose and fix</h3><p>Find a silent failure, add a guard</p></div>
+                        <div class="agenda-card"><h3>Evaluate and monitor</h3><p>Score live runs, alert on rates</p></div>
+                    </div>
+                    <p style="font-size: 0.7em; color: #cbd5e1;">Labs run in windows that end on a checkpoint, not the clock. Stickies tell TAs where to go.</p>
+                    <aside class="notes">
+                        Agenda: opening 20 min, concepts 25, incident 40, break 10, evaluator 35, alerts 20, close 15, buffers 15.
+                        Checkpoint rule: 80% or more, move on; 60 to 80%, move on and TAs keep helping; under 60%, I drive from the projector.
+                        No factual claims on this slide.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Why it matters: a chatbot's answer in court</h2>
+                    <ul>
+                        <li>Air Canada's chatbot gave a customer wrong bereavement fare information</li>
+                        <li>Air Canada argued the bot was "a separate legal entity"</li>
+                        <li>The tribunal held the airline liable: C$650.88, plus interest and fees</li>
+                    </ul>
+                    <p class="quote">Could you prove what your bot told a customer, and why?</p>
+                    <aside class="notes">
+                        Block 2 (00:05 to 00:10). Ask the room the question.
+                        Total ordered: C$812.02 = C$650.88 damages + C$36.14 interest + C$125 fees.
+                        Sources: https://www.theguardian.com/world/2024/feb/16/air-canada-chatbot-lawsuit
+                        Decision: https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf
+                        CAVEAT: the decision says Air Canada "did not provide any information about the nature of its chatbot". Call it a chatbot, not a GenAI agent.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Why it matters: an agent that acted</h2>
+                    <ul>
+                        <li>Replit's AI coding agent deleted a production database during an explicit code freeze</li>
+                        <li>It said rollback would not work. The rollback worked.</li>
+                        <li>You cannot debug an agent by asking the agent</li>
+                    </ul>
+                    <p class="quote">Which span would have shown the destructive tool call?</p>
+                    <aside class="notes">
+                        Block 2. Drop this slide if behind.
+                        Sources: https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783
+                        Lemkin's post: https://x.com/jasonlk/status/1946239068691665187 · Masad's reply: https://x.com/amasad/status/1946986468586721478
+                        CAVEAT: the data was recovered, and this was a 12-day experiment, not a real company's customer data. https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7
+                    </aside>
+                </section>
+                <section>
+                    <h2>Most teams trace. Fewer check the answer.</h2>
+                    <div class="metric-grid">
+                        <div class="metric-card"><h3 style="color: #60a5fa;">~89%</h3><p>have agent observability</p></div>
+                        <div class="metric-card"><h3 style="color: #60a5fa;">52.4%</h3><p>run offline evals</p></div>
+                        <div class="metric-card"><h3 style="color: #60a5fa;">37.3%</h3><p>run online evals</p></div>
+                    </div>
+                    <p style="font-size: 0.6em; color: #94a3b8;">LangChain, State of Agent Engineering survey, 1,340 responses, 18 Nov to 2 Dec 2025</p>
+                    <aside class="notes">
+                        Block 2. Also: 32% cite quality as a top barrier.
+                        Source: https://www.langchain.com/state-of-agent-engineering
+                    </aside>
+                </section>
+                <section>
+                    <h2>Tracing is table stakes. Today we close the loop.</h2>
+                    <div class="flow-diagram">observe (trace)  →  diagnose  →  fix (guard)  →  verify (evaluator)  →  monitor (alert)</div>
+                    <aside class="notes">
+                        Block 2 close. "Tracing is table stakes" echoes the survey: https://www.langchain.com/state-of-agent-engineering
+                    </aside>
+                </section>
+                <section>
+                    <h2>Why me</h2>
+                    <ul>
+                        <li>AI Observability Architect, PepsiCo, Hyderabad</li>
+                        <li>Tidy Traces: a daily AI observability newspaper</li>
+                        <li>Ragwatch: OTel-native tracing SDK for RAG and agents</li>
+                        <li>widescope: browser-only trace viewer for LLM and agent pipelines</li>
+                        <li>observability-engineering-series: 11 chapters of runnable code</li>
+                    </ul>
+                    <p style="font-size: 0.6em; color: #94a3b8;">Views are my own. This workshop is independent of my employer.</p>
+                    <aside class="notes">
+                        Block 3 (00:10 to 00:15). 60 seconds, facts only.
+                        Sources: https://soumendrak.com/about · https://tidytraces.com · https://github.com/soumendrak/ragwatch · https://github.com/soumendrak/widescope · https://github.com/soumendrak/observability-engineering-series
+                    </aside>
+                </section>
+                <section>
+                    <h2>The incident: TripMate booked the wrong flight</h2>
+                    <ul>
+                        <li>TripMate is a travel agent bot built for this workshop</li>
+                        <li>A customer complained about their booking</li>
+                        <li>All data is synthetic. No real airline, no real customer.</li>
+                    </ul>
+                    <p class="quote">First, one normal run.</p>
+                    <aside class="notes">
+                        Block 3. Teaser only. Do not describe the fault yet.
+                        No external factual claims. TripMate and its data are synthetic.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 1</span> Your first trace</h2>
+                    <div class="code-block">uv run ws run "Book HYD to BLR on 2026-10-31"</div>
+                    <ul>
+                        <li>Same command on macOS, Linux and Windows PowerShell</li>
+                        <li>Click the trace URL it prints</li>
+                        <li>No network or no Langfuse account? Add <code>--exporter console</code></li>
+                    </ul>
+                    <aside class="notes">
+                        Block 3. Lab guide: labs/01-first-trace.md in the workshop repo.
+                        TAs: region and key errors go to docs/troubleshooting.md.
+                        No external factual claims.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Checkpoint 1: trace visible</h2>
+                    <div class="flow-diagram">tripmate (agent)
+  └─ LangGraph (chain)
+       ├─ generation
+       ├─ search_flights (tool)
+       ├─ generation
+       ├─ book_flight (tool)
+       └─ generation</div>
+                    <p style="font-size: 0.7em;">Green sticky if your tree matches the projector.</p>
+                    <aside class="notes">
+                        Block 4 (00:15 to 00:20). Tour my trace on the projector.
+                        Stragglers: pair up, open a public trace, or switch to --exporter console.
+                        Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
+                        TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
+                    </aside>
+                </section>
+            </section>
+
+            <!-- PHASE 2: READ A TRACE AND ESSENTIAL CONCEPTS (B5-B9, 00:20-00:45) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #4ade80;">Part 2: Read a trace</h2>
+                    <p class="quote">00:20 to 00:45 · spans, the agent loop, percentiles</p>
+                    <aside class="notes">Blocks 5 to 9. Checkpoint 2 at 00:45: own p99 read.</aside>
+                </section>
+                <section>
+                    <h2>Anatomy of a span</h2>
+                    <ul>
+                        <li>A <span class="highlight">span</span> has a name, start, duration, status, attributes and a parent</li>
+                        <li>A <span class="highlight">trace</span> is a tree of spans for one request</li>
+                        <li>A <span class="highlight">log</span> is one event. A <span class="highlight">metric</span> is an aggregate.</li>
+                    </ul>
+                    <p class="quote">Find your trace ID, the root, and shout your span count.</p>
+                    <aside class="notes">
+                        Block 5 (00:20 to 00:25). Optional 10 s demo of plain vs structured logs from observability-engineering-series ch1.
+                        Definitions follow OpenTelemetry: https://opentelemetry.io/docs/concepts/signals/traces/ · https://opentelemetry.io/docs/concepts/signals/
+                        ch1: https://github.com/soumendrak/observability-engineering-series
+                    </aside>
+                </section>
+                <section>
+                    <h2>The agent loop</h2>
+                    <div class="flow-diagram">LLM → tool → LLM → tool → LLM (final answer)</div>
+                    <ul>
+                        <li>Observation types: <code>agent</code>, <code>generation</code>, <code>tool</code>, <code>chain</code></li>
+                        <li>Every run of TripMate is wrapped in one root observation, <code>tripmate</code></li>
+                    </ul>
+                    <aside class="notes">
+                        Block 6 (00:25 to 00:30). Show agent.py briefly.
+                        Langfuse observation types: https://langfuse.com/docs/observability/features/observation-types
+                    </aside>
+                </section>
+                <section>
+                    <h2>The root holds the facts</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3><code>input.requested</code></h3>
+                            <ul><li>origin, destination, date</li><li>Parsed by plain code, not the LLM</li></ul>
+                        </div>
+                        <div>
+                            <h3><code>output.booking</code></h3>
+                            <ul><li>What the booking tool returned</li><li>Never LLM text</li></ul>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.7em;">Start the background load now: <code>uv run ws load -n 50</code></p>
+                    <aside class="notes">
+                        Block 6. "Open the root tripmate. Input has requested, output has booking. Remember this."
+                        Check the load started. Design from the workshop plan (A6); no external claim.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 2</span> Read a trace</h2>
+                    <ol>
+                        <li>Which span is the longest?</li>
+                        <li>How many generations are there?</li>
+                        <li>What arguments did each tool get?</li>
+                        <li>How many tokens in total?</li>
+                        <li>Root input vs root output: what do you see?</li>
+                    </ol>
+                    <p style="font-size: 0.7em;">Worksheet Q1 to Q5, with a partner if you have one.</p>
+                    <aside class="notes">
+                        Block 7, window W1 (00:28 to 00:38). If behind, Q1 to Q3 only.
+                        TAs check against the key on the answer sheet. Answers are not in this public deck.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Same instrumentation, real model</h2>
+                    <ul>
+                        <li>Same agent, a real OpenAI-compatible model, same prompt run twice</li>
+                        <li>Two different traces, same tree shape</li>
+                        <li>Real models vary, so today's faults are scripted</li>
+                    </ul>
+                    <p class="quote">Spot the difference between the two runs.</p>
+                    <aside class="notes">
+                        Block 8 (00:35 to 00:40). 3-minute demo in my own project with LLM_MODE=openai.
+                        If behind: screenshot of the two runs. TODO: add the screenshot.
+                        No external factual claim.
+                    </aside>
+                </section>
+                <section>
+                    <h2>OpenTelemetry GenAI names</h2>
+                    <ul>
+                        <li><code>invoke_agent</code>: an agent run</li>
+                        <li><code>execute_tool</code>: a tool call</li>
+                        <li><code>gen_ai.tool.call.arguments</code>: what the tool was given</li>
+                    </ul>
+                    <p style="font-size: 0.6em; color: #94a3b8;">Status: Development. Names can still change.</p>
+                    <aside class="notes">
+                        Block 8. 60 seconds.
+                        Source: https://github.com/open-telemetry/semantic-conventions-genai
+                    </aside>
+                </section>
+                <section>
+                    <h2>Checkpoint 2: mean vs percentiles</h2>
+                    <ul>
+                        <li>Guess your p99 from your mean, then read the last line of <code>ws load</code></li>
+                        <li>99 runs at 1 s plus one at 30 s: mean 1.29 s, median 1 s</li>
+                        <li>With 50 runs, p99 is your slowest run or two. An illustration, not an estimate.</li>
+                        <li>Tools compute percentiles differently. Langfuse may differ a little.</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 9 (00:40 to 00:45). Worksheet uses the ws load numbers (nearest rank).
+                        Nearest-rank p99 of 50 values is the maximum; numpy's default linear method interpolates between the two largest: https://numpy.org/doc/stable/reference/generated/numpy.percentile.html
+                        1.29 s = (99 × 1 + 30) / 100, my own calculation.
+                        Offline: ws load -n 50 --exporter console prints the same line.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Why tails matter for agents</h2>
+                    <div class="code-block">P(at least one slow step) = 1 − 0.99ⁿ</div>
+                    <ul>
+                        <li>n = 10 steps: 9.6%</li>
+                        <li>n = 25 steps: 22.2%</li>
+                    </ul>
+                    <p style="font-size: 0.65em; color: #94a3b8;">Intuition, not a prediction. Real steps aren't independent.</p>
+                    <aside class="notes">
+                        Block 9. Assumes each step independently has a 1% chance of hitting its p99. My own calculation.
+                        The Tail at Scale reports 63% at fan-out 100: https://cacm.acm.org/research/the-tail-at-scale/
+                        A slow model or backend slows several steps at once. Details: Appendix, reliability compounding.
+                    </aside>
+                </section>
+            </section>
+
+            <!-- PHASE 3: INCIDENT INVESTIGATION, FIX AND RERUN (B10-B18, 00:45-01:30) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #f87171;">Part 3: The incident</h2>
+                    <p class="quote">00:45 to 01:25 · investigate, fix, rerun</p>
+                    <aside class="notes">Blocks 10 to 18. Checkpoint 3 at 01:10 (Case 2 explained), Checkpoint 4 at 01:25 (rerun PASS). Never cut below 15 minutes of Case 2 window.</aside>
+                </section>
+                <section>
+                    <h2>The complaint</h2>
+                    <p class="quote">"I asked TripMate for a flight. The confirmation looked right. The ticket I got was not the trip I asked for."</p>
+                    <aside class="notes">
+                        Block 10 (00:45 to 00:50). Synthetic complaint letter for the workshop. No external claim.
+                        TODO: final wording of the complaint letter from the lab guide.
+                    </aside>
+                </section>
+                <section>
+                    <h2>A five-step method</h2>
+                    <ol>
+                        <li>Filter level = ERROR</li>
+                        <li>Filter type = tool</li>
+                        <li>Sort by duration or tokens</li>
+                        <li>Compare what was asked with what the tool did</li>
+                        <li>Open the generation that chose the call</li>
+                    </ol>
+                    <aside class="notes">
+                        Block 10. Skip this slide if behind and say the steps aloud.
+                        Method from the workshop plan. No external claim.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 3</span> Warm-up: Case 1</h2>
+                    <div class="code-block">uv run ws case 1</div>
+                    <ul>
+                        <li>Find the failing step</li>
+                        <li>Find which step caused it</li>
+                        <li>Tell your TA your answer</li>
+                    </ul>
+                    <aside class="notes">
+                        Blocks 10 and 11, window W2 (00:47 to 00:55). Reveal at 00:54 (00:52 if behind).
+                        The reveal is on the TA answer sheet, not in this public deck.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 3</span> The real complaint: Case 2</h2>
+                    <div class="code-block">uv run ws case 2</div>
+                    <ul>
+                        <li>Nothing is red. Read the confirmation too.</li>
+                        <li>Five minutes on your own first</li>
+                        <li>Goal: what went wrong, and where does it show?</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 11 launches W3 (00:55 to 01:15). Bug bounty: first 3 correct answers, checked by a TA.
+                        Answers and hints are on the TA answer sheet only.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Case 2 hints</h2>
+                    <div class="placeholder">Hint 1 and hint 2 are revealed live, one at a time.</div>
+                    <aside class="notes">
+                        Block 12 (hint 1 at +4 min) and block 13 (hint 2). Read the hints from the instructor copy.
+                        Deliberately not written here: this deck is public.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 3</span> Fill the evidence table</h2>
+                    <table class="comparison-table">
+                        <thead><tr><th>Span</th><th>Field</th><th>What it says</th><th>What the user asked</th></tr></thead>
+                        <tbody><tr><td>…</td><td>…</td><td>…</td><td>…</td></tr><tr><td>…</td><td>…</td><td>…</td><td>…</td></tr></tbody>
+                    </table>
+                    <p style="font-size: 0.7em;">Compare with your partner or neighbour.</p>
+                    <aside class="notes">
+                        Block 13 (01:00 to 01:05). Worksheet part B. TAs listen in and nudge with questions, not answers.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Checkpoint 3: one sentence</h2>
+                    <p class="quote">What went wrong, where it shows, and why the confirmation hid it.</p>
+                    <p style="font-size: 0.7em;">Green sticky when it's written. A TA checks it.</p>
+                    <aside class="notes">
+                        Block 14 (01:05 to 01:10). Accept a verbal explanation if behind. TAs count per zone.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Share and vote</h2>
+                    <ul>
+                        <li>Three pairs read their sentence, 30 seconds each</li>
+                        <li>The room votes for the most precise one</li>
+                        <li>I draw the chain from request to customer on the whiteboard</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 15 (01:10 to 01:15). Mic runner. The causal chain is drawn live from the instructor copy, not shown here.
+                        60 s mention: stretch tasks for later.
+                    </aside>
+                </section>
+                <section>
+                    <h2>The text is a claim. The tool result is the fact.</h2>
+                    <p class="quote">Debug and evaluate on facts.</p>
+                    <aside class="notes">
+                        Block 15 close. General lesson; no case specifics. Workshop plan principle, no external claim.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 4</span> Fix it</h2>
+                    <ul>
+                        <li>Open <code>src/tripmate/guards.py</code> and find <code>WORKSHOP EDIT HERE</code></li>
+                        <li>Make <code>validate_booking</code> raise <code>ValueError</code> if origin, destination or date differ from the request</li>
+                        <li>About 4 to 6 lines</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 16, window W4 (01:15 to 01:25). Lab guide: labs/04-fix-and-rerun.md.
+                        Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 4</span> Checkpoint 4: rerun</h2>
+                    <div class="code-block">uv run ws case 2 --rerun</div>
+                    <ul>
+                        <li>Look for <code>booking_matches_request: PASS (local check)</code></li>
+                        <li>Open the new trace and compare its root with the old one</li>
+                    </ul>
+                    <p class="quote">The guard prevents the incorrect action. The evaluator checks the recorded outcome afterwards.</p>
+                    <aside class="notes">
+                        Block 17 (01:20 to 01:25). Sticky: PASS. Stuck more than 5 minutes: TA shows the reference fix from the answer sheet.
+                        If the room is behind, I show the fix and rerun live from the instructor copy.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Buffer A: stretch</h2>
+                    <ul>
+                        <li>Run Case 2 with other cities or dates</li>
+                        <li>Predict the local check result before you run it</li>
+                        <li>Cases 3 to 6, if built</li>
+                    </ul>
+                    <aside class="notes">Block 18 (01:25 to 01:30). Overflow for W4.</aside>
+                </section>
+            </section>
+
+            <!-- BREAK (B19-B20, 01:30-01:40) -->
+            <section class="chapter-slide">
+                <h2 style="color: #38bdf8;">Break: 10 minutes</h2>
+                <p class="quote">Help desk at the front for setup and reruns</p>
+                <aside class="notes">Blocks 19 and 20. Collect zone readiness from TAs. Cut to 7 minutes if more than 10 minutes behind. TODO: add a timer.</aside>
+            </section>
+
+            <!-- PHASE 4: BUILD AND TEST AN EVALUATOR (B21-B28, 01:40-02:20) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #4ade80;">Part 4: Build an evaluator</h2>
+                    <p class="quote">01:40 to 02:15 · score every run, not just this one</p>
+                    <aside class="notes">Blocks 21 to 28. Checkpoint 5 at 02:00, Checkpoint 6 at 02:05.</aside>
+                </section>
+                <section>
+                    <h2>Three ways to score quality</h2>
+                    <table class="comparison-table">
+                        <thead><tr><th>Check</th><th>Strength</th><th>Cost</th></tr></thead>
+                        <tbody>
+                            <tr><td>Code</td><td>Deterministic</td><td>Cheap</td></tr>
+                            <tr><td>LLM-as-judge</td><td>Semantic</td><td>Tokens, and it can be wrong</td></tr>
+                            <tr><td>Human review</td><td>Ground truth</td><td>Slow</td></tr>
+                        </tbody>
+                    </table>
+                    <aside class="notes">
+                        Block 21 (01:40 to 01:45). Cut this slide first if behind.
+                        Langfuse evaluation methods: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators · https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
+                    </aside>
+                </section>
+                <section>
+                    <h2>Poll: which check catches it?</h2>
+                    <ul>
+                        <li>A regex on the confirmation text</li>
+                        <li>A structured comparison of request and booking</li>
+                        <li>An LLM judge</li>
+                    </ul>
+                    <aside class="notes">Block 21 poll. Discuss after the votes. No factual claim.</aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 5</span> Build the code evaluator</h2>
+                    <ol>
+                        <li>Evaluators → New → Code evaluator → Python</li>
+                        <li>Paste <code>evals/booking_matches.py</code> from the repo</li>
+                        <li>Target root observations, name <code>tripmate</code></li>
+                        <li>Don't save yet</li>
+                    </ol>
+                    <aside class="notes">
+                        Block 22 demo (01:45 to 01:50), then block 23, window W5 (01:50 to 02:05). Lab guide: labs/05-evals.md.
+                        Common slips: not targeting root, not selecting a sample.
+                        Langfuse code evaluators need observations from an OTel-based SDK (Python SDK v3+), standard library only, no network, 2-second limit: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 5</span> Checkpoint 5: test it</h2>
+                    <ul>
+                        <li>Test on your old Case 2 trace</li>
+                        <li>Test on your rerun trace</li>
+                        <li>Sticky when both results match what you expect</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 24 (01:55 to 02:00). Expected results are on the TA answer sheet.
+                        If the test errors, check whether input arrives as a dict or a JSON string. If behind, test only the rerun trace.
+                    </aside>
+                </section>
+                <section>
+                    <h2><span class="lab-tag">Lab 5</span> Checkpoint 6: run on traffic</h2>
+                    <div class="code-block">uv run ws load -n 15 --case 0
+uv run ws load -n 15 --case 2 --guard off
+uv run ws case 2 --rerun</div>
+                    <ul>
+                        <li>Save the evaluator with a rule on new data first</li>
+                        <li>Filter traces by <code>booking_matches_request</code></li>
+                    </ul>
+                    <aside class="notes">
+                        Block 25 (02:00 to 02:05). Use -n 5 each if behind. One --mix command if O2 shipped.
+                        Langfuse evaluator rules: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators
+                    </aside>
+                </section>
+                <section>
+                    <h2>Demo: LLM-as-judge</h2>
+                    <ul>
+                        <li>Judge prompt: "Does the booking match the request?"</li>
+                        <li>Needs an LLM connection, meaning a provider key</li>
+                        <li>Costs tokens on every scored observation</li>
+                    </ul>
+                    <p class="quote">Code or judge for this?</p>
+                    <aside class="notes">
+                        Block 26 (02:05 to 02:10). In my own project. Screenshot if behind (first cut). Calibration details: Appendix.
+                        Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
+                    </aside>
+                </section>
+                <section>
+                    <h2>Which check catches which case?</h2>
+                    <table class="comparison-table">
+                        <thead><tr><th>Check</th><th>Case 0</th><th>Case 2</th><th>Case 3</th><th>Case 5</th></tr></thead>
+                        <tbody>
+                            <tr><td>Text regex</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+                            <tr><td>Structured eval</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+                            <tr><td>LLM judge</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.7em;">Use code evals for facts and judges for semantics.</p>
+                    <aside class="notes">
+                        Block 27 (02:10 to 02:15). The room fills cells aloud. The filled table is on the instructor copy, not here.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Buffer B</h2>
+                    <p>Finish your evaluator. TAs are coming round.</p>
+                    <aside class="notes">Block 28 (02:15 to 02:20).</aside>
+                </section>
+            </section>
+
+            <!-- PHASE 5: MONITORING AND ALERT DEMO (B29-B33, 02:20-02:45) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #4ade80;">Part 5: Monitor and alert</h2>
+                    <p class="quote">02:20 to 02:40 · missing is not the same as failing</p>
+                    <aside class="notes">Blocks 29 to 33. Checkpoint 7 at 02:40: "explain NO_DATA vs ALERT" poll.</aside>
+                </section>
+                <section>
+                    <h2>Four signals to watch</h2>
+                    <div class="metric-grid">
+                        <div class="metric-card"><h3 style="color: #60a5fa;">Eval</h3><p>pass rate</p></div>
+                        <div class="metric-card"><h3 style="color: #60a5fa;">p95</h3><p>latency</p></div>
+                        <div class="metric-card"><h3 style="color: #60a5fa;">Tool</h3><p>error rate</p></div>
+                        <div class="metric-card"><h3 style="color: #60a5fa;">Tokens</h3><p>per run</p></div>
+                    </div>
+                    <p class="quote">Which one would you page on for TripMate?</p>
+                    <aside class="notes">Block 29 (02:20 to 02:25). Show of hands. Workshop plan recommendation, no external claim.</aside>
+                </section>
+                <section>
+                    <h2>Alert on rates and symptoms</h2>
+                    <ul>
+                        <li>Alert on rates over a window, not on every exception</li>
+                        <li>Alert on what users feel</li>
+                        <li>Burn rate: how fast you spend your error budget (Appendix)</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 29. One slide if behind.
+                        Source: Google SRE workbook, alerting on SLOs: https://sre.google/workbook/alerting-on-slos/
+                    </aside>
+                </section>
+                <section>
+                    <h2>Demo: create the alert</h2>
+                    <ul>
+                        <li>Scores (boolean): avg <code>booking_matches_request</code> &lt; 0.9, smallest window</li>
+                        <li>Default no-data mode: treat missing data as 0</li>
+                        <li>So before any score exists, it reads as 0% pass and fires</li>
+                        <li>Choose <span class="highlight">Show severity NO_DATA</span></li>
+                    </ul>
+                    <p style="font-size: 0.6em; color: #94a3b8;">A count alert flags a small denominator. It doesn't silence the pass-rate alert.</p>
+                    <aside class="notes">
+                        Block 30 (02:25 to 02:30). Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
+                        No-data modes, boolean average = share of true scores: https://langfuse.com/docs/observability/features/alerts
+                        Hobby allows 2 alerts: https://langfuse.com/pricing
+                        Record the real evaluation interval from the integration gate here.
+                    </aside>
+                </section>
+                <section>
+                    <h2>ALERT vs NO_DATA</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3 style="color: #f87171;">ALERT</h3>
+                            <ul><li>We measured</li><li>It's below the threshold</li></ul>
+                        </div>
+                        <div>
+                            <h3 style="color: #facc15;">NO_DATA</h3>
+                            <ul><li>No matching scores in the window</li><li>Broken evaluator, no traffic, or a filter typo</li><li>Check the trace count to tell which</li></ul>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        Block 31 (02:30 to 02:35). Two pre-built alerts on my project with no scores: default shows ALERT, NO_DATA one shows NO_DATA. Then ws load -n 40 --case 2 --guard off, then the webhook payload.
+                        In production use "Notify after sustained NO_DATA".
+                        Source: https://langfuse.com/docs/observability/features/alerts
+                        If the gate shows different NO_DATA behaviour, record it here.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Checkpoint 7: predict the state</h2>
+                    <ol>
+                        <li>Your evaluator crashed for an hour. What does the default-mode alert show? The NO_DATA-mode alert?</li>
+                        <li>Nobody booked for an hour. What does the NO_DATA alert show?</li>
+                        <li>How do you tell those two apart?</li>
+                    </ol>
+                    <aside class="notes">Block 32 (02:35 to 02:40). Poll. Answers are discussed live, not written here.</aside>
+                </section>
+                <section>
+                    <h2>Token budget</h2>
+                    <ul>
+                        <li>Budget: 3,000 tokens per run</li>
+                        <li>Compare a normal run with a rerun that adds a generation</li>
+                        <li>Tokens per run is a cost signal you can alert on</li>
+                    </ul>
+                    <aside class="notes">Block 32, 2 minutes. Goes to homework if behind. Use Case 6 if built. The 3,000 budget is a workshop example, not an external figure.</aside>
+                </section>
+                <section>
+                    <h2>Buffer C</h2>
+                    <p>Questions, or finish your alert.</p>
+                    <aside class="notes">Block 33 (02:40 to 02:45).</aside>
+                </section>
+            </section>
+
+            <!-- PHASE 6: PRODUCTION TAKEAWAYS AND Q&A (B34-B36, 02:45-03:00) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #4ade80;">Part 6: Take it to production</h2>
+                    <p class="quote">02:45 to 03:00</p>
+                    <aside class="notes">Blocks 34 to 36.</aside>
+                </section>
+                <section>
+                    <h2>The loop, again</h2>
+                    <div class="flow-diagram">observe (trace)  →  diagnose (compare request vs tool)  →  fix (guard)
+                   →  verify (local check + evaluator)  →  monitor (alert with NO_DATA)</div>
+                    <aside class="notes">Block 34 (02:45 to 02:50). No external claim.</aside>
+                </section>
+                <section>
+                    <h2>Production checklist (1/2)</h2>
+                    <ol>
+                        <li>Trace every LLM and tool call with OTel-based instrumentation</li>
+                        <li>Put the structured request and tool result on the root span</li>
+                        <li>Validate tool arguments before any action that changes something</li>
+                        <li>Set span status to ERROR and record exceptions, even on recovery</li>
+                        <li>Propagate session, user and release IDs</li>
+                        <li>Cap steps and retries, and record when the cap is hit</li>
+                    </ol>
+                    <aside class="notes">
+                        Block 34. Full list: docs/production-checklist.md in the workshop repo.
+                        OTel GenAI conventions: https://github.com/open-telemetry/semantic-conventions-genai
+                    </aside>
+                </section>
+                <section>
+                    <h2>Production checklist (2/2)</h2>
+                    <ol start="7">
+                        <li>Track p50, p95, p99 latency, tool error rate, tokens and cost per run</li>
+                        <li>Run a structured code eval on live traffic for your costliest mistake</li>
+                        <li>Calibrate any LLM judge against human labels before alerting on it</li>
+                        <li>Alert on rates over windows, with explicit no-data handling</li>
+                        <li>Tail-sample: keep all errors and slow runs</li>
+                        <li>Redact PII before export. Keep keys out of traces.</li>
+                    </ol>
+                    <aside class="notes">
+                        Block 34. Sources: https://langfuse.com/docs/observability/features/alerts · https://sre.google/workbook/alerting-on-slos/
+                    </aside>
+                </section>
+                <section>
+                    <h2>Homework and Q&amp;A</h2>
+                    <ul>
+                        <li>Cases 3 to 6 if built, otherwise Case 2 variants</li>
+                        <li>Add the Langfuse <code>CallbackHandler</code> to your own agent</li>
+                        <li>Read the maths appendix</li>
+                    </ul>
+                    <aside class="notes">
+                        Block 35 (02:50 to 02:55). docs/homework.md. Collect chat questions.
+                        Langfuse LangChain integration: https://langfuse.com/docs/integrations/langchain/tracing
+                    </aside>
+                </section>
+                <section class="thanks-slide">
+                    <h2 style="color: #4ade80;">Thank you</h2>
+                    <img src="../../../shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
+                    <p class="connect-text">Connect on LinkedIn</p>
+                    <p>Feedback form: <span class="highlight">[QR on the day]</span></p>
+                    <p style="color: #cbd5e1;">tidytraces.com · github.com/soumendrak/ragwatch · github.com/soumendrak/widescope</p>
+                    <p style="color: #cbd5e1;">Thanks to The Data AI Guild and our TAs</p>
+                    <aside class="notes">
+                        Block 36 (02:55 to 03:00). Collect stickies; photo.
+                        Links: https://tidytraces.com · https://github.com/soumendrak/ragwatch · https://github.com/soumendrak/widescope
+                    </aside>
+                </section>
+            </section>
+
+            <!-- APPENDIX: MATHS AND BACKUP (Q&A only) -->
+            <section>
+                <section class="chapter-slide">
+                    <h2 style="color: #a78bfa;">Appendix</h2>
+                    <p class="quote">Maths and backup slides, for Q&amp;A only</p>
+                    <aside class="notes">Not taught in the main flow. Numbers are my own calculations unless a source is cited.</aside>
+                </section>
+                <section>
+                    <h2>Appendix: percentiles on small samples</h2>
+                    <ul>
+                        <li>n = 50: nearest-rank p99 is rank ⌈0.99 × 50⌉ = 50, the maximum</li>
+                        <li>numpy default (linear): position 0.99 × 49 = 48.51</li>
+                        <li>A p99 you can trust needs hundreds of runs. Use p50 and p95 for small samples.</li>
+                    </ul>
+                    <aside class="notes">B0. Source: https://numpy.org/doc/stable/reference/generated/numpy.percentile.html. Langfuse's method is not documented on the pages checked.</aside>
+                </section>
+                <section>
+                    <h2>Appendix: reliability compounding</h2>
+                    <ul>
+                        <li>Per-step success multiplies: 0.95¹⁰ = 59.9%, 0.99¹⁰ = 90.4%</li>
+                        <li>1 − 0.99ⁿ: n = 5 → 4.9%, 10 → 9.6%, 25 → 22.2%, 50 → 39.5%, 100 → 63.4%</li>
+                        <li>Assumes independent, identical steps. Real steps are correlated.</li>
+                    </ul>
+                    <aside class="notes">B1. Own calculations. Fan-out reference: https://cacm.acm.org/research/the-tail-at-scale/</aside>
+                </section>
+                <section>
+                    <h2>Appendix: pass@k vs pass^k</h2>
+                    <ul>
+                        <li>pass@k: at least one of k tries succeeds</li>
+                        <li>pass^k: all k tries succeed</li>
+                        <li>p = 0.7: pass@3 = 97.3%, pass^3 = 34.3%</li>
+                        <li>Use pass^k for agents that act on behalf of users</li>
+                    </ul>
+                    <aside class="notes">
+                        B2. pass@k: https://arxiv.org/abs/2107.03374 · pass^k: https://arxiv.org/abs/2406.12045 (reports "pass^8 &lt;25% in retail").
+                        97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
+                    </aside>
+                </section>
+                <section>
+                    <h2>Appendix: confidence intervals</h2>
+                    <table class="comparison-table">
+                        <thead><tr><th>Result</th><th>95% Wilson interval</th></tr></thead>
+                        <tbody>
+                            <tr><td>9/10</td><td>59.6% to 98.2%</td></tr>
+                            <tr><td>45/50</td><td>78.6% to 95.7%</td></tr>
+                            <tr><td>450/500</td><td>87.1% to 92.3%</td></tr>
+                            <tr><td>44/50 vs 46/50</td><td>76.2-94.4% vs 81.2-96.8%: they overlap</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 0.65em;">±5 points at p = 0.5 needs about 384 samples; ±3 needs about 1,067. Rule of three: 0 failures in n runs → upper bound about 3/n.</p>
+                    <aside class="notes">
+                        B3. Own calculations (Wilson score interval). Method reference: https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval
+                        Rule of three: https://en.wikipedia.org/wiki/Rule_of_three_(statistics)
+                    </aside>
+                </section>
+                <section>
+                    <h2>Appendix: base rates and alert precision</h2>
+                    <ul>
+                        <li>Sensitivity 95%, specificity 95%, 2% of runs bad</li>
+                        <li>Precision = 0.95×0.02 / (0.95×0.02 + 0.05×0.98) = 28%</li>
+                        <li>At 1,000 runs a day: 19 true alarms, 49 false</li>
+                        <li>Alert on windowed rates. Read them next to the sample count.</li>
+                    </ul>
+                    <aside class="notes">B4. Own calculation (Bayes). Reference: https://en.wikipedia.org/wiki/Base_rate_fallacy</aside>
+                </section>
+                <section>
+                    <h2>Appendix: burn rate</h2>
+                    <ul>
+                        <li>A 99% SLO leaves a 1% error budget</li>
+                        <li>Burn rate 14.4 spends 2% of a 30-day budget in 1 hour</li>
+                        <li>Page at 2% in 1 hour or 5% in 6 hours. Ticket at 10% in 3 days.</li>
+                        <li>Check a short window at the same time</li>
+                    </ul>
+                    <aside class="notes">B5. Source: https://sre.google/workbook/alerting-on-slos/. Example rules: observability-engineering-series ch11, https://github.com/soumendrak/observability-engineering-series</aside>
+                </section>
+                <section>
+                    <h2>Appendix: sampling and PII</h2>
+                    <ul>
+                        <li>Uniform 5% sampling keeps about 1 of 20 daily failures</li>
+                        <li>Tail sampling: keep 100% of errors, 100% of slow runs, 5% of normal runs</li>
+                        <li>Redact prompts, emails and IDs before export</li>
+                        <li>Run the redaction before tail sampling in the Collector</li>
+                    </ul>
+                    <aside class="notes">
+                        B6. Own calculation for the 1 in 20. Collector tail sampling: https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor
+                        Example config: observability-engineering-series ch9, https://github.com/soumendrak/observability-engineering-series
+                    </aside>
+                </section>
+                <section>
+                    <h2>Appendix: calibrating an LLM judge</h2>
+                    <ul>
+                        <li>Label 20 to 50 runs by hand</li>
+                        <li>Measure agreement with the judge</li>
+                        <li>Fix the rubric before you trust its rate</li>
+                        <li>Judges cost tokens on every scored observation</li>
+                    </ul>
+                    <aside class="notes">B7. Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge</aside>
+                </section>
+                <section>
+                    <h2>Backup: troubleshooting top 10</h2>
+                    <div class="placeholder">TODO: fill from <code>ws doctor</code> messages and docs/troubleshooting.md after the build.</div>
+                    <aside class="notes">Backup slide. Wrong region, bad or swapped keys, missing .env, proxy or TLS, wrong Python, uv sync not run, wrong tag, guards.py edited early.</aside>
+                </section>
+                <section>
+                    <h2>Backup: public traces and offline view</h2>
+                    <div class="placeholder">TODO: public trace QR codes and a console-tree screenshot, after backup traces exist.</div>
+                    <aside class="notes">Backup slide for stuck laptops. Public trace links use langfuse.trace.public: https://langfuse.com/docs/opentelemetry/get-started</aside>
+                </section>
+            </section>
+
+        </div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+
+    <script src="../../../shared/scripts/slides.js"></script>
+</body>
+</html>

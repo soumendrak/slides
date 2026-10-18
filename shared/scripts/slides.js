@@ -109,7 +109,9 @@
     disableLayout: smallScreen.matches && !printMode,
     touch: !smallScreen.matches,
     keyboardCondition: event => !help.open && !slideIndex.open && (!toolbar.contains(document.activeElement) || ![' ', 'Enter'].includes(event.key)),
-    pdfSeparateFragments: false
+    pdfSeparateFragments: false,
+    // Speaker view (S) works in decks that load reveal.js's notes plugin.
+    plugins: [window.RevealNotes].filter(Boolean)
   }).then(() => {
     function jumpSection(direction) {
       const horizontalSlides = [...document.querySelector('.reveal .slides').children]
