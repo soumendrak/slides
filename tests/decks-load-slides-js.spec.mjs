@@ -8,7 +8,7 @@ const root = path.resolve(import.meta.dirname, '..');
 const decks = fs.readdirSync(path.join(root, 'talks'), { recursive: true })
   .filter(file => file.endsWith('.html'))
   .map(file => path.join('talks', file))
-  .filter(file => fs.readFileSync(path.join(root, file), 'utf8').includes('reveal.min.js'));
+  .filter(file => /reveal(\.min)?\.js/.test(fs.readFileSync(path.join(root, file), 'utf8')));
 const templates = ['README.md', '.claude/UPDATE_PROMPT.md'].flatMap(file =>
   [...fs.readFileSync(path.join(root, file), 'utf8').matchAll(/```html\n([\s\S]*?)```/g)]
     .map(([, block]) => block)
