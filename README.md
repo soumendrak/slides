@@ -129,6 +129,10 @@ The reveal.js setup supports:
 - Speaker notes (press `S` during presentation)
 - PDF export (add `?view=print` to URL)
 
+## Sponsor
+
+If this project helps you, consider [sponsoring my work on GitHub](https://github.com/sponsors/soumendrak). Your support helps fund maintenance, documentation, and continued development.
+
 ## License
 
 This repository structure is available for anyone to use for their own presentations. The talk content itself is © the respective authors.
