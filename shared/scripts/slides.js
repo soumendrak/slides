@@ -18,6 +18,13 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const smallScreen = window.matchMedia('(max-width: 760px)');
   const printMode = new URLSearchParams(location.search).has('print-pdf');
+  const themeStorage = (() => {
+    try { return window.localStorage; } catch { return null; }
+  })();
+  const savedTheme = themeStorage ? themeStorage.getItem('slides-theme') : null;
+  const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  let currentTheme = savedTheme || systemTheme;
+  root.dataset.theme = currentTheme;
   document.querySelectorAll('.comparison-table').forEach(table => {
     const headers = [...table.querySelectorAll('thead th')];
     headers.forEach(header => header.setAttribute('scope', 'col'));
@@ -49,6 +56,7 @@
     <dl><dt>← / →</dt><dd>Previous / next slide</dd><dt>Space</dt><dd>Next slide</dd>
     <dt>Shift + →</dt><dd>Jump to next section</dd>
     <dt>Shift + ←</dt><dd>Jump to previous section</dd>
+    <dt>T</dt><dd>Toggle light and dark theme</dd>
     <dt>Esc</dt><dd>Overview / close help</dd><dt>F</dt><dd>Fullscreen</dd>
     <dt>Home / End</dt><dd>First / last slide</dd>${window.RevealNotes ? '<dt>S</dt><dd>Speaker notes</dd>' : ''}</dl>
     <p>On phones, scroll inside a slide to read the rest. Use the arrows to continue.</p>
@@ -70,9 +78,23 @@
       Reveal.configure({ transition: motionEnabled ? 'fade' : 'none', backgroundTransition: motionEnabled ? 'fade' : 'none' });
     }
   }
+
+  function syncTheme() {
+    root.dataset.theme = currentTheme;
+    if (themeStorage) themeStorage.setItem('slides-theme', currentTheme);
+  }
   syncMotion();
+  syncTheme();
   reducedMotion.addEventListener('change', () => { motionEnabled = !reducedMotion.matches; syncMotion(); });
   motionButton.addEventListener('click', () => { motionEnabled = !motionEnabled; syncMotion(); });
+  document.addEventListener('keydown', event => {
+    const target = event.target;
+    if (event.ctrlKey || event.metaKey || event.altKey || target && target.closest('input, textarea, select, [contenteditable="true"], [contenteditable=""]')) return;
+    if (event.key.toLowerCase() === 't') {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      syncTheme();
+    }
+  }, true);
   toolbar.querySelector('[data-action="overview"]').addEventListener('click', event => {
     if (smallScreen.matches) {
       const list = slideIndex.querySelector('ol');
