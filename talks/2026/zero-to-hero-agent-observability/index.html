@@ -29,6 +29,24 @@
         .reveal .text-violet { color: #a78bfa !important; }
         .reveal .text-blue { color: #60a5fa !important; }
         .reveal .text-yellow { color: #facc15 !important; }
+        .reveal .recap-progress { font-size: 20px; color: #94a3b8; margin: -8px 0 18px; }
+        .reveal .recap-progress strong { color: #4ade80; }
+        .reveal .recap-past { font-size: 22px; margin-bottom: 18px; }
+        .reveal .recap-past li { color: #94a3b8; line-height: 1.35; margin-bottom: 6px; }
+        .reveal .recap-past ul { margin-top: 6px; }
+        .reveal .recap-past strong { color: #cbd5e1; }
+        .reveal .recap-past code { color: inherit; }
+        .reveal .recap-now, .reveal .recap-current { border-left: 4px solid #4ade80; padding-left: 22px; }
+        .reveal .recap-now { font-size: 30px; color: #4ade80; margin: 0; padding-bottom: 12px; }
+        .reveal .recap-current { font-size: 26px; padding-left: calc(22px + 1.15em); }
+        .reveal .recap-current li { color: var(--deck-text); line-height: 1.35; margin-bottom: 10px; }
+        :root[data-theme="light"] .reveal .recap-progress,
+        :root[data-theme="light"] .reveal .recap-past li { color: #64748b; }
+        :root[data-theme="light"] .reveal .recap-past strong { color: #334155; }
+        :root[data-theme="light"] .reveal .recap-progress strong,
+        :root[data-theme="light"] .reveal .recap-now { color: #15803d; }
+        :root[data-theme="light"] .reveal .recap-now,
+        :root[data-theme="light"] .reveal .recap-current { border-left-color: #15803d; }
         :root[data-theme="light"] .reveal .placeholder,
         :root[data-theme="light"] .reveal .muted,
         :root[data-theme="light"] .reveal .dim,
@@ -354,6 +372,30 @@ Note:
 - Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
 - TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
 
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 1 of 6
+
+<p class="recap-progress"><strong>Part 1 ●</strong> · Part 2 · Part 3 · Part 4 · Part 5 · Part 6</p>
+
+### Part 1 · Opening and first trace <!-- .element: class="recap-now" -->
+
+- Why it matters: a chatbot's answer in court, an agent that deleted a database
+- Most teams trace. Fewer check the answer.
+- Today's loop: observe, diagnose, fix, verify, monitor
+- Lab 1: your first TripMate trace, one root with LLM and tool steps
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 4 (ends 00:20). Take 30 to 60 seconds of that block, then move on.
+- Read Part 1 aloud. Name the earlier parts in one breath each.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: Part 2, Read a trace.
+- Summarises slides already shown. No new claims, no lab answers.
+
 ---
 
 <!-- .slide: class="chapter-slide" -->
@@ -525,6 +567,37 @@ Note:
 Sources:
 
 1. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
+
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 2 of 6
+
+<p class="recap-progress">Part 1 ✓ · <strong>Part 2 ●</strong> · Part 3 · Part 4 · Part 5 · Part 6</p>
+
+- **Part 1 · Opening and first trace**
+    - Why it matters: agents fail silently, and most teams trace but fewer check the answer
+    - Lab 1: your first TripMate trace
+
+<!-- .element: class="recap-past" -->
+
+### Part 2 · Read a trace <!-- .element: class="recap-now" -->
+
+- A trace is a tree of spans. A span has a name, duration, status, attributes and a parent.
+- The agent loop: LLM, tool, LLM. Types: `agent`, `generation`, `tool`, `chain`
+- The root holds the facts: `input.requested` and `output.booking`, never LLM text
+- OpenTelemetry GenAI names: `invoke_agent`, `execute_tool`
+- Read the tail, not the mean: p99, and why tails matter for agents
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 9 (ends 00:45). Take 30 to 60 seconds of that block, then move on.
+- Read Part 2 aloud. Name the earlier parts in one breath each.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: Part 3, The incident.
+- Summarises slides already shown. No new claims, no lab answers.
 
 ---
 
@@ -701,6 +774,38 @@ Note:
 - Block 18 (01:25 to 01:30).
 - Overflow for W4.
 
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 3 of 6
+
+<p class="recap-progress">Part 1 ✓ · Part 2 ✓ · <strong>Part 3 ●</strong> · Part 4 · Part 5 · Part 6</p>
+
+- Part 1 · Opening and first trace: your first trace
+- **Part 2 · Read a trace**
+    - The root holds the facts: `input.requested` and `output.booking`
+    - Read the tail, not the mean: p99 and why tails matter
+
+<!-- .element: class="recap-past" -->
+
+### Part 3 · The incident <!-- .element: class="recap-now" -->
+
+- A five-step method: filter, sort, compare what was asked with what the tool did
+- Case 1 warm-up, then Case 2: nothing is red, so read the confirmation too
+- Evidence table and one sentence: what went wrong and where it shows
+- The text is a claim. The tool result is the fact.
+- Lab 4: a guard in `guards.py`, then a rerun: `booking_matches_request: PASS`
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 18 (ends 01:30). Take 30 to 60 seconds of that block, then move on.
+- Read Part 3 aloud. Name the earlier parts in one breath each.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: the break, then Part 4, Build an evaluator.
+- Summarises slides already shown. No new claims, no lab answers.
+
 ---
 
 <!-- .slide: class="chapter-slide" -->
@@ -865,6 +970,39 @@ Finish your evaluator. TAs are coming round.
 Note:
 - Block 28 (02:15 to 02:20).
 
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 4 of 6
+
+<p class="recap-progress">Part 1 ✓ · Part 2 ✓ · Part 3 ✓ · <strong>Part 4 ●</strong> · Part 5 · Part 6</p>
+
+- Part 1 · Opening and first trace: your first trace
+- Part 2 · Read a trace: spans, the agent loop, percentiles
+- **Part 3 · The incident**
+    - The text is a claim. The tool result is the fact.
+    - A guard in `guards.py`, then a rerun: local check PASS
+
+<!-- .element: class="recap-past" -->
+
+### Part 4 · Build an evaluator <!-- .element: class="recap-now" -->
+
+- Three ways to score: code, LLM-as-judge, human review
+- Lab 5: a code evaluator on root `tripmate` observations
+- Tested on the old Case 2 trace and the rerun, then run on traffic
+- LLM-as-judge: semantic, but needs a provider key and costs tokens
+- Code evals for facts, judges for semantics
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 28 (ends 02:20). Take 30 to 60 seconds of that block, then move on.
+- Read Part 4 aloud. Name the earlier parts in one breath each.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: Part 5, Monitor and alert.
+- Summarises slides already shown. No new claims, no lab answers.
+
 ---
 
 <!-- .slide: class="chapter-slide" -->
@@ -996,6 +1134,40 @@ Questions, or finish your alert.
 Note:
 - Block 33 (02:40 to 02:45).
 
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 5 of 6
+
+<p class="recap-progress">Part 1 ✓ · Part 2 ✓ · Part 3 ✓ · Part 4 ✓ · <strong>Part 5 ●</strong> · Part 6</p>
+
+- Part 1 · Opening and first trace
+- Part 2 · Read a trace: spans, the agent loop, percentiles
+- Part 3 · The incident: investigate, fix, rerun
+- **Part 4 · Build an evaluator**
+    - A code evaluator scores every run: `booking_matches_request`
+    - Code evals for facts, judges for semantics
+
+<!-- .element: class="recap-past" -->
+
+### Part 5 · Monitor and alert <!-- .element: class="recap-now" -->
+
+- Four signals: eval pass rate, p95 latency, tool error rate, tokens per run
+- Alert on rates over a window, and on what users feel
+- An alert on avg `booking_matches_request`, with severity NO_DATA shown
+- ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
+- Tokens per run is a cost signal you can alert on
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 33 (ends 02:45). Take 30 to 60 seconds of that block, then move on.
+- Read Part 5 aloud. Name the earlier parts in one breath each.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: Part 6, Take it to production.
+- Summarises slides already shown. No new claims, no lab answers.
+
 ---
 
 <!-- .slide: class="chapter-slide" -->
@@ -1077,6 +1249,40 @@ Note:
 Sources:
 
 1. [Langfuse: LangChain integration](https://langfuse.com/docs/integrations/langchain/tracing)
+
+--
+
+<!-- .slide: class="recap-slide" -->
+
+## Where we are: Part 6 of 6
+
+<p class="recap-progress">Part 1 ✓ · Part 2 ✓ · Part 3 ✓ · Part 4 ✓ · Part 5 ✓ · <strong>Part 6 ●</strong></p>
+
+- Part 1 · Opening and first trace
+- Part 2 · Read a trace
+- Part 3 · The incident: investigate, fix, rerun
+- Part 4 · Build an evaluator: score every run
+- **Part 5 · Monitor and alert**
+    - Alert on rates over a window, and on what users feel
+    - ALERT means we measured and it is low. NO_DATA means nothing to measure.
+
+<!-- .element: class="recap-past" -->
+
+### Part 6 · Take it to production <!-- .element: class="recap-now" -->
+
+- The loop, again: observe, diagnose, fix, verify, monitor
+- Checklist 1 to 6: trace every call, keep request and tool result on the root, validate before acting
+- Checklist 7 to 12: track latency and cost, eval live traffic, alert with no-data handling, redact PII
+- Homework: more cases, `CallbackHandler` in your own agent, the maths appendix
+
+<!-- .element: class="recap-current" -->
+
+Note:
+- End of Block 36 (ends 03:00). Take 30 to 60 seconds of that block, then move on.
+- Wrap-up for the whole workshop: walk the parts top to bottom, then finish on Part 6.
+- If behind, 15 seconds: read only the highlighted part.
+- Next: Thank you.
+- Summarises slides already shown. No new claims, no lab answers.
 
 --
 
