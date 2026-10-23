@@ -282,15 +282,13 @@ No external factual claims.
 
 ## Checkpoint 1: trace visible
 
-```mermaid
-flowchart LR
-agent["tripmate (agent)"] --> chain["LangGraph (chain)"]
-chain --> gen1[generation]
-chain --> search["search_flights (tool)"]
-chain --> gen2[generation]
-chain --> book["book_flight (tool)"]
-chain --> gen3[generation]
-```
+<div class="flow-diagram">tripmate (agent)
+  └─ LangGraph (chain)
+       ├─ generation
+       ├─ search_flights (tool)
+       ├─ generation
+       ├─ book_flight (tool)
+       └─ generation</div>
 
 Green sticky if your tree matches the projector. <!-- .element: class="small" -->
 
