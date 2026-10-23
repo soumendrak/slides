@@ -80,6 +80,7 @@ slides/
 - **Navigate:** Arrow keys, space, or click
 - **Skip to next/previous section:** `Shift + →` / `Shift + ←` (skips vertical detail slides and consecutive split-slide parts)
 - Load `shared/scripts/slides.js` in every presentation, after reveal.js. It calls `Reveal.initialize`, adds the shared navigation and keyboard help, and drops postMessages from other origins. Don't call `Reveal.initialize` yourself.
+- **Markdown and diagrams:** to write slides in Markdown, also load reveal.js's `plugin/markdown.min.js`. For ```` ```mermaid ```` diagrams, load `shared/assets/js/pele-1.9.0.global.js`, `shared/scripts/diagrams.js` and `shared/styles/diagrams.css`. To run with no network, point at the local reveal.js copy in `shared/assets/reveal.js-6.0.2/` instead of cdnjs. See `talks/2026/zero-to-hero-agent-observability/` for an example.
 - **Overview mode:** Press `Esc`
 - **Fullscreen:** Press `F`
 - **Speaker notes:** Press `S`
