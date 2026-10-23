@@ -30,7 +30,7 @@ for (const [scheme, url] of Object.entries(urls)) {
       diagrams: document.querySelectorAll('.pele-diagram svg').length,
       errors: document.querySelectorAll('.pele-error').length,
     }));
-    expect(deckState).toEqual({ notesPlugin: true, slides: 71, withNotes: 71, diagrams: 3, errors: 0 });
+    expect(deckState).toEqual({ notesPlugin: true, slides: 77, withNotes: 77, diagrams: 3, errors: 0 });
     expect(external).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
