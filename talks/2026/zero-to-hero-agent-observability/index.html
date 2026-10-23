@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/theme/night.min.css" id="theme">
     <link rel="stylesheet" href="../../../shared/styles/slides.css">
+    <link rel="stylesheet" href="../../../shared/styles/diagrams.css">
     <style>
         .reveal figure { margin: 0 auto; text-align: center; }
         .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
@@ -224,7 +225,10 @@ Source: https://www.langchain.com/state-of-agent-engineering
 
 ## Tracing is table stakes. Today we close the loop.
 
-<div class="flow-diagram">observe (trace)  →  diagnose  →  fix (guard)  →  verify (evaluator)  →  monitor (alert)</div>
+```mermaid
+flowchart LR
+observe["observe (trace)"] --> diagnose --> fix["fix (guard)"] --> verify["verify (evaluator)"] --> monitor["monitor (alert)"]
+```
 
 Note:
 Block 2 close. "Tracing is table stakes" echoes the survey: https://www.langchain.com/state-of-agent-engineering
@@ -278,13 +282,15 @@ No external factual claims.
 
 ## Checkpoint 1: trace visible
 
-<div class="flow-diagram">tripmate (agent)
-  └─ LangGraph (chain)
-       ├─ generation
-       ├─ search_flights (tool)
-       ├─ generation
-       ├─ book_flight (tool)
-       └─ generation</div>
+```mermaid
+flowchart LR
+agent["tripmate (agent)"] --> chain["LangGraph (chain)"]
+chain --> gen1[generation]
+chain --> search["search_flights (tool)"]
+chain --> gen2[generation]
+chain --> book["book_flight (tool)"]
+chain --> gen3[generation]
+```
 
 Green sticky if your tree matches the projector. <!-- .element: class="small" -->
 
@@ -323,7 +329,10 @@ ch1: https://github.com/soumendrak/observability-engineering-series
 
 ## The agent loop
 
-<div class="flow-diagram">LLM → tool → LLM → tool → LLM (final answer)</div>
+```mermaid
+flowchart LR
+llm1[LLM] --> tool1[tool] --> llm2[LLM] --> tool2[tool] --> llm3["LLM (final answer)"]
+```
 
 - Observation types: `agent`, `generation`, `tool`, `chain`
 - Every run of TripMate is wrapped in one root observation, `tripmate`
@@ -826,8 +835,10 @@ Note: Blocks 34 to 36.
 
 ## The loop, again
 
-<div class="flow-diagram">observe (trace)  →  diagnose (compare request vs tool)  →  fix (guard)
-                   →  verify (local check + evaluator)  →  monitor (alert with NO_DATA)</div>
+```mermaid
+flowchart LR
+observe["observe (trace)"] --> diagnose["diagnose (compare request vs tool)"] --> fix["fix (guard)"] --> verify["verify (local check + evaluator)"] --> monitor["monitor (alert with NO_DATA)"]
+```
 
 Note: Block 34 (02:45 to 02:50). No external claim.
 
@@ -1023,6 +1034,8 @@ Note: Backup slide for stuck laptops. Public trace links use langfuse.trace.publ
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/plugin/markdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/6.0.2/plugin/notes.min.js"></script>
 
+    <script src="../../../shared/assets/js/pele-1.9.0.global.js"></script>
+    <script src="../../../shared/scripts/diagrams.js"></script>
     <script src="../../../shared/scripts/slides.js"></script>
 </body>
 </html>

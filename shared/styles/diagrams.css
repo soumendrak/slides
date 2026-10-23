@@ -1,0 +1,19 @@
+.reveal .pele-diagram {
+  --pele-bg: transparent;
+  --pele-fg: var(--deck-text);
+  --pele-muted: var(--deck-muted);
+  --pele-line: var(--deck-muted);
+  --pele-surface: var(--deck-surface);
+  --pele-surface-alt: var(--deck-bg);
+  --pele-border: var(--deck-blue);
+  --pele-accent: var(--deck-blue);
+  --pele-critical: #f87171;
+  --pele-error: #f87171;
+  --pele-font: inherit;
+  --pele-font-mono: var(--deck-mono);
+  --pele-radius: 10px;
+  margin: 0 0 20px;
+  text-align: center;
+}
+.reveal .pele-diagram svg { max-width: 100%; height: auto; }
+.reveal .pele-error { font-family: var(--deck-mono); font-size: 22px; color: #f87171; text-align: left; white-space: pre-wrap; }
