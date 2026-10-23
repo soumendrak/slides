@@ -13,8 +13,6 @@
     <style>
         .reveal figure { margin: 0 auto; text-align: center; }
         .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
-        .reveal figcaption { font-size: 0.55em; color: #cbd5e1; margin-top: 6px; }
-        .reveal figcaption a { word-break: break-all; }
         .reveal .lab-tag { color: #facc15; font-weight: 600; }
         .reveal .placeholder { border: 2px dashed #475569; padding: 18px; color: #94a3b8; }
         .reveal .medium { font-size: 0.75em; }
@@ -31,7 +29,6 @@
         .reveal .text-violet { color: #a78bfa !important; }
         .reveal .text-blue { color: #60a5fa !important; }
         .reveal .text-yellow { color: #facc15 !important; }
-        :root[data-theme="light"] .reveal figcaption,
         :root[data-theme="light"] .reveal .placeholder,
         :root[data-theme="light"] .reveal .muted,
         :root[data-theme="light"] .reveal .dim,
@@ -72,8 +69,9 @@ By Soumendra Kumar Sahoo <!-- .element: class="byline" -->
 The Data AI Guild, Hyderabad · Saturday 31 Oct 2026 · 180 min <!-- .element: class="center muted" -->
 
 Note:
-Block 1 (00:00). Put this up while people sit down. Wifi and chat details go on the next slides.
-Event page: https://luma.com/dil7wq7j
+- Block 1 (00:00). Put this up while people sit down.
+- Wifi and chat details go on the next slides.
+- Event page: [luma.com/dil7wq7j](https://luma.com/dil7wq7j)
 
 ---
 
@@ -81,26 +79,42 @@ Event page: https://luma.com/dil7wq7j
 
 <figure>
 <img src="assets/mco-figure4-encounter-diagram.webp" alt="NASA schematic of the Mars Climate Orbiter encounter: the estimated trajectory passes 226 km above Mars, the actual trajectory 57 km">
-<figcaption>Figure 4, "Schematic MCO Encounter Diagram", Mars Climate Orbiter Mishap Investigation Board Phase I Report, NASA, 10 Nov 1999, p. 14.<br>
-Source: <a href="https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf">https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf</a></figcaption>
 </figure>
 
 <p class="medium">One ground file reported thruster data in pound-force-seconds. Navigation expected newton-seconds. <span class="red">lbf-s ≠ N-s</span></p>
 
 Note:
-Recommended opener: Candidate 2. Full script, backup facts and every caveat: speaker-notes/opening-story.md.
-
-Script (~230 words, about 1 min 45 s):
-On 11 December 1998, NASA launched the Mars Climate Orbiter. It was supposed to be the first weather satellite for another planet. Together with its sister lander, the project cost 327.6 million dollars.
-For nine months it flew towards Mars. On 23 September 1999 it fired its engine to go into orbit. NASA's investigation report says: "All systems performed nominally" until the spacecraft went behind Mars. The signal never came back.
-What went wrong? One ground software file, called "Small Forces", gave thruster data in pound-seconds. The navigation software expected newton-seconds. Nothing crashed and no alarm went off. Every number looked like a valid number. But each one was off by a factor of 4.45. Small errors added up over nine months. The spacecraft came in about 170 kilometres lower than planned and was lost.
-Here is the painful part. For months, people on the team had noticed that the navigation numbers did not agree. The report says these were "only informally reported", sorted out over e-mail, and "not resolved".
-So the system was healthy and the outcome was wrong. Every component said "I'm fine." Nobody was checking whether the answer made sense.
+- Recommended opener: Candidate 2.
+- Full script, backup facts and every caveat: speaker-notes/opening-story.md.
+- Script (~230 words, about 1 min 45 s):
+    - On 11 December 1998, NASA launched the Mars Climate Orbiter. [1]
+    - It was supposed to be the first weather satellite for another planet.
+    - Together with its sister lander, the project cost 327.6 million dollars. [3]
+    - For nine months it flew towards Mars. On 23 September 1999 it fired its engine to go into orbit.
+    - NASA's investigation report says: "All systems performed nominally" until the spacecraft went behind Mars. The signal never came back. [1]
+    - What went wrong? One ground software file, called "Small Forces", gave thruster data in pound-seconds. The navigation software expected newton-seconds. [1]
+    - Nothing crashed and no alarm went off. Every number looked like a valid number.
+    - But each one was off by a factor of 4.45. Small errors added up over nine months. [1]
+    - The spacecraft came in about 170 kilometres lower than planned and was lost. [1]
+    - Here is the painful part. For months, people on the team had noticed that the navigation numbers did not agree.
+    - The report says these were "only informally reported", sorted out over e-mail, and "not resolved". [1]
+    - So the system was healthy and the outcome was wrong. Every component said "I'm fine." Nobody was checking whether the answer made sense.
+- Backup facts from the report: [1] [2]
+    - Launch 11 Dec 1998; "All systems performed nominally until Mars's occultation loss of signal".
+    - Small Forces in lbf-s vs N-s, factor 4.45; about 170 km lower than planned.
+    - 57 km periapsis vs 80 km survivable.
+    - "only informally reported", "not resolved", "relied on e-mail".
+- CAVEAT: $327.6M is "total for both orbiter and lander (not including Deep Space 2)". [3]
+    - It covers the orbiter plus the Mars Polar Lander, not the orbiter alone.
+    - Say "the project" or "the two missions together".
+- Slide figure: Figure 4, "Schematic MCO Encounter Diagram", Mars Climate Orbiter Mishap Investigation Board Phase I Report, NASA, 10 Nov 1999, p. 14. [1]
+    - It shows the estimated trajectory (226 km) against the actual one (57 km). Not to scale.
 
 Sources:
-- Launch 11 Dec 1998; "All systems performed nominally until Mars's occultation loss of signal"; Small Forces in lbf-s vs N-s, factor 4.45; about 170 km lower than planned; 57 km periapsis vs 80 km survivable; "only informally reported", "not resolved", "relied on e-mail": NASA MIB Phase I Report, https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf (also NASA LLIS lesson 641, https://llis.nasa.gov/lesson/641)
-- CAVEAT: $327.6M is "total for both orbiter and lander (not including Deep Space 2)". It covers the orbiter plus the Mars Polar Lander, not the orbiter alone. Say "the project" or "the two missions together". https://web.archive.org/web/20121003073752/http://mars.jpl.nasa.gov/msp98/orbiter/fact.html
-- Figure 4 is on page 14 of the same report. It shows the estimated trajectory (226 km) against the actual one (57 km). Not to scale.
+
+1. [NASA MCO Mishap Investigation Board Phase I Report](https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf)
+2. [NASA LLIS lesson 641](https://llis.nasa.gov/lesson/641)
+3. [JPL MCO fact sheet (archived)](https://web.archive.org/web/20121003073752/http://mars.jpl.nasa.gov/msp98/orbiter/fact.html)
 
 --
 
@@ -126,9 +140,13 @@ Sources:
 </div>
 
 Note:
-Bridge line (Candidate 2): "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns 200 OK, and it books Hyderabad to Delhi when you asked for Delhi to Hyderabad. Today you'll learn to catch the swapped units before the spacecraft is gone."
-MCO facts: https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf
-TripMate is the workshop's synthetic agent; no external source needed.
+- Bridge line (Candidate 2): "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns 200 OK, and it books Hyderabad to Delhi when you asked for Delhi to Hyderabad. Today you'll learn to catch the swapped units before the spacecraft is gone."
+- MCO facts are from the NASA report. [1]
+- TripMate is the workshop's synthetic agent; no external source needed.
+
+Sources:
+
+1. [NASA MCO Mishap Investigation Board Phase I Report](https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf)
 
 ---
 
@@ -138,7 +156,9 @@ TripMate is the workshop's synthetic agent; no external source needed.
 
 00:00 to 00:20 · your first trace by minute 15 <!-- .element: class="quote" -->
 
-Note: Blocks 1 to 4. Checkpoint 1 at 00:15 to 00:20: trace visible.
+Note:
+- Blocks 1 to 4.
+- Checkpoint 1 at 00:15 to 00:20: trace visible.
 
 --
 
@@ -151,9 +171,12 @@ Note: Blocks 1 to 4. Checkpoint 1 at 00:15 to 00:20: trace visible.
 - Green sticky: ready. Red sticky: need help.
 
 Note:
-Block 1 (00:00 to 00:05). Hands up: traced an LLM app before? Saw READY at home?
-TAs count greens; reds get help; locked laptops pair with a ready neighbour. If behind, skip the poll.
-No factual claims on this slide.
+- Block 1 (00:00 to 00:05).
+- Hands up: traced an LLM app before? Saw READY at home?
+- TAs count greens; reds get help.
+- Locked laptops pair with a ready neighbour.
+- If behind, skip the poll.
+- No factual claims on this slide.
 
 --
 
@@ -168,9 +191,12 @@ No factual claims on this slide.
 Labs run in windows that end on a checkpoint, not the clock. Stickies tell TAs where to go. <!-- .element: class="small muted" -->
 
 Note:
-Agenda: opening 20 min, concepts 25, incident 40, break 10, evaluator 35, alerts 20, close 15, buffers 15.
-Checkpoint rule: 80% or more, move on; 60 to 80%, move on and TAs keep helping; under 60%, I drive from the projector.
-No factual claims on this slide.
+- Agenda: opening 20 min, concepts 25, incident 40, break 10, evaluator 35, alerts 20, close 15, buffers 15.
+- Checkpoint rule:
+    - 80% or more: move on.
+    - 60 to 80%: move on, and TAs keep helping.
+    - Under 60%: I drive from the projector.
+- No factual claims on this slide.
 
 --
 
@@ -183,11 +209,16 @@ No factual claims on this slide.
 Could you prove what your bot told a customer, and why? <!-- .element: class="quote" -->
 
 Note:
-Block 2 (00:05 to 00:10). Ask the room the question.
-Total ordered: C$812.02 = C$650.88 damages + C$36.14 interest + C$125 fees.
-Sources: https://www.theguardian.com/world/2024/feb/16/air-canada-chatbot-lawsuit
-Decision: https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf
-CAVEAT: the decision says Air Canada "did not provide any information about the nature of its chatbot". Call it a chatbot, not a GenAI agent.
+- Block 2 (00:05 to 00:10). Ask the room the question.
+- Total ordered: C$812.02 = C$650.88 damages + C$36.14 interest + C$125 fees. [2]
+- Coverage of the case. [1]
+- CAVEAT: the decision says Air Canada "did not provide any information about the nature of its chatbot". [2]
+    - Call it a chatbot, not a GenAI agent.
+
+Sources:
+
+1. [The Guardian: Air Canada chatbot lawsuit](https://www.theguardian.com/world/2024/feb/16/air-canada-chatbot-lawsuit)
+2. [BC Civil Resolution Tribunal decision, 2024 BCCRT 149](https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf)
 
 --
 
@@ -200,10 +231,17 @@ CAVEAT: the decision says Air Canada "did not provide any information about the 
 Which span would have shown the destructive tool call? <!-- .element: class="quote" -->
 
 Note:
-Block 2. Drop this slide if behind.
-Sources: https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783
-Lemkin's post: https://x.com/jasonlk/status/1946239068691665187 · Masad's reply: https://x.com/amasad/status/1946986468586721478
-CAVEAT: the data was recovered, and this was a 12-day experiment, not a real company's customer data. https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7
+- Block 2. Drop this slide if behind.
+- Coverage of the incident. [1]
+- Lemkin's post [2] and Masad's reply. [3]
+- CAVEAT: the data was recovered, and this was a 12-day experiment, not a real company's customer data. [4]
+
+Sources:
+
+1. [The Register: Replit agent deleted a production database](https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783)
+2. [Jason Lemkin's post on X](https://x.com/jasonlk/status/1946239068691665187)
+3. [Amjad Masad's reply on X](https://x.com/amasad/status/1946986468586721478)
+4. [Business Insider: Replit CEO apologises](https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7)
 
 --
 
@@ -215,11 +253,14 @@ CAVEAT: the data was recovered, and this was a 12-day experiment, not a real com
 <div class="metric-card"><h3 class="text-blue">37.3%</h3><p>run online evals</p></div>
 </div>
 
-LangChain, State of Agent Engineering survey, 1,340 responses, 18 Nov to 2 Dec 2025 <!-- .element: class="fine" -->
-
 Note:
-Block 2. Also: 32% cite quality as a top barrier.
-Source: https://www.langchain.com/state-of-agent-engineering
+- Block 2.
+- Survey: LangChain, State of Agent Engineering, 1,340 responses, 18 Nov to 2 Dec 2025. [1]
+- Also: 32% cite quality as a top barrier. [1]
+
+Sources:
+
+1. [LangChain: State of Agent Engineering](https://www.langchain.com/state-of-agent-engineering)
 
 --
 
@@ -231,7 +272,12 @@ observe["observe (trace)"] --> diagnose --> fix["fix (guard)"] --> verify["verif
 ```
 
 Note:
-Block 2 close. "Tracing is table stakes" echoes the survey: https://www.langchain.com/state-of-agent-engineering
+- Block 2 close.
+- "Tracing is table stakes" echoes the survey. [1]
+
+Sources:
+
+1. [LangChain: State of Agent Engineering](https://www.langchain.com/state-of-agent-engineering)
 
 --
 
@@ -246,8 +292,16 @@ Block 2 close. "Tracing is table stakes" echoes the survey: https://www.langchai
 Views are my own. This workshop is independent of my employer. <!-- .element: class="fine" -->
 
 Note:
-Block 3 (00:10 to 00:15). 60 seconds, facts only.
-Sources: https://soumendrak.com/about · https://tidytraces.com · https://github.com/soumendrak/ragwatch · https://github.com/soumendrak/widescope · https://github.com/soumendrak/observability-engineering-series
+- Block 3 (00:10 to 00:15). 60 seconds, facts only.
+- About me [1], Tidy Traces [2], Ragwatch [3], widescope [4], observability-engineering-series [5].
+
+Sources:
+
+1. [soumendrak.com/about](https://soumendrak.com/about)
+2. [Tidy Traces](https://tidytraces.com)
+3. [Ragwatch on GitHub](https://github.com/soumendrak/ragwatch)
+4. [widescope on GitHub](https://github.com/soumendrak/widescope)
+5. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
 
 --
 
@@ -260,8 +314,9 @@ Sources: https://soumendrak.com/about · https://tidytraces.com · https://githu
 First, one normal run. <!-- .element: class="quote" -->
 
 Note:
-Block 3. Teaser only. Do not describe the fault yet.
-No external factual claims. TripMate and its data are synthetic.
+- Block 3. Teaser only.
+- Do not describe the fault yet.
+- No external factual claims. TripMate and its data are synthetic.
 
 --
 
@@ -274,9 +329,10 @@ No external factual claims. TripMate and its data are synthetic.
 - No network or no Langfuse account? Add `--exporter console`
 
 Note:
-Block 3. Lab guide: labs/01-first-trace.md in the workshop repo.
-TAs: region and key errors go to docs/troubleshooting.md.
-No external factual claims.
+- Block 3.
+- Lab guide: labs/01-first-trace.md in the workshop repo.
+- TAs: region and key errors go to docs/troubleshooting.md.
+- No external factual claims.
 
 --
 
@@ -293,10 +349,10 @@ No external factual claims.
 Green sticky if your tree matches the projector. <!-- .element: class="small" -->
 
 Note:
-Block 4 (00:15 to 00:20). Tour my trace on the projector.
-Stragglers: pair up, open a public trace, or switch to --exporter console.
-Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
-TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
+- Block 4 (00:15 to 00:20). Tour my trace on the projector.
+- Stragglers: pair up, open a public trace, or switch to --exporter console.
+- Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
+- TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
 
 ---
 
@@ -306,7 +362,9 @@ TODO: replace with an annotated screenshot of a real Case 0 trace after the inte
 
 00:20 to 00:45 · spans, the agent loop, percentiles <!-- .element: class="quote" -->
 
-Note: Blocks 5 to 9. Checkpoint 2 at 00:45: own p99 read.
+Note:
+- Blocks 5 to 9.
+- Checkpoint 2 at 00:45: own p99 read.
 
 --
 
@@ -319,9 +377,15 @@ Note: Blocks 5 to 9. Checkpoint 2 at 00:45: own p99 read.
 Find your trace ID, the root, and shout your span count. <!-- .element: class="quote" -->
 
 Note:
-Block 5 (00:20 to 00:25). Optional 10 s demo of plain vs structured logs from observability-engineering-series ch1.
-Definitions follow OpenTelemetry: https://opentelemetry.io/docs/concepts/signals/traces/ · https://opentelemetry.io/docs/concepts/signals/
-ch1: https://github.com/soumendrak/observability-engineering-series
+- Block 5 (00:20 to 00:25).
+- Optional 10 s demo of plain vs structured logs from observability-engineering-series ch1. [3]
+- Definitions follow OpenTelemetry. [1] [2]
+
+Sources:
+
+1. [OpenTelemetry: traces](https://opentelemetry.io/docs/concepts/signals/traces/)
+2. [OpenTelemetry: signals](https://opentelemetry.io/docs/concepts/signals/)
+3. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
 
 --
 
@@ -336,8 +400,12 @@ llm1[LLM] --> tool1[tool] --> llm2[LLM] --> tool2[tool] --> llm3["LLM (final ans
 - Every run of TripMate is wrapped in one root observation, `tripmate`
 
 Note:
-Block 6 (00:25 to 00:30). Show agent.py briefly.
-Langfuse observation types: https://langfuse.com/docs/observability/features/observation-types
+- Block 6 (00:25 to 00:30). Show agent.py briefly.
+- Langfuse observation types. [1]
+
+Sources:
+
+1. [Langfuse: observation types](https://langfuse.com/docs/observability/features/observation-types)
 
 --
 
@@ -357,8 +425,10 @@ Langfuse observation types: https://langfuse.com/docs/observability/features/obs
 <p class="small">Start the background load now: <code>uv run ws load -n 50</code></p>
 
 Note:
-Block 6. "Open the root tripmate. Input has requested, output has booking. Remember this."
-Check the load started. Design from the workshop plan (A6); no external claim.
+- Block 6.
+- "Open the root tripmate. Input has requested, output has booking. Remember this."
+- Check the load started.
+- Design from the workshop plan (A6); no external claim.
 
 --
 
@@ -373,8 +443,10 @@ Check the load started. Design from the workshop plan (A6); no external claim.
 Worksheet Q1 to Q5, with a partner if you have one. <!-- .element: class="small" -->
 
 Note:
-Block 7, window W1 (00:28 to 00:38). If behind, Q1 to Q3 only.
-TAs check against the key on the answer sheet. Answers are not in this public deck.
+- Block 7, window W1 (00:28 to 00:38).
+- If behind, Q1 to Q3 only.
+- TAs check against the key on the answer sheet.
+- Answers are not in this public deck.
 
 --
 
@@ -387,9 +459,11 @@ TAs check against the key on the answer sheet. Answers are not in this public de
 Spot the difference between the two runs. <!-- .element: class="quote" -->
 
 Note:
-Block 8 (00:35 to 00:40). 3-minute demo in my own project with LLM_MODE=openai.
-If behind: screenshot of the two runs. TODO: add the screenshot.
-No external factual claim.
+- Block 8 (00:35 to 00:40).
+- 3-minute demo in my own project with LLM_MODE=openai.
+- If behind: screenshot of the two runs.
+- TODO: add the screenshot.
+- No external factual claim.
 
 --
 
@@ -402,8 +476,12 @@ No external factual claim.
 Status: Development. Names can still change. <!-- .element: class="fine" -->
 
 Note:
-Block 8. 60 seconds.
-Source: https://github.com/open-telemetry/semantic-conventions-genai
+- Block 8. 60 seconds.
+- OTel GenAI semantic conventions. [1]
+
+Sources:
+
+1. [OTel GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)
 
 --
 
@@ -415,10 +493,16 @@ Source: https://github.com/open-telemetry/semantic-conventions-genai
 - Tools compute percentiles differently. Langfuse may differ a little.
 
 Note:
-Block 9 (00:40 to 00:45). Worksheet uses the ws load numbers (nearest rank).
-Nearest-rank p99 of 50 values is the maximum; numpy's default linear method interpolates between the two largest: https://numpy.org/doc/stable/reference/generated/numpy.percentile.html
-1.29 s = (99 × 1 + 30) / 100, my own calculation.
-Offline: ws load -n 50 --exporter console prints the same line.
+- Block 9 (00:40 to 00:45).
+- The worksheet uses the ws load numbers (nearest rank).
+- Nearest-rank p99 of 50 values is the maximum. [1]
+- numpy's default linear method interpolates between the two largest. [1]
+- 1.29 s = (99 × 1 + 30) / 100, my own calculation.
+- Offline: ws load -n 50 --exporter console prints the same line.
+
+Sources:
+
+1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
 
 --
 
@@ -432,9 +516,15 @@ Offline: ws load -n 50 --exporter console prints the same line.
 Intuition, not a prediction. Real steps aren't independent. <!-- .element: class="smaller dim" -->
 
 Note:
-Block 9. Assumes each step independently has a 1% chance of hitting its p99. My own calculation.
-The Tail at Scale reports 63% at fan-out 100: https://cacm.acm.org/research/the-tail-at-scale/
-A slow model or backend slows several steps at once. Details: Appendix, reliability compounding.
+- Block 9.
+- Assumes each step independently has a 1% chance of hitting its p99. My own calculation.
+- The Tail at Scale reports 63% at fan-out 100. [1]
+- A slow model or backend slows several steps at once.
+- Details: Appendix, reliability compounding.
+
+Sources:
+
+1. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
 
 ---
 
@@ -444,7 +534,11 @@ A slow model or backend slows several steps at once. Details: Appendix, reliabil
 
 00:45 to 01:25 · investigate, fix, rerun <!-- .element: class="quote" -->
 
-Note: Blocks 10 to 18. Checkpoint 3 at 01:10 (Case 2 explained), Checkpoint 4 at 01:25 (rerun PASS). Never cut below 15 minutes of Case 2 window.
+Note:
+- Blocks 10 to 18.
+- Checkpoint 3 at 01:10 (Case 2 explained).
+- Checkpoint 4 at 01:25 (rerun PASS).
+- Never cut below 15 minutes of Case 2 window.
 
 --
 
@@ -453,8 +547,9 @@ Note: Blocks 10 to 18. Checkpoint 3 at 01:10 (Case 2 explained), Checkpoint 4 at
 "I asked TripMate for a flight. The confirmation looked right. The ticket I got was not the trip I asked for." <!-- .element: class="quote" -->
 
 Note:
-Block 10 (00:45 to 00:50). Synthetic complaint letter for the workshop. No external claim.
-TODO: final wording of the complaint letter from the lab guide.
+- Block 10 (00:45 to 00:50).
+- Synthetic complaint letter for the workshop. No external claim.
+- TODO: final wording of the complaint letter from the lab guide.
 
 --
 
@@ -467,8 +562,9 @@ TODO: final wording of the complaint letter from the lab guide.
 5. Open the generation that chose the call
 
 Note:
-Block 10. Skip this slide if behind and say the steps aloud.
-Method from the workshop plan. No external claim.
+- Block 10.
+- Skip this slide if behind and say the steps aloud.
+- Method from the workshop plan. No external claim.
 
 --
 
@@ -481,8 +577,9 @@ Method from the workshop plan. No external claim.
 - Tell your TA your answer
 
 Note:
-Blocks 10 and 11, window W2 (00:47 to 00:55). Reveal at 00:54 (00:52 if behind).
-The reveal is on the TA answer sheet, not in this public deck.
+- Blocks 10 and 11, window W2 (00:47 to 00:55).
+- Reveal at 00:54 (00:52 if behind).
+- The reveal is on the TA answer sheet, not in this public deck.
 
 --
 
@@ -495,8 +592,9 @@ The reveal is on the TA answer sheet, not in this public deck.
 - Goal: what went wrong, and where does it show?
 
 Note:
-Block 11 launches W3 (00:55 to 01:15). Bug bounty: first 3 correct answers, checked by a TA.
-Answers and hints are on the TA answer sheet only.
+- Block 11 launches W3 (00:55 to 01:15).
+- Bug bounty: first 3 correct answers, checked by a TA.
+- Answers and hints are on the TA answer sheet only.
 
 --
 
@@ -505,8 +603,9 @@ Answers and hints are on the TA answer sheet only.
 <div class="placeholder">Hint 1 and hint 2 are revealed live, one at a time.</div>
 
 Note:
-Block 12 (hint 1 at +4 min) and block 13 (hint 2). Read the hints from the instructor copy.
-Deliberately not written here: this deck is public.
+- Block 12 (hint 1 at +4 min) and block 13 (hint 2).
+- Read the hints from the instructor copy.
+- Deliberately not written here: this deck is public.
 
 --
 
@@ -521,7 +620,8 @@ Deliberately not written here: this deck is public.
 Compare with your partner or neighbour. <!-- .element: class="small" -->
 
 Note:
-Block 13 (01:00 to 01:05). Worksheet part B. TAs listen in and nudge with questions, not answers.
+- Block 13 (01:00 to 01:05). Worksheet part B.
+- TAs listen in and nudge with questions, not answers.
 
 --
 
@@ -532,7 +632,9 @@ What went wrong, where it shows, and why the confirmation hid it. <!-- .element:
 Green sticky when it's written. A TA checks it. <!-- .element: class="small" -->
 
 Note:
-Block 14 (01:05 to 01:10). Accept a verbal explanation if behind. TAs count per zone.
+- Block 14 (01:05 to 01:10).
+- Accept a verbal explanation if behind.
+- TAs count per zone.
 
 --
 
@@ -543,8 +645,9 @@ Block 14 (01:05 to 01:10). Accept a verbal explanation if behind. TAs count per 
 - I draw the chain from request to customer on the whiteboard
 
 Note:
-Block 15 (01:10 to 01:15). Mic runner. The causal chain is drawn live from the instructor copy, not shown here.
-60 s mention: stretch tasks for later.
+- Block 15 (01:10 to 01:15). Mic runner.
+- The causal chain is drawn live from the instructor copy, not shown here.
+- 60 s mention: stretch tasks for later.
 
 --
 
@@ -553,7 +656,9 @@ Block 15 (01:10 to 01:15). Mic runner. The causal chain is drawn live from the i
 Debug and evaluate on facts. <!-- .element: class="quote" -->
 
 Note:
-Block 15 close. General lesson; no case specifics. Workshop plan principle, no external claim.
+- Block 15 close.
+- General lesson; no case specifics.
+- Workshop plan principle, no external claim.
 
 --
 
@@ -564,8 +669,9 @@ Block 15 close. General lesson; no case specifics. Workshop plan principle, no e
 - About 4 to 6 lines
 
 Note:
-Block 16, window W4 (01:15 to 01:25). Lab guide: labs/04-fix-and-rerun.md.
-Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
+- Block 16, window W4 (01:15 to 01:25).
+- Lab guide: labs/04-fix-and-rerun.md.
+- Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
 
 --
 
@@ -579,8 +685,9 @@ Pseudo-code and the reference fix are on the instructor copy and TA answer sheet
 The guard prevents the incorrect action. The evaluator checks the recorded outcome afterwards. <!-- .element: class="quote" -->
 
 Note:
-Block 17 (01:20 to 01:25). Sticky: PASS. Stuck more than 5 minutes: TA shows the reference fix from the answer sheet.
-If the room is behind, I show the fix and rerun live from the instructor copy.
+- Block 17 (01:20 to 01:25). Sticky: PASS.
+- Stuck more than 5 minutes: TA shows the reference fix from the answer sheet.
+- If the room is behind, I show the fix and rerun live from the instructor copy.
 
 --
 
@@ -590,7 +697,9 @@ If the room is behind, I show the fix and rerun live from the instructor copy.
 - Predict the local check result before you run it
 - Cases 3 to 6, if built
 
-Note: Block 18 (01:25 to 01:30). Overflow for W4.
+Note:
+- Block 18 (01:25 to 01:30).
+- Overflow for W4.
 
 ---
 
@@ -600,7 +709,11 @@ Note: Block 18 (01:25 to 01:30). Overflow for W4.
 
 Help desk at the front for setup and reruns <!-- .element: class="quote" -->
 
-Note: Blocks 19 and 20. Collect zone readiness from TAs. Cut to 7 minutes if more than 10 minutes behind. TODO: add a timer.
+Note:
+- Blocks 19 and 20.
+- Collect zone readiness from TAs.
+- Cut to 7 minutes if more than 10 minutes behind.
+- TODO: add a timer.
 
 ---
 
@@ -610,7 +723,9 @@ Note: Blocks 19 and 20. Collect zone readiness from TAs. Cut to 7 minutes if mor
 
 01:40 to 02:15 · score every run, not just this one <!-- .element: class="quote" -->
 
-Note: Blocks 21 to 28. Checkpoint 5 at 02:00, Checkpoint 6 at 02:05.
+Note:
+- Blocks 21 to 28.
+- Checkpoint 5 at 02:00, Checkpoint 6 at 02:05.
 
 --
 
@@ -624,8 +739,14 @@ Note: Blocks 21 to 28. Checkpoint 5 at 02:00, Checkpoint 6 at 02:05.
 <!-- .element: class="comparison-table" -->
 
 Note:
-Block 21 (01:40 to 01:45). Cut this slide first if behind.
-Langfuse evaluation methods: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators · https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
+- Block 21 (01:40 to 01:45).
+- Cut this slide first if behind.
+- Langfuse evaluation methods: code evaluators [1] and LLM-as-a-judge. [2]
+
+Sources:
+
+1. [Langfuse: code evaluators](https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators)
+2. [Langfuse: LLM-as-a-judge](https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge)
 
 --
 
@@ -635,7 +756,10 @@ Langfuse evaluation methods: https://langfuse.com/docs/evaluation/evaluation-met
 - A structured comparison of request and booking
 - An LLM judge
 
-Note: Block 21 poll. Discuss after the votes. No factual claim.
+Note:
+- Block 21 poll.
+- Discuss after the votes.
+- No factual claim.
 
 --
 
@@ -647,9 +771,17 @@ Note: Block 21 poll. Discuss after the votes. No factual claim.
 4. Don't save yet
 
 Note:
-Block 22 demo (01:45 to 01:50), then block 23, window W5 (01:50 to 02:05). Lab guide: labs/05-evals.md.
-Common slips: not targeting root, not selecting a sample.
-Langfuse code evaluators need observations from an OTel-based SDK (Python SDK v3+), standard library only, no network, 2-second limit: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators
+- Block 22 demo (01:45 to 01:50), then block 23, window W5 (01:50 to 02:05).
+- Lab guide: labs/05-evals.md.
+- Common slips: not targeting root, not selecting a sample.
+- Langfuse code evaluators: [1]
+    - need observations from an OTel-based SDK (Python SDK v3+)
+    - standard library only, no network
+    - 2-second limit
+
+Sources:
+
+1. [Langfuse: code evaluators](https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators)
 
 --
 
@@ -660,8 +792,10 @@ Langfuse code evaluators need observations from an OTel-based SDK (Python SDK v3
 - Sticky when both results match what you expect
 
 Note:
-Block 24 (01:55 to 02:00). Expected results are on the TA answer sheet.
-If the test errors, check whether input arrives as a dict or a JSON string. If behind, test only the rerun trace.
+- Block 24 (01:55 to 02:00).
+- Expected results are on the TA answer sheet.
+- If the test errors, check whether input arrives as a dict or a JSON string.
+- If behind, test only the rerun trace.
 
 --
 
@@ -675,8 +809,14 @@ uv run ws case 2 --rerun</div>
 - Filter traces by `booking_matches_request`
 
 Note:
-Block 25 (02:00 to 02:05). Use -n 5 each if behind. One --mix command if O2 shipped.
-Langfuse evaluator rules: https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators
+- Block 25 (02:00 to 02:05).
+- Use -n 5 each if behind.
+- One --mix command if O2 shipped.
+- Langfuse evaluator rules. [1]
+
+Sources:
+
+1. [Langfuse: code evaluators](https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators)
 
 --
 
@@ -689,8 +829,14 @@ Langfuse evaluator rules: https://langfuse.com/docs/evaluation/evaluation-method
 Code or judge for this? <!-- .element: class="quote" -->
 
 Note:
-Block 26 (02:05 to 02:10). In my own project. Screenshot if behind (first cut). Calibration details: Appendix.
-Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
+- Block 26 (02:05 to 02:10). In my own project.
+- Screenshot if behind (first cut).
+- Calibration details: Appendix.
+- Langfuse LLM-as-a-judge docs. [1]
+
+Sources:
+
+1. [Langfuse: LLM-as-a-judge](https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge)
 
 --
 
@@ -706,7 +852,9 @@ Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
 Use code evals for facts and judges for semantics. <!-- .element: class="small" -->
 
 Note:
-Block 27 (02:10 to 02:15). The room fills cells aloud. The filled table is on the instructor copy, not here.
+- Block 27 (02:10 to 02:15).
+- The room fills cells aloud.
+- The filled table is on the instructor copy, not here.
 
 --
 
@@ -714,7 +862,8 @@ Block 27 (02:10 to 02:15). The room fills cells aloud. The filled table is on th
 
 Finish your evaluator. TAs are coming round.
 
-Note: Block 28 (02:15 to 02:20).
+Note:
+- Block 28 (02:15 to 02:20).
 
 ---
 
@@ -724,7 +873,9 @@ Note: Block 28 (02:15 to 02:20).
 
 02:20 to 02:40 · missing is not the same as failing <!-- .element: class="quote" -->
 
-Note: Blocks 29 to 33. Checkpoint 7 at 02:40: "explain NO_DATA vs ALERT" poll.
+Note:
+- Blocks 29 to 33.
+- Checkpoint 7 at 02:40: "explain NO_DATA vs ALERT" poll.
 
 --
 
@@ -739,7 +890,9 @@ Note: Blocks 29 to 33. Checkpoint 7 at 02:40: "explain NO_DATA vs ALERT" poll.
 
 Which one would you page on for TripMate? <!-- .element: class="quote" -->
 
-Note: Block 29 (02:20 to 02:25). Show of hands. Workshop plan recommendation, no external claim.
+Note:
+- Block 29 (02:20 to 02:25). Show of hands.
+- Workshop plan recommendation, no external claim.
 
 --
 
@@ -750,8 +903,12 @@ Note: Block 29 (02:20 to 02:25). Show of hands. Workshop plan recommendation, no
 - Burn rate: how fast you spend your error budget (Appendix)
 
 Note:
-Block 29. One slide if behind.
-Source: Google SRE workbook, alerting on SLOs: https://sre.google/workbook/alerting-on-slos/
+- Block 29. One slide if behind.
+- Google SRE workbook, alerting on SLOs. [1]
+
+Sources:
+
+1. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
 
 --
 
@@ -765,10 +922,16 @@ Source: Google SRE workbook, alerting on SLOs: https://sre.google/workbook/alert
 A count alert flags a small denominator. It doesn't silence the pass-rate alert. <!-- .element: class="fine" -->
 
 Note:
-Block 30 (02:25 to 02:30). Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
-No-data modes, boolean average = share of true scores: https://langfuse.com/docs/observability/features/alerts
-Hobby allows 2 alerts: https://langfuse.com/pricing
-Record the real evaluation interval from the integration gate here.
+- Block 30 (02:25 to 02:30).
+- Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
+- No-data modes, and boolean average = share of true scores. [1]
+- Hobby allows 2 alerts. [2]
+- Record the real evaluation interval from the integration gate here.
+
+Sources:
+
+1. [Langfuse: alerts](https://langfuse.com/docs/observability/features/alerts)
+2. [Langfuse pricing](https://langfuse.com/pricing)
 
 --
 
@@ -786,10 +949,17 @@ Record the real evaluation interval from the integration gate here.
 </div>
 
 Note:
-Block 31 (02:30 to 02:35). Two pre-built alerts on my project with no scores: default shows ALERT, NO_DATA one shows NO_DATA. Then ws load -n 40 --case 2 --guard off, then the webhook payload.
-In production use "Notify after sustained NO_DATA".
-Source: https://langfuse.com/docs/observability/features/alerts
-If the gate shows different NO_DATA behaviour, record it here.
+- Block 31 (02:30 to 02:35).
+- Two pre-built alerts on my project with no scores:
+    - the default one shows ALERT
+    - the NO_DATA one shows NO_DATA
+- Then ws load -n 40 --case 2 --guard off, then the webhook payload.
+- In production use "Notify after sustained NO_DATA". [1]
+- If the gate shows different NO_DATA behaviour, record it here.
+
+Sources:
+
+1. [Langfuse: alerts](https://langfuse.com/docs/observability/features/alerts)
 
 --
 
@@ -799,7 +969,9 @@ If the gate shows different NO_DATA behaviour, record it here.
 2. Nobody booked for an hour. What does the NO_DATA alert show?
 3. How do you tell those two apart?
 
-Note: Block 32 (02:35 to 02:40). Poll. Answers are discussed live, not written here.
+Note:
+- Block 32 (02:35 to 02:40). Poll.
+- Answers are discussed live, not written here.
 
 --
 
@@ -809,7 +981,11 @@ Note: Block 32 (02:35 to 02:40). Poll. Answers are discussed live, not written h
 - Compare a normal run with a rerun that adds a generation
 - Tokens per run is a cost signal you can alert on
 
-Note: Block 32, 2 minutes. Goes to homework if behind. Use Case 6 if built. The 3,000 budget is a workshop example, not an external figure.
+Note:
+- Block 32, 2 minutes.
+- Goes to homework if behind.
+- Use Case 6 if built.
+- The 3,000 budget is a workshop example, not an external figure.
 
 --
 
@@ -817,7 +993,8 @@ Note: Block 32, 2 minutes. Goes to homework if behind. Use Case 6 if built. The 
 
 Questions, or finish your alert.
 
-Note: Block 33 (02:40 to 02:45).
+Note:
+- Block 33 (02:40 to 02:45).
 
 ---
 
@@ -827,7 +1004,8 @@ Note: Block 33 (02:40 to 02:45).
 
 02:45 to 03:00 <!-- .element: class="quote" -->
 
-Note: Blocks 34 to 36.
+Note:
+- Blocks 34 to 36.
 
 --
 
@@ -838,7 +1016,9 @@ flowchart LR
 observe["observe (trace)"] --> diagnose["diagnose (compare request vs tool)"] --> fix["fix (guard)"] --> verify["verify (local check + evaluator)"] --> monitor["monitor (alert with NO_DATA)"]
 ```
 
-Note: Block 34 (02:45 to 02:50). No external claim.
+Note:
+- Block 34 (02:45 to 02:50).
+- No external claim.
 
 --
 
@@ -852,8 +1032,13 @@ Note: Block 34 (02:45 to 02:50). No external claim.
 6. Cap steps and retries, and record when the cap is hit
 
 Note:
-Block 34. Full list: docs/production-checklist.md in the workshop repo.
-OTel GenAI conventions: https://github.com/open-telemetry/semantic-conventions-genai
+- Block 34.
+- Full list: docs/production-checklist.md in the workshop repo.
+- OTel GenAI conventions. [1]
+
+Sources:
+
+1. [OTel GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai)
 
 --
 
@@ -867,7 +1052,13 @@ OTel GenAI conventions: https://github.com/open-telemetry/semantic-conventions-g
 12. Redact PII before export. Keep keys out of traces.
 
 Note:
-Block 34. Sources: https://langfuse.com/docs/observability/features/alerts · https://sre.google/workbook/alerting-on-slos/
+- Block 34.
+- Checklist sources: Langfuse alerts [1] and the Google SRE workbook. [2]
+
+Sources:
+
+1. [Langfuse: alerts](https://langfuse.com/docs/observability/features/alerts)
+2. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
 
 --
 
@@ -878,8 +1069,14 @@ Block 34. Sources: https://langfuse.com/docs/observability/features/alerts · ht
 - Read the maths appendix
 
 Note:
-Block 35 (02:50 to 02:55). docs/homework.md. Collect chat questions.
-Langfuse LangChain integration: https://langfuse.com/docs/integrations/langchain/tracing
+- Block 35 (02:50 to 02:55).
+- docs/homework.md.
+- Collect chat questions.
+- `CallbackHandler` comes from the Langfuse LangChain integration. [1]
+
+Sources:
+
+1. [Langfuse: LangChain integration](https://langfuse.com/docs/integrations/langchain/tracing)
 
 --
 
@@ -898,8 +1095,15 @@ tidytraces.com · github.com/soumendrak/ragwatch · github.com/soumendrak/widesc
 Thanks to The Data AI Guild and our TAs <!-- .element: class="muted" -->
 
 Note:
-Block 36 (02:55 to 03:00). Collect stickies; photo.
-Links: https://tidytraces.com · https://github.com/soumendrak/ragwatch · https://github.com/soumendrak/widescope
+- Block 36 (02:55 to 03:00).
+- Collect stickies; photo.
+- Links on the slide: Tidy Traces [1], Ragwatch [2], widescope [3].
+
+Sources:
+
+1. [Tidy Traces](https://tidytraces.com)
+2. [Ragwatch on GitHub](https://github.com/soumendrak/ragwatch)
+3. [widescope on GitHub](https://github.com/soumendrak/widescope)
 
 ---
 
@@ -909,7 +1113,9 @@ Links: https://tidytraces.com · https://github.com/soumendrak/ragwatch · https
 
 Maths and backup slides, for Q&A only <!-- .element: class="quote" -->
 
-Note: Not taught in the main flow. Numbers are my own calculations unless a source is cited.
+Note:
+- Not taught in the main flow.
+- Numbers are my own calculations unless a source is cited.
 
 --
 
@@ -919,7 +1125,14 @@ Note: Not taught in the main flow. Numbers are my own calculations unless a sour
 - numpy default (linear): position 0.99 × 49 = 48.51
 - A p99 you can trust needs hundreds of runs. Use p50 and p95 for small samples.
 
-Note: B0. Source: https://numpy.org/doc/stable/reference/generated/numpy.percentile.html. Langfuse's method is not documented on the pages checked.
+Note:
+- B0.
+- Nearest-rank vs numpy's default linear method. [1]
+- Langfuse's method is not documented on the pages checked.
+
+Sources:
+
+1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
 
 --
 
@@ -929,7 +1142,13 @@ Note: B0. Source: https://numpy.org/doc/stable/reference/generated/numpy.percent
 - 1 − 0.99ⁿ: n = 5 → 4.9%, 10 → 9.6%, 25 → 22.2%, 50 → 39.5%, 100 → 63.4%
 - Assumes independent, identical steps. Real steps are correlated.
 
-Note: B1. Own calculations. Fan-out reference: https://cacm.acm.org/research/the-tail-at-scale/
+Note:
+- B1. Own calculations.
+- Fan-out reference: The Tail at Scale. [1]
+
+Sources:
+
+1. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
 
 --
 
@@ -941,8 +1160,15 @@ Note: B1. Own calculations. Fan-out reference: https://cacm.acm.org/research/the
 - Use pass^k for agents that act on behalf of users
 
 Note:
-B2. pass@k: https://arxiv.org/abs/2107.03374 · pass^k: https://arxiv.org/abs/2406.12045 (reports "pass^8 <25% in retail").
-97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
+- B2.
+- pass@k. [1]
+- pass^k; the paper reports "pass^8 <25% in retail". [2]
+- 97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
+
+Sources:
+
+1. [arXiv:2107.03374 (pass@k)](https://arxiv.org/abs/2107.03374)
+2. [arXiv:2406.12045 (pass^k)](https://arxiv.org/abs/2406.12045)
 
 --
 
@@ -959,8 +1185,14 @@ B2. pass@k: https://arxiv.org/abs/2107.03374 · pass^k: https://arxiv.org/abs/24
 ±5 points at p = 0.5 needs about 384 samples; ±3 needs about 1,067. Rule of three: 0 failures in n runs → upper bound about 3/n. <!-- .element: class="smaller" -->
 
 Note:
-B3. Own calculations (Wilson score interval). Method reference: https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval
-Rule of three: https://en.wikipedia.org/wiki/Rule_of_three_(statistics)
+- B3. Own calculations (Wilson score interval).
+- Method reference: Wilson score interval. [1]
+- Rule of three. [2]
+
+Sources:
+
+1. [Wikipedia: Wilson score interval](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval)
+2. [Wikipedia: Rule of three (statistics)](https://en.wikipedia.org/wiki/Rule_of_three_(statistics))
 
 --
 
@@ -971,7 +1203,13 @@ Rule of three: https://en.wikipedia.org/wiki/Rule_of_three_(statistics)
 - At 1,000 runs a day: 19 true alarms, 49 false
 - Alert on windowed rates. Read them next to the sample count.
 
-Note: B4. Own calculation (Bayes). Reference: https://en.wikipedia.org/wiki/Base_rate_fallacy
+Note:
+- B4. Own calculation (Bayes).
+- Reference: the base rate fallacy. [1]
+
+Sources:
+
+1. [Wikipedia: Base rate fallacy](https://en.wikipedia.org/wiki/Base_rate_fallacy)
 
 --
 
@@ -982,7 +1220,15 @@ Note: B4. Own calculation (Bayes). Reference: https://en.wikipedia.org/wiki/Base
 - Page at 2% in 1 hour or 5% in 6 hours. Ticket at 10% in 3 days.
 - Check a short window at the same time
 
-Note: B5. Source: https://sre.google/workbook/alerting-on-slos/. Example rules: observability-engineering-series ch11, https://github.com/soumendrak/observability-engineering-series
+Note:
+- B5.
+- Google SRE workbook, alerting on SLOs. [1]
+- Example rules: observability-engineering-series ch11. [2]
+
+Sources:
+
+1. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
+2. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
 
 --
 
@@ -994,8 +1240,15 @@ Note: B5. Source: https://sre.google/workbook/alerting-on-slos/. Example rules: 
 - Run the redaction before tail sampling in the Collector
 
 Note:
-B6. Own calculation for the 1 in 20. Collector tail sampling: https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor
-Example config: observability-engineering-series ch9, https://github.com/soumendrak/observability-engineering-series
+- B6.
+- Own calculation for the 1 in 20.
+- Collector tail sampling. [1]
+- Example config: observability-engineering-series ch9. [2]
+
+Sources:
+
+1. [OTel Collector tail sampling processor](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor)
+2. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
 
 --
 
@@ -1006,7 +1259,13 @@ Example config: observability-engineering-series ch9, https://github.com/soumend
 - Fix the rubric before you trust its rate
 - Judges cost tokens on every scored observation
 
-Note: B7. Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge
+Note:
+- B7.
+- Langfuse LLM-as-a-judge docs. [1]
+
+Sources:
+
+1. [Langfuse: LLM-as-a-judge](https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge)
 
 --
 
@@ -1014,7 +1273,10 @@ Note: B7. Source: https://langfuse.com/docs/evaluation/evaluation-methods/llm-as
 
 <div class="placeholder">TODO: fill from <code>ws doctor</code> messages and docs/troubleshooting.md after the build.</div>
 
-Note: Backup slide. Wrong region, bad or swapped keys, missing .env, proxy or TLS, wrong Python, uv sync not run, wrong tag, guards.py edited early.
+Note:
+- Backup slide.
+- Wrong region, bad or swapped keys, missing .env, proxy or TLS.
+- Wrong Python, uv sync not run, wrong tag, guards.py edited early.
 
 --
 
@@ -1022,7 +1284,13 @@ Note: Backup slide. Wrong region, bad or swapped keys, missing .env, proxy or TL
 
 <div class="placeholder">TODO: public trace QR codes and a console-tree screenshot, after backup traces exist.</div>
 
-Note: Backup slide for stuck laptops. Public trace links use langfuse.trace.public: https://langfuse.com/docs/opentelemetry/get-started
+Note:
+- Backup slide for stuck laptops.
+- Public trace links use langfuse.trace.public. [1]
+
+Sources:
+
+1. [Langfuse: OpenTelemetry get started](https://langfuse.com/docs/opentelemetry/get-started)
 </textarea>
             </section>
 
