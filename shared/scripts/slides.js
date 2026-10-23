@@ -25,19 +25,6 @@
   const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   let currentTheme = savedTheme || systemTheme;
   root.dataset.theme = currentTheme;
-  document.querySelectorAll('.comparison-table').forEach(table => {
-    const headers = [...table.querySelectorAll('thead th')];
-    headers.forEach(header => header.setAttribute('scope', 'col'));
-    table.querySelectorAll('tbody tr').forEach(row => {
-      [...row.children].forEach((cell, index) => {
-        cell.dataset.label = headers[index]?.textContent.trim() || '';
-        // Wrap the value so the mobile label and value remain two grid items.
-        const value = document.createElement('span');
-        while (cell.firstChild) value.append(cell.firstChild);
-        cell.append(value);
-      });
-    });
-  });
   let motionEnabled = !reducedMotion.matches;
 
   const toolbar = document.createElement('nav');
@@ -147,8 +134,22 @@
     keyboardCondition: event => !help.open && !slideIndex.open && (!toolbar.contains(document.activeElement) || ![' ', 'Enter'].includes(event.key)),
     pdfSeparateFragments: false,
     // Speaker view (S) works in decks that load reveal.js's notes plugin.
-    plugins: [window.RevealNotes].filter(Boolean)
+    // Markdown decks also load reveal.js's markdown plugin and shared/scripts/diagrams.js.
+    plugins: [window.RevealMarkdown, window.RevealPele, window.RevealNotes].filter(Boolean)
   }).then(() => {
+    document.querySelectorAll('.comparison-table').forEach(table => {
+      const headers = [...table.querySelectorAll('thead th')];
+      headers.forEach(header => header.setAttribute('scope', 'col'));
+      table.querySelectorAll('tbody tr').forEach(row => {
+        [...row.children].forEach((cell, index) => {
+          cell.dataset.label = headers[index]?.textContent.trim() || '';
+          // Wrap the value so the mobile label and value remain two grid items.
+          const value = document.createElement('span');
+          while (cell.firstChild) value.append(cell.firstChild);
+          cell.append(value);
+        });
+      });
+    });
     function jumpSection(direction) {
       const horizontalSlides = [...document.querySelector('.reveal .slides').children]
         .filter(element => element.tagName === 'SECTION');
