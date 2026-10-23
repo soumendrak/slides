@@ -29,8 +29,12 @@ for (const [scheme, url] of Object.entries(urls)) {
       withNotes: Reveal.getSlides().filter(slide => Reveal.getSlideNotes(slide)?.trim()).length,
       diagrams: document.querySelectorAll('.pele-diagram svg').length,
       errors: document.querySelectorAll('.pele-error').length,
+      recaps: [...document.querySelectorAll('.reveal .slides section.recap-slide')].map(slide => slide.querySelector('h2')?.textContent.trim()),
     }));
-    expect(deckState).toEqual({ notesPlugin: true, slides: 77, withNotes: 77, diagrams: 3, errors: 0 });
+    const { recaps, ...counts } = deckState;
+    // One recap closes each part, in order.
+    expect(recaps).toEqual([1, 2, 3, 4, 5, 6].map(n => `Where we are: Part ${n} of 6`));
+    expect(counts).toEqual({ notesPlugin: true, slides: 77, withNotes: 77, diagrams: 3, errors: 0 });
     expect(external).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
