@@ -172,11 +172,11 @@ Sources:
 
 ## Part 1: Opening and first trace <!-- .element: class="text-green" -->
 
-00:00 to 00:20 · your first trace by minute 15 <!-- .element: class="quote" -->
+00:00 to 00:16 · your first trace by minute 12 <!-- .element: class="quote" -->
 
 Note:
 - Blocks 1 to 4.
-- Checkpoint 1 at 00:15 to 00:20: trace visible.
+- Checkpoint 1 at 00:12 to 00:16: trace visible.
 
 --
 
@@ -203,13 +203,13 @@ Note:
 <div class="agenda-container">
 <div class="agenda-card"><h3>Trace</h3><p>See every step an agent takes</p></div>
 <div class="agenda-card"><h3>Diagnose and fix</h3><p>Find a silent failure, add a guard</p></div>
-<div class="agenda-card"><h3>Evaluate and monitor</h3><p>Score live runs, alert on rates</p></div>
+<div class="agenda-card"><h3>Evaluate and monitor</h3><p>Score live runs, alert on rates, watch cost</p></div>
 </div>
 
 Labs run in windows that end on a checkpoint, not the clock. Stickies tell TAs where to go. <!-- .element: class="small muted" -->
 
 Note:
-- Agenda: opening 20 min, concepts 25, incident 40, break 10, evaluator 35, alerts 20, close 15, buffers 15.
+- Agenda: opening 16 min, concepts 25, incident 40, break 10, evaluator 35, alerts and cost 23, production and close 21, buffers 10.
 - Checkpoint rule:
     - 80% or more: move on.
     - 60 to 80%: move on, and TAs keep helping.
@@ -227,7 +227,7 @@ Note:
 Could you prove what your bot told a customer, and why? <!-- .element: class="quote" -->
 
 Note:
-- Block 2 (00:05 to 00:10). Ask the room the question.
+- Block 2 (00:05 to 00:07), about 40 seconds a slide. Ask the room the question and keep moving.
 - Total ordered: C$812.02 = C$650.88 damages + C$36.14 interest + C$125 fees. [2]
 - Coverage of the case. [1]
 - CAVEAT: the decision says Air Canada "did not provide any information about the nature of its chatbot". [2]
@@ -237,29 +237,6 @@ Sources:
 
 1. [The Guardian: Air Canada chatbot lawsuit](https://www.theguardian.com/world/2024/feb/16/air-canada-chatbot-lawsuit)
 2. [BC Civil Resolution Tribunal decision, 2024 BCCRT 149](https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.pdf)
-
---
-
-## Why it matters: an agent that acted
-
-- Replit's AI coding agent deleted a production database during an explicit code freeze
-- It said rollback would not work. The rollback worked.
-- You cannot debug an agent by asking the agent
-
-Which span would have shown the destructive tool call? <!-- .element: class="quote" -->
-
-Note:
-- Block 2. Drop this slide if behind.
-- Coverage of the incident. [1]
-- Lemkin's post [2] and Masad's reply. [3]
-- CAVEAT: the data was recovered, and this was a 12-day experiment, not a real company's customer data. [4]
-
-Sources:
-
-1. [The Register: Replit agent deleted a production database](https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783)
-2. [Jason Lemkin's post on X](https://x.com/jasonlk/status/1946239068691665187)
-3. [Amjad Masad's reply on X](https://x.com/amasad/status/1946986468586721478)
-4. [Business Insider: Replit CEO apologises](https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7)
 
 --
 
@@ -310,7 +287,7 @@ Sources:
 Views are my own. This workshop is independent of my employer. <!-- .element: class="fine" -->
 
 Note:
-- Block 3 (00:10 to 00:15). 60 seconds, facts only.
+- Block 3 (00:07 to 00:12). 60 seconds, facts only.
 - About me [1], Tidy Traces [2], Ragwatch [3], widescope [4], observability-engineering-series [5].
 
 Sources:
@@ -367,7 +344,7 @@ Note:
 Green sticky if your tree matches the projector. <!-- .element: class="small" -->
 
 Note:
-- Block 4 (00:15 to 00:20). Tour my trace on the projector.
+- Block 4 (00:12 to 00:16). Tour my trace on the projector.
 - Stragglers: pair up, open a public trace, or switch to --exporter console.
 - Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
 - TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
@@ -382,7 +359,7 @@ Note:
 
 ### Part 1 · Opening and first trace <!-- .element: class="recap-now" -->
 
-- Why it matters: a chatbot's answer in court, an agent that deleted a database
+- Why it matters: a chatbot's answer in court
 - Most teams trace. Fewer check the answer.
 - Today's loop: observe, diagnose, fix, verify, monitor
 - Lab 1: your first TripMate trace, one root with LLM and tool steps
@@ -390,7 +367,7 @@ Note:
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 4 (ends 00:20). Take 30 to 60 seconds of that block, then move on.
+- End of Block 4 (ends 00:16). Take 30 to 60 seconds of that block, then move on.
 - Read Part 1 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: Part 2, Read a trace.
@@ -402,11 +379,11 @@ Note:
 
 ## Part 2: Read a trace <!-- .element: class="text-green" -->
 
-00:20 to 00:45 · spans, the agent loop, percentiles <!-- .element: class="quote" -->
+00:16 to 00:41 · spans, the agent loop, percentiles <!-- .element: class="quote" -->
 
 Note:
 - Blocks 5 to 9.
-- Checkpoint 2 at 00:45: own p99 read.
+- Checkpoint 2 at 00:41: own p99 read.
 
 --
 
@@ -419,7 +396,7 @@ Note:
 Find your trace ID, the root, and shout your span count. <!-- .element: class="quote" -->
 
 Note:
-- Block 5 (00:20 to 00:25).
+- Block 5 (00:16 to 00:21).
 - Optional 10 s demo of plain vs structured logs from observability-engineering-series ch1. [3]
 - Definitions follow OpenTelemetry. [1] [2]
 
@@ -442,7 +419,7 @@ llm1[LLM] --> tool1[tool] --> llm2[LLM] --> tool2[tool] --> llm3["LLM (final ans
 - Every run of TripMate is wrapped in one root observation, `tripmate`
 
 Note:
-- Block 6 (00:25 to 00:30). Show agent.py briefly.
+- Block 6 (00:21 to 00:26). Show agent.py briefly.
 - Langfuse observation types. [1]
 
 Sources:
@@ -485,7 +462,7 @@ Note:
 Worksheet Q1 to Q5, with a partner if you have one. <!-- .element: class="small" -->
 
 Note:
-- Block 7, window W1 (00:28 to 00:38).
+- Block 7, window W1 (00:24 to 00:34).
 - If behind, Q1 to Q3 only.
 - TAs check against the key on the answer sheet.
 - Answers are not in this public deck.
@@ -501,7 +478,7 @@ Note:
 Spot the difference between the two runs. <!-- .element: class="quote" -->
 
 Note:
-- Block 8 (00:35 to 00:40).
+- Block 8 (00:31 to 00:36).
 - 3-minute demo in my own project with LLM_MODE=openai.
 - If behind: screenshot of the two runs.
 - TODO: add the screenshot.
@@ -535,7 +512,7 @@ Sources:
 - Tools compute percentiles differently. Langfuse may differ a little.
 
 Note:
-- Block 9 (00:40 to 00:45).
+- Block 9 (00:36 to 00:41).
 - The worksheet uses the ws load numbers (nearest rank).
 - Nearest-rank p99 of 50 values is the maximum. [1]
 - numpy's default linear method interpolates between the two largest. [1]
@@ -593,7 +570,7 @@ Sources:
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 9 (ends 00:45). Take 30 to 60 seconds of that block, then move on.
+- End of Block 9 (ends 00:41). Take 30 to 60 seconds of that block, then move on.
 - Read Part 2 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: Part 3, The incident.
@@ -605,12 +582,12 @@ Note:
 
 ## Part 3: The incident <!-- .element: class="text-red" -->
 
-00:45 to 01:25 · investigate, fix, rerun <!-- .element: class="quote" -->
+00:41 to 01:21 · investigate, fix, rerun <!-- .element: class="quote" -->
 
 Note:
 - Blocks 10 to 18.
-- Checkpoint 3 at 01:10 (Case 2 explained).
-- Checkpoint 4 at 01:25 (rerun PASS).
+- Checkpoint 3 at 01:06 (Case 2 explained).
+- Checkpoint 4 at 01:21 (rerun PASS).
 - Never cut below 15 minutes of Case 2 window.
 
 --
@@ -620,7 +597,7 @@ Note:
 "I asked TripMate for a flight. The confirmation looked right. The ticket I got was not the trip I asked for." <!-- .element: class="quote" -->
 
 Note:
-- Block 10 (00:45 to 00:50).
+- Block 10 (00:41 to 00:46).
 - Synthetic complaint letter for the workshop. No external claim.
 - TODO: final wording of the complaint letter from the lab guide.
 
@@ -650,8 +627,8 @@ Note:
 - Tell your TA your answer
 
 Note:
-- Blocks 10 and 11, window W2 (00:47 to 00:55).
-- Reveal at 00:54 (00:52 if behind).
+- Blocks 10 and 11, window W2 (00:43 to 00:51).
+- Reveal at 00:50 (00:48 if behind).
 - The reveal is on the TA answer sheet, not in this public deck.
 
 --
@@ -665,7 +642,7 @@ Note:
 - Goal: what went wrong, and where does it show?
 
 Note:
-- Block 11 launches W3 (00:55 to 01:15).
+- Block 11 launches W3 (00:51 to 01:11).
 - Bug bounty: first 3 correct answers, checked by a TA.
 - Answers and hints are on the TA answer sheet only.
 
@@ -693,7 +670,7 @@ Note:
 Compare with your partner or neighbour. <!-- .element: class="small" -->
 
 Note:
-- Block 13 (01:00 to 01:05). Worksheet part B.
+- Block 13 (00:56 to 01:01). Worksheet part B.
 - TAs listen in and nudge with questions, not answers.
 
 --
@@ -705,7 +682,7 @@ What went wrong, where it shows, and why the confirmation hid it. <!-- .element:
 Green sticky when it's written. A TA checks it. <!-- .element: class="small" -->
 
 Note:
-- Block 14 (01:05 to 01:10).
+- Block 14 (01:01 to 01:06).
 - Accept a verbal explanation if behind.
 - TAs count per zone.
 
@@ -718,7 +695,7 @@ Note:
 - I draw the chain from request to customer on the whiteboard
 
 Note:
-- Block 15 (01:10 to 01:15). Mic runner.
+- Block 15 (01:06 to 01:11). Mic runner.
 - The causal chain is drawn live from the instructor copy, not shown here.
 - 60 s mention: stretch tasks for later.
 
@@ -742,7 +719,7 @@ Note:
 - About 4 to 6 lines
 
 Note:
-- Block 16, window W4 (01:15 to 01:25).
+- Block 16, window W4 (01:11 to 01:21).
 - Lab guide: labs/04-fix-and-rerun.md.
 - Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
 
@@ -758,7 +735,7 @@ Note:
 The guard prevents the incorrect action. The evaluator checks the recorded outcome afterwards. <!-- .element: class="quote" -->
 
 Note:
-- Block 17 (01:20 to 01:25). Sticky: PASS.
+- Block 17 (01:16 to 01:21). Sticky: PASS.
 - Stuck more than 5 minutes: TA shows the reference fix from the answer sheet.
 - If the room is behind, I show the fix and rerun live from the instructor copy.
 
@@ -771,7 +748,7 @@ Note:
 - Cases 3 to 6, if built
 
 Note:
-- Block 18 (01:25 to 01:30).
+- Block 18 (01:21 to 01:26).
 - Overflow for W4.
 
 --
@@ -800,7 +777,7 @@ Note:
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 18 (ends 01:30). Take 30 to 60 seconds of that block, then move on.
+- End of Block 18 (ends 01:26). Take 30 to 60 seconds of that block, then move on.
 - Read Part 3 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: the break, then Part 4, Build an evaluator.
@@ -826,11 +803,11 @@ Note:
 
 ## Part 4: Build an evaluator <!-- .element: class="text-green" -->
 
-01:40 to 02:15 · score every run, not just this one <!-- .element: class="quote" -->
+01:36 to 02:11 · score every run, not just this one <!-- .element: class="quote" -->
 
 Note:
 - Blocks 21 to 28.
-- Checkpoint 5 at 02:00, Checkpoint 6 at 02:05.
+- Checkpoint 5 at 01:56, Checkpoint 6 at 02:01.
 
 --
 
@@ -844,7 +821,7 @@ Note:
 <!-- .element: class="comparison-table" -->
 
 Note:
-- Block 21 (01:40 to 01:45).
+- Block 21 (01:36 to 01:41).
 - Cut this slide first if behind.
 - Langfuse evaluation methods: code evaluators [1] and LLM-as-a-judge. [2]
 
@@ -876,7 +853,7 @@ Note:
 4. Don't save yet
 
 Note:
-- Block 22 demo (01:45 to 01:50), then block 23, window W5 (01:50 to 02:05).
+- Block 22 demo (01:41 to 01:46), then block 23, window W5 (01:46 to 02:01).
 - Lab guide: labs/05-evals.md.
 - Common slips: not targeting root, not selecting a sample.
 - Langfuse code evaluators: [1]
@@ -897,7 +874,7 @@ Sources:
 - Sticky when both results match what you expect
 
 Note:
-- Block 24 (01:55 to 02:00).
+- Block 24 (01:51 to 01:56).
 - Expected results are on the TA answer sheet.
 - If the test errors, check whether input arrives as a dict or a JSON string.
 - If behind, test only the rerun trace.
@@ -914,7 +891,7 @@ uv run ws case 2 --rerun</div>
 - Filter traces by `booking_matches_request`
 
 Note:
-- Block 25 (02:00 to 02:05).
+- Block 25 (01:56 to 02:01).
 - Use -n 5 each if behind.
 - One --mix command if O2 shipped.
 - Langfuse evaluator rules. [1]
@@ -934,7 +911,7 @@ Sources:
 Code or judge for this? <!-- .element: class="quote" -->
 
 Note:
-- Block 26 (02:05 to 02:10). In my own project.
+- Block 26 (02:01 to 02:06). In my own project.
 - Screenshot if behind (first cut).
 - Calibration details: Appendix.
 - Langfuse LLM-as-a-judge docs. [1]
@@ -957,7 +934,7 @@ Sources:
 Use code evals for facts and judges for semantics. <!-- .element: class="small" -->
 
 Note:
-- Block 27 (02:10 to 02:15).
+- Block 27 (02:06 to 02:11).
 - The room fills cells aloud.
 - The filled table is on the instructor copy, not here.
 
@@ -968,7 +945,7 @@ Note:
 Finish your evaluator. TAs are coming round.
 
 Note:
-- Block 28 (02:15 to 02:20).
+- Block 28 (02:11 to 02:16).
 
 --
 
@@ -997,7 +974,7 @@ Note:
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 28 (ends 02:20). Take 30 to 60 seconds of that block, then move on.
+- End of Block 28 (ends 02:16). Take 30 to 60 seconds of that block, then move on.
 - Read Part 4 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: Part 5, Monitor and alert.
@@ -1009,11 +986,12 @@ Note:
 
 ## Part 5: Monitor and alert <!-- .element: class="text-green" -->
 
-02:20 to 02:40 · missing is not the same as failing <!-- .element: class="quote" -->
+02:16 to 02:39 · missing is not the same as failing, and what a run costs <!-- .element: class="quote" -->
 
 Note:
 - Blocks 29 to 33.
-- Checkpoint 7 at 02:40: "explain NO_DATA vs ALERT" poll.
+- Checkpoint 7 at 02:34: "explain NO_DATA vs ALERT" poll.
+- Token budget and Cost per run are must-cover, not homework.
 
 --
 
@@ -1029,7 +1007,7 @@ Note:
 Which one would you page on for TripMate? <!-- .element: class="quote" -->
 
 Note:
-- Block 29 (02:20 to 02:25). Show of hands.
+- Block 29 (02:16 to 02:21). Show of hands.
 - Workshop plan recommendation, no external claim.
 
 --
@@ -1060,7 +1038,7 @@ Sources:
 A count alert flags a small denominator. It doesn't silence the pass-rate alert. <!-- .element: class="fine" -->
 
 Note:
-- Block 30 (02:25 to 02:30).
+- Block 30 (02:21 to 02:26).
 - Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
 - No-data modes, and boolean average = share of true scores. [1]
 - Hobby allows 2 alerts. [2]
@@ -1087,7 +1065,7 @@ Sources:
 </div>
 
 Note:
-- Block 31 (02:30 to 02:35).
+- Block 31 (02:26 to 02:31).
 - Two pre-built alerts on my project with no scores:
     - the default one shows ALERT
     - the NO_DATA one shows NO_DATA
@@ -1108,7 +1086,7 @@ Sources:
 3. How do you tell those two apart?
 
 Note:
-- Block 32 (02:35 to 02:40). Poll.
+- Block 32 (02:31 to 02:36). Poll for about 3 minutes (02:31 to 02:34), then Token budget.
 - Answers are discussed live, not written here.
 
 --
@@ -1120,19 +1098,38 @@ Note:
 - Tokens per run is a cost signal you can alert on
 
 Note:
-- Block 32, 2 minutes.
-- Goes to homework if behind.
+- Block 32 (02:34 to 02:36), 2 minutes. Must cover, with Cost per run next.
+- If behind, read the three bullets and move on. Do not send it to homework.
 - Use Case 6 if built.
 - The 3,000 budget is a workshop example, not an external figure.
 
 --
 
-## Buffer C
+## Cost per run
 
-Questions, or finish your alert.
+<div class="code-block">cost per run = tokens × price</div>
+
+- TripMate's budget: 3,000 tokens per run
+- Failed and retried runs still cost
+- Cost per successful task = total cost ÷ successful runs
+
+Price the successes, not the runs. <!-- .element: class="quote" -->
+
+100 runs × 3,000 tokens = 300,000 tokens. 10 fail. 300,000 ÷ 90 = 3,333 tokens per success. <!-- .element: class="small muted" -->
 
 Note:
-- Block 33 (02:40 to 02:45).
+- Block 33 (02:36 to 02:39), 3 minutes. Must cover. About 2 minutes here, then the Part 5 recap.
+- Langfuse records usage and cost per generation, split by usage type such as input and output. It calculates cost from usage and a model price when the generation is ingested. [1]
+- If you do not send cost, Langfuse infers it from the model's price. If you send cost, yours is used. [1]
+- So tokens × price is two prices: input tokens and output tokens are priced separately.
+- Failed and retried runs still spend tokens, so cost per successful task is higher than cost per run. Workshop plan recommendation, no external claim.
+- The 3,000-token budget is a workshop example, not an external figure.
+- The example uses my own arithmetic: 100 × 3,000 = 300,000 and 300,000 ÷ 90 = 3,333, which is 11% above the budget.
+- Prices are not on the slide because they differ by model and change. Look yours up.
+
+Sources:
+
+1. [Langfuse: token and cost tracking](https://langfuse.com/docs/observability/features/token-and-cost-tracking)
 
 --
 
@@ -1158,11 +1155,12 @@ Note:
 - An alert on avg `booking_matches_request`, with severity NO_DATA shown
 - ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
 - Tokens per run is a cost signal you can alert on
+- Cost per run: tokens × price, and cost per successful task
 
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 33 (ends 02:45). Take 30 to 60 seconds of that block, then move on.
+- End of Block 33 (ends 02:39). Take 30 to 60 seconds of that block, then move on.
 - Read Part 5 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: Part 6, Take it to production.
@@ -1174,7 +1172,7 @@ Note:
 
 ## Part 6: Take it to production <!-- .element: class="text-green" -->
 
-02:45 to 03:00 <!-- .element: class="quote" -->
+02:39 to 03:00 <!-- .element: class="quote" -->
 
 Note:
 - Blocks 34 to 36.
@@ -1189,7 +1187,10 @@ observe["observe (trace)"] --> diagnose["diagnose (compare request vs tool)"] --
 ```
 
 Note:
-- Block 34 (02:45 to 02:50).
+- Block 34 (02:39 to 02:50), 11 minutes:
+    - this slide and the checklist, 02:39 to 02:44
+    - Minimum setup for a small team, 02:44 to 02:47
+    - Instrumentation overhead and load testing, 02:47 to 02:50
 - No external claim.
 
 --
@@ -1234,21 +1235,97 @@ Sources:
 
 --
 
+## Minimum setup for a small team
+
+1. Trace every LLM and tool call
+2. Put the request and tool result on the root span
+3. One code eval on live traffic, for your costliest mistake
+4. One alert on a rate, with NO_DATA handled
+5. Redact PII before export
+
+The other seven can wait. <!-- .element: class="quote" -->
+
+Note:
+- Block 34 (02:44 to 02:47), 3 minutes.
+- These are checklist items 1, 2, 8, 10 and 12. The other seven are 3 to 7, 9 and 11.
+- Which five, and what can wait, is a workshop plan recommendation, no external claim.
+- If you can only measure a few things, pick a few: Google SRE says to focus on four golden signals (latency, traffic, errors, saturation) if you can only measure four. [1]
+- Say it plainly: a team of two does not need all twelve on day one.
+- If a sixth: tokens and cost per run (checklist 7), from Part 5.
+
+Sources:
+
+1. [Google SRE book: monitoring distributed systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+--
+
+## Instrumentation overhead and load testing
+
+<div class="two-column">
+<div>
+<h3>Keep tracing cheap</h3>
+<ul>
+<li>Batch and export asynchronously</li>
+<li>Tail-sample: keep all errors and slow runs, sample the rest</li>
+<li>Keep attributes small</li>
+</ul>
+</div>
+<div>
+<h3>Load test safely</h3>
+<ul>
+<li>Stubbed tools and a recorded or mock model</li>
+<li>Fixed concurrency, in a sandbox with no real side effects</li>
+<li>Watch p95 latency, error rate and tokens per run</li>
+</ul>
+</div>
+</div>
+
+Note:
+- Block 34 (02:47 to 02:50), 3 minutes. Talk-through, no lab.
+- Batching: the OpenTelemetry SDK has a batching span processor that exports finished spans in batches. The simple processor exports each span as soon as it finishes. [1]
+- Langfuse says its SDKs send trace data asynchronously in the background, queued locally and flushed in batches. [2]
+- Tail sampling decides after it has seen the whole trace, so it can always keep traces with errors and sample on latency. [3]
+- CAVEAT: tail sampling is hard to run. It needs a stateful component such as the Collector's tail sampling processor. [3]
+- Langfuse's `sample_rate` is set in the client, and the SDK samples on the trace level. My reading: that is not tail sampling, so it cannot keep every error by itself. [4]
+- If volume is small, keep everything and sample later. Details: Appendix, sampling and PII.
+- Keep attributes small: workshop plan recommendation, no external claim.
+- Load testing: workshop plan recommendation, no external claim.
+    - Real tools have side effects, so stub them.
+    - A real model costs tokens on every run and adds provider rate limits and noise, so use a recorded or mock model.
+    - Fixed concurrency makes two runs comparable.
+    - A sandbox means no real bookings, emails or payments, whatever the agent does.
+- Latency and errors are two of the four golden signals. [5]
+- Tokens per run is the Part 5 cost signal.
+- This answers two survey questions: lightweight instrumentation, and sandboxing an agent for load testing.
+
+Sources:
+
+1. [OpenTelemetry: trace SDK, built-in span processors](https://opentelemetry.io/docs/specs/otel/trace/sdk/)
+2. [Langfuse: observability overview, FAQ on latency](https://langfuse.com/docs/observability/overview)
+3. [OpenTelemetry: sampling](https://opentelemetry.io/docs/concepts/sampling/)
+4. [Langfuse: sampling](https://langfuse.com/docs/observability/features/sampling)
+5. [Google SRE book: monitoring distributed systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+--
+
 ## Homework and Q&A
 
 - Cases 3 to 6 if built, otherwise Case 2 variants
 - Add the Langfuse `CallbackHandler` to your own agent
 - Read the maths appendix
+- Other tools exist. OpenTelemetry is vendor-neutral, so you can compare backends.
 
 Note:
 - Block 35 (02:50 to 02:55).
 - docs/homework.md.
 - Collect chat questions.
 - `CallbackHandler` comes from the Langfuse LangChain integration. [1]
+- OpenTelemetry describes itself as vendor- and tool-agnostic, usable with a broad variety of observability backends. [2]
 
 Sources:
 
 1. [Langfuse: LangChain integration](https://langfuse.com/docs/integrations/langchain/tracing)
+2. [OpenTelemetry: what is OpenTelemetry](https://opentelemetry.io/docs/what-is-opentelemetry/)
 
 --
 
@@ -1265,6 +1342,7 @@ Sources:
 - **Part 5 · Monitor and alert**
     - Alert on rates over a window, and on what users feel
     - ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
+    - Cost per run: tokens × price, and cost per successful task
 
 <!-- .element: class="recap-past" -->
 
@@ -1273,6 +1351,8 @@ Sources:
 - The loop, again: observe, diagnose, fix, verify, monitor
 - Checklist 1 to 6: trace every call, keep request and tool result on the root, validate before acting
 - Checklist 7 to 12: track latency and cost, eval live traffic, alert with no-data handling, redact PII
+- Minimum setup for a small team: five items, the rest can wait
+- Overhead and load testing: batch, tail-sample, stubbed tools in a sandbox
 - Homework: more cases, `CallbackHandler` in your own agent, the maths appendix
 
 <!-- .element: class="recap-current" -->
@@ -1472,6 +1552,29 @@ Note:
 Sources:
 
 1. [Langfuse: LLM-as-a-judge](https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge)
+
+--
+
+## Appendix: an agent that acted
+
+- Replit's AI coding agent deleted a production database during an explicit code freeze
+- It said rollback would not work. The rollback worked.
+- You cannot debug an agent by asking the agent
+
+Which span would have shown the destructive tool call? <!-- .element: class="quote" -->
+
+Note:
+- Moved out of Block 2 to keep the opening at 16 minutes. Use it in Q&A, or if the room is ahead.
+- Coverage of the incident. [1]
+- Lemkin's post [2] and Masad's reply. [3]
+- CAVEAT: the data was recovered, and this was a 12-day experiment, not a real company's customer data. [4]
+
+Sources:
+
+1. [The Register: Replit agent deleted a production database](https://www.theregister.com/software/2025/07/21/vibe-coding-service-replit-deleted-production-database/719783)
+2. [Jason Lemkin's post on X](https://x.com/jasonlk/status/1946239068691665187)
+3. [Amjad Masad's reply on X](https://x.com/amasad/status/1946986468586721478)
+4. [Business Insider: Replit CEO apologises](https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7)
 
 --
 
