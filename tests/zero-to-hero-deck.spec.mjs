@@ -53,29 +53,50 @@ test('zero-to-hero schedule in the notes is consistent and sums to 180 minutes',
   const html = fs.readFileSync(path.resolve(import.meta.dirname, '..', deck), 'utf8');
   const minutes = hhmm => Number(hhmm.slice(0, 2)) * 60 + Number(hhmm.slice(3));
   const agenda = html.match(/- Agenda: (.+)\./)[1].split(', ').map(item => Number(item.match(/(\d+)( min)?$/)[1]));
+  expect(agenda).toHaveLength(8);
   expect(agenda.reduce((a, b) => a + b, 0)).toBe(180);
+  const [opening, concepts, incident, pause, evaluator, alerts, production, buffers] = agenda;
 
   const chapters = [...html.matchAll(/^## Part (\d): .*\n\n(\d\d:\d\d) to (\d\d:\d\d)/gm)]
     .map(([, n, from, to]) => ({ n: Number(n), from: minutes(from), to: minutes(to) }));
   expect(chapters.map(c => c.n)).toEqual([1, 2, 3, 4, 5, 6]);
+  expect(chapters.map(c => c.to - c.from)).toEqual([opening, concepts, incident, evaluator, alerts, production]);
   expect(chapters[0].from).toBe(0);
   expect(chapters.at(-1).to).toBe(180);
-  for (const [a, b] of chapters.slice(1).map((c, i) => [chapters[i], c])) {
-    expect(b.from).toBeGreaterThanOrEqual(a.to);
-  }
+  const gaps = chapters.slice(1).map((c, i) => c.from - chapters[i].to);
+  expect(gaps).toEqual([0, 0, pause + buffers / 2, buffers / 2, 0]);
 
   const blocks = new Map();
-  for (const [, n, from, to] of html.matchAll(/Block (\d+) \((\d\d:\d\d) to (\d\d:\d\d)\)/g)) {
+  for (const [, n, from, to] of html.matchAll(/Block (\d+)(?: demo)? \((\d\d:\d\d) to (\d\d:\d\d)\)/g)) {
     const span = blocks.get(Number(n)) ?? { from: Infinity, to: 0 };
     blocks.set(Number(n), { from: Math.min(span.from, minutes(from)), to: Math.max(span.to, minutes(to)) });
   }
-  const timed = [...blocks.entries()].sort(([a], [b]) => a - b);
-  for (const [[, a], [, b]] of timed.slice(1).map((entry, i) => [timed[i], entry])) {
-    expect(b.from).toBeGreaterThanOrEqual(a.from);
+  const measured = [1, 2, 3, 4, 5, 6, 8, 9, 10, 13, 14, 15, 17, 18, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+  expect([...blocks.keys()].sort((a, b) => a - b)).toEqual(measured);
+  const slot = 5;
+  for (const [a, b] of measured.slice(1).map((n, i) => [measured[i], n])) {
+    expect(blocks.get(b).from - blocks.get(a).to).toBe((b - a - 1) * slot);
+  }
+  for (const chapter of chapters) {
+    const inside = measured.filter(n => blocks.get(n).from >= chapter.from && blocks.get(n).to <= chapter.to);
+    expect(blocks.get(inside[0]).from).toBe(chapter.from);
+    expect(blocks.get(inside.at(-1)).to).toBe(chapter.to);
   }
   expect(blocks.get(1).from).toBe(0);
   expect(blocks.get(36).to).toBe(180);
-  expect(blocks.get(33).to).toBe(chapters[5].from);
-  expect(blocks.get(34).from).toBe(chapters[5].from);
-  expect(chapters[4].to).toBe(chapters[5].from);
+
+  const split = [...html.match(/Block 34 \(02:39 to 02:50\)[^\n]*\n((?:    - [^\n]*\n)+)/)[1]
+    .matchAll(/, (\d\d:\d\d) to (\d\d:\d\d)\n/g)].map(([, from, to]) => ({ from: minutes(from), to: minutes(to) }));
+  expect(split).toHaveLength(3);
+  expect(split[0].from).toBe(blocks.get(34).from);
+  expect(split[1].from).toBe(split[0].to);
+  expect(split[2].from).toBe(split[1].to);
+  expect(split[2].to).toBe(blocks.get(34).to);
+  expect(split.reduce((sum, part) => sum + part.to - part.from, 0)).toBe(blocks.get(34).to - blocks.get(34).from);
+  const whole = blocks.get(34);
+  for (const [, from, to] of html.matchAll(/Block 34 \((\d\d:\d\d) to (\d\d:\d\d)\)/g)) {
+    const range = { from: minutes(from), to: minutes(to) };
+    const isWhole = range.from === whole.from && range.to === whole.to;
+    expect(isWhole || split.some(part => part.from === range.from && part.to === range.to)).toBe(true);
+  }
 });

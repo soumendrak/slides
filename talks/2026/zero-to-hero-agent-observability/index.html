@@ -1120,6 +1120,7 @@ Price the successes, not the runs. <!-- .element: class="quote" -->
 Note:
 - Block 33 (02:36 to 02:39), 3 minutes. Must cover. About 2 minutes here, then the Part 5 recap.
 - Langfuse records usage and cost per generation, split by usage type such as input and output. It calculates cost from usage and a model price when the generation is ingested. [1]
+- If you do not send cost, Langfuse infers it from the model's price. If you send cost, yours is used. [1]
 - So tokens × price is two prices: input tokens and output tokens are priced separately.
 - Failed and retried runs still spend tokens, so cost per successful task is higher than cost per run. Workshop plan recommendation, no external claim.
 - The 3,000-token budget is a workshop example, not an external figure.
@@ -1285,7 +1286,7 @@ Note:
 - Langfuse says its SDKs send trace data asynchronously in the background, queued locally and flushed in batches. [2]
 - Tail sampling decides after it has seen the whole trace, so it can always keep traces with errors and sample on latency. [3]
 - CAVEAT: tail sampling is hard to run. It needs a stateful component such as the Collector's tail sampling processor. [3]
-- Langfuse's `sample_rate` is set in the client and decided at the trace level, from the first observation. My reading: that is not tail sampling, so it cannot keep every error by itself. [4]
+- Langfuse's `sample_rate` is set in the client, and the SDK samples on the trace level. My reading: that is not tail sampling, so it cannot keep every error by itself. [4]
 - If volume is small, keep everything and sample later. Details: Appendix, sampling and PII.
 - Keep attributes small: workshop plan recommendation, no external claim.
 - Load testing: workshop plan recommendation, no external claim.
