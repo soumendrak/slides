@@ -13,6 +13,10 @@
     <style>
         .reveal figure { margin: 0 auto; text-align: center; }
         .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
+        .reveal .qr-layout { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center; }
+        .reveal .qr-figure img { width: 320px; max-height: none; box-shadow: 0 0 0 1px #94a3b8; }
+        .reveal .qr-figure figcaption { margin-top: 14px; font-size: 28px; }
+        .reveal .qr-figure .qr-url { font-size: 20px; line-height: 1.4; color: var(--deck-muted); }
         .reveal .lab-tag { color: #facc15; font-weight: 600; }
         .reveal .placeholder { border: 2px dashed #475569; padding: 18px; color: #94a3b8; }
         .reveal .medium { font-size: 0.75em; }
@@ -180,13 +184,24 @@ Note:
 
 ## Setup check
 
+<div class="two-column qr-layout">
+<div>
+
 - Repo QR: <span class="highlight">https://github.com/soumendrak/AI-Agent-Observability</span>
 - Run this while I talk: `uv run ws doctor`
 - Pairing on one laptop is fine and encouraged
 - Green sticky: ready. Red sticky: need help.
 
+</div>
+<figure class="qr-figure">
+<img src="assets/slides-qr.svg" alt="QR code that opens these workshop slides at slides.soumendrak.com/talks/2026/zero-to-hero-agent-observability/">
+<figcaption>Scan for these slides<br><span class="qr-url">slides.soumendrak.com/talks/2026/<br>zero-to-hero-agent-observability</span></figcaption>
+</figure>
+</div>
+
 Note:
 - Block 1 (00:00 to 00:05).
+- The QR on the right opens this deck. Leave it up while people settle in.
 - Hands up: traced an LLM app before? Saw READY at home?
 - TAs count greens; reds get help.
 - Locked laptops pair with a ready neighbour.

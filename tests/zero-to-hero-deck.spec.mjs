@@ -100,3 +100,33 @@ test('zero-to-hero schedule in the notes is consistent and sums to 180 minutes',
     expect(isWhole || split.some(part => part.from === range.from && part.to === range.to)).toBe(true);
   }
 });
+
+test('zero-to-hero slide 5 shows a loaded QR code with alt text, a caption and the file on disk', async ({ page }) => {
+  const qr = path.resolve(import.meta.dirname, '..', path.dirname(deck), 'assets/slides-qr.svg');
+  expect(fs.existsSync(qr)).toBe(true);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto(urls.http);
+  await page.waitForFunction(() => window.Reveal?.isReady());
+  const slide = await page.evaluate(() => {
+    const section = Reveal.getSlides()[4];
+    const img = section.querySelector('img[src="assets/slides-qr.svg"]');
+    return {
+      title: section.querySelector('h2').textContent.trim(),
+      alt: img?.getAttribute('alt'),
+      caption: section.querySelector('figcaption')?.textContent,
+      loaded: img?.complete && img.naturalWidth > 0,
+    };
+  });
+  expect(slide.title).toBe('Setup check');
+  expect(slide.alt).toContain('slides.soumendrak.com/talks/2026/zero-to-hero-agent-observability/');
+  expect(slide.caption).toContain('Scan for these slides');
+  expect(slide.loaded).toBe(true);
+  await page.evaluate(() => Reveal.slide(2, 1));
+  const fit = await page.evaluate(() => {
+    const section = Reveal.getCurrentSlide();
+    const box = section.querySelector('.qr-layout').getBoundingClientRect();
+    const frame = document.querySelector('.reveal').getBoundingClientRect();
+    return { scroll: section.scrollHeight <= section.clientHeight, inside: box.bottom <= frame.bottom && box.right <= frame.right };
+  });
+  expect(fit).toEqual({ scroll: true, inside: true });
+});
