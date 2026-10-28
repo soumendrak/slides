@@ -58,8 +58,10 @@ test('zero-to-hero schedule in the notes is consistent and sums to 180 minutes',
   expect(agenda.reduce((a, b) => a + b, 0)).toBe(180);
   const [opening, concepts, incident, pause, evaluator, alerts, production, buffers] = agenda;
 
-  const chapters = [...html.matchAll(/^## Part (\d): .*\n\n(\d\d:\d\d) to (\d\d:\d\d)/gm)]
-    .map(([, n, from, to]) => ({ n: Number(n), from: minutes(from), to: minutes(to) }));
+  const chapters = [...html.matchAll(/^## Part (\d): .*\n\n(?:(\d\d:\d\d) to (\d\d:\d\d))?/gm)]
+    .map(([, n, from, to]) => ({ n: Number(n), from: from && minutes(from), to: to && minutes(to) }));
+  chapters[0].from ??= 0;
+  chapters[0].to ??= chapters[1].from;
   expect(chapters.map(c => c.n)).toEqual([1, 2, 3, 4, 5, 6]);
   expect(chapters.map(c => c.to - c.from)).toEqual([opening, concepts, incident, evaluator, alerts, production]);
   expect(chapters[0].from).toBe(0);
