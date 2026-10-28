@@ -102,7 +102,6 @@ Note:
 <p class="medium">One ground file reported thruster data in pound-force-seconds. Navigation expected newton-seconds. <span class="red">lbf-s ≠ N-s</span></p>
 
 Note:
-- Recommended opener: Candidate 2.
 - Full script, backup facts and every caveat: speaker-notes/opening-story.md.
 - Script (~230 words, about 1 min 45 s):
     - On 11 December 1998, NASA launched the Mars Climate Orbiter. [1]
@@ -158,9 +157,10 @@ Sources:
 </div>
 
 Note:
-- Bridge line (Candidate 2): "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns 200 OK, and it books Hyderabad to Delhi when you asked for Delhi to Hyderabad. Today you'll learn to catch the swapped units before the spacecraft is gone."
+- Bridge line: "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns OK, and the customer still gets a flight they didn't ask for. Today you'll learn to catch it before the spacecraft is gone."
+- Do not say what the wrong flight was. That is Case 2.
 - MCO facts are from the NASA report. [1]
-- TripMate is the workshop's synthetic agent; no external source needed.
+- TripMate is the workshop's synthetic agent.
 
 Sources:
 
@@ -191,7 +191,6 @@ Note:
 - TAs count greens; reds get help.
 - Locked laptops pair with a ready neighbour.
 - If behind, skip the poll.
-- No factual claims on this slide.
 
 --
 
@@ -211,7 +210,6 @@ Note:
     - 80% or more: move on.
     - 60 to 80%: move on, and TAs keep helping.
     - Under 60%: I drive from the projector.
-- No factual claims on this slide.
 
 --
 
@@ -247,6 +245,10 @@ Sources:
 
 Note:
 - Block 2.
+- Say:
+    - Nearly everyone traces. Only about a third score live runs.
+    - A trace tells you what happened. It doesn't tell you if it was right.
+    - Today we do both.
 - Survey: LangChain, State of Agent Engineering, 1,340 responses, 18 Nov to 2 Dec 2025. [1]
 - Also: 32% cite quality as a top barrier. [1]
 
@@ -265,6 +267,9 @@ observe["observe (trace)"] --> diagnose --> fix["fix (guard)"] --> verify["verif
 
 Note:
 - Block 2 close.
+- Say:
+    - This is the whole workshop on one line.
+    - Each part of today fills in one box, left to right.
 - "Tracing is table stakes" echoes the survey. [1]
 
 Sources:
@@ -308,7 +313,7 @@ First, one normal run. <!-- .element: class="quote" -->
 Note:
 - Block 3. Teaser only.
 - Do not describe the fault yet.
-- No external factual claims. TripMate and its data are synthetic.
+- TripMate and its data are synthetic.
 
 --
 
@@ -320,11 +325,11 @@ Note:
 - Click the trace URL it prints
 - No network or no Langfuse account? Add `--exporter console`
 
+Lab guide: `labs/01-first-trace.md` <!-- .element: class="fine" -->
+
 Note:
 - Block 3.
-- Lab guide: labs/01-first-trace.md in the workshop repo.
 - TAs: region and key errors go to docs/troubleshooting.md.
-- No external factual claims.
 
 --
 
@@ -343,8 +348,8 @@ Green sticky if your tree matches the projector. <!-- .element: class="small" --
 Note:
 - Block 4 (00:12 to 00:16). Tour my trace on the projector.
 - Stragglers: pair up, open a public trace, or switch to --exporter console.
-- Tree shape is the Case 0 design in the workshop plan (synthetic agent). No external claim.
-- TODO: replace with an annotated screenshot of a real Case 0 trace after the integration gate.
+- The tree is simplified. The real trace also has `agent`, `tools_condition` and `tools` chains between steps. Point at the five steps, not the wrappers.
+- TODO: swap the tree for an annotated Langfuse screenshot saved as `assets/checkpoint1-trace.webp`.
 
 --
 
@@ -394,6 +399,10 @@ Find your trace ID, the root, and shout your span count. <!-- .element: class="q
 
 Note:
 - Block 5 (00:16 to 00:21).
+- Say:
+    - A span is one step, with a start, an end and a status.
+    - A trace is every step of one request, as a tree.
+    - Logs are single events, metrics are totals. The trace shows what caused what.
 - Optional 10 s demo of plain vs structured logs from observability-engineering-series ch1. [3]
 - Definitions follow OpenTelemetry. [1] [2]
 
@@ -417,6 +426,10 @@ llm1[LLM] --> tool1[tool] --> llm2[LLM] --> tool2[tool] --> llm3["LLM (final ans
 
 Note:
 - Block 6 (00:21 to 00:26). Show agent.py briefly.
+- Say:
+    - An agent is a loop: the model picks a tool, reads the result, picks again.
+    - Each turn is a generation followed by a tool call.
+    - One root wraps the whole loop, so one click opens the run.
 - Langfuse observation types. [1]
 
 Sources:
@@ -444,7 +457,6 @@ Note:
 - Block 6.
 - "Open the root tripmate. Input has requested, output has booking. Remember this."
 - Check the load started.
-- Design from the workshop plan (A6); no external claim.
 
 --
 
@@ -458,8 +470,10 @@ Note:
 
 Worksheet Q1 to Q5, with a partner if you have one. <!-- .element: class="small" -->
 
+Lab guide: `labs/02-read-a-trace.md` <!-- .element: class="fine" -->
+
 Note:
-- Block 7, window W1 (00:24 to 00:34).
+- Block 7, window W1 (00:24 to 00:32). Stop the lab at 00:32 for the demo.
 - If behind, Q1 to Q3 only.
 - TAs check against the key on the answer sheet.
 - Answers are not in this public deck.
@@ -475,11 +489,10 @@ Note:
 Spot the difference between the two runs. <!-- .element: class="quote" -->
 
 Note:
-- Block 8 (00:31 to 00:36).
-- 3-minute demo in my own project with LLM_MODE=openai.
+- Block 8 (00:31 to 00:36). W1 runs until 00:32, then this 3-minute demo (00:32 to 00:35), then OpenTelemetry names (00:35 to 00:36).
+- Demo in my own project with LLM_MODE=openai.
 - If behind: screenshot of the two runs.
-- TODO: add the screenshot.
-- No external factual claim.
+- TODO: save the screenshot as `assets/real-model-two-runs.webp`.
 
 --
 
@@ -493,6 +506,10 @@ Status: Development. Names can still change. <!-- .element: class="fine" -->
 
 Note:
 - Block 8. 60 seconds.
+- Say:
+    - These are the vendor-neutral names. Langfuse maps its types onto them.
+    - If you switch backends, these names come with you.
+    - Status Development: pin your SDK version.
 - OTel GenAI semantic conventions. [1]
 
 Sources:
@@ -504,43 +521,32 @@ Sources:
 ## Checkpoint 2: mean vs percentiles
 
 - Guess your p99 from your mean, then read the last line of `ws load`
-- 99 runs at 1 s plus one at 30 s: mean 1.29 s, median 1 s
-- With 50 runs, p99 is your slowest run or two. An illustration, not an estimate.
-- Tools compute percentiles differently. Langfuse may differ a little.
+- 49 runs at 1 s plus one at 30 s: mean 1.58 s, median 1 s, p99 30 s
+- With 50 runs, p99 is your slowest run. An illustration, not an estimate.
+
+<div class="code-block">P(at least one slow step) = 1 − 0.99ⁿ: 9.6% at 10 steps, 22.2% at 25</div>
+
+Agents multiply tails. Intuition, not a prediction: real steps aren't independent. Tools compute percentiles differently. <!-- .element: class="smaller dim" -->
 
 Note:
 - Block 9 (00:36 to 00:41).
+- Say:
+    - The mean hides the one slow run. The customer who waited 30 seconds doesn't care about 1.58.
+    - An agent takes many steps, so one slow step is likely somewhere in the run.
 - The worksheet uses the ws load numbers (nearest rank).
-- Nearest-rank p99 of 50 values is the maximum. [1]
+- Nearest-rank p99 of 50 values is the maximum, here 30 s. [1]
 - numpy's default linear method interpolates between the two largest. [1]
-- 1.29 s = (99 × 1 + 30) / 100, my own calculation.
+- 1.58 s = (49 × 1 + 30) / 50, my own calculation.
 - Offline: ws load -n 50 --exporter console prints the same line.
-
-Sources:
-
-1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
-
---
-
-## Why tails matter for agents
-
-<div class="code-block">P(at least one slow step) = 1 − 0.99ⁿ</div>
-
-- n = 10 steps: 9.6%
-- n = 25 steps: 22.2%
-
-Intuition, not a prediction. Real steps aren't independent. <!-- .element: class="smaller dim" -->
-
-Note:
-- Block 9.
-- Assumes each step independently has a 1% chance of hitting its p99. My own calculation.
-- The Tail at Scale reports 63% at fan-out 100. [1]
+- Tail formula: assumes each step independently has a 1% chance of hitting its p99. My own calculation.
+- The Tail at Scale reports 63% at fan-out 100. [2]
 - A slow model or backend slows several steps at once.
 - Details: Appendix, reliability compounding.
 
 Sources:
 
-1. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
+1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
+2. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
 
 --
 
@@ -550,9 +556,7 @@ Sources:
 
 <p class="recap-progress">Part 1 ✓ · <strong>Part 2 ●</strong> · Part 3 · Part 4 · Part 5 · Part 6</p>
 
-- **Part 1 · Opening and first trace**
-    - Why it matters: agents fail silently, and most teams trace but fewer check the answer
-    - Lab 1: your first TripMate trace
+- Part 1 · Opening and first trace: your first trace
 
 <!-- .element: class="recap-past" -->
 
@@ -595,8 +599,10 @@ Note:
 
 Note:
 - Block 10 (00:41 to 00:46).
-- Synthetic complaint letter for the workshop. No external claim.
-- TODO: final wording of the complaint letter from the lab guide.
+- Synthetic complaint for the workshop.
+- Say:
+    - Read it out slowly. This is all the customer gives us.
+    - Notice what's missing: no error message, no screenshot.
 
 --
 
@@ -611,7 +617,6 @@ Note:
 Note:
 - Block 10.
 - Skip this slide if behind and say the steps aloud.
-- Method from the workshop plan. No external claim.
 
 --
 
@@ -622,6 +627,8 @@ Note:
 - Find the failing step
 - Find which step caused it
 - Tell your TA your answer
+
+Lab guide: `labs/03-incident.md` <!-- .element: class="fine" -->
 
 Note:
 - Blocks 10 and 11, window W2 (00:43 to 00:51).
@@ -705,7 +712,10 @@ Debug and evaluate on facts. <!-- .element: class="quote" -->
 Note:
 - Block 15 close.
 - General lesson; no case specifics.
-- Workshop plan principle, no external claim.
+- Say:
+    - The final message is what the model says it did.
+    - The tool result is what actually happened.
+    - Debug, evaluate and alert on the second one.
 
 --
 
@@ -715,10 +725,13 @@ Note:
 - Make `validate_booking` raise `ValueError` if origin, destination or date differ from the request
 - About 4 to 6 lines
 
+Lab guide: `labs/04-fix-and-rerun.md` <!-- .element: class="fine" -->
+
 Note:
 - Block 16, window W4 (01:11 to 01:21).
 - Lab guide: labs/04-fix-and-rerun.md.
 - Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
+- If asked what the user sees: the guard runs inside `book_flight`, so the tool errors and TripMate apologises instead of booking. No booking beats a wrong booking.
 
 --
 
@@ -742,7 +755,7 @@ Note:
 
 - Run Case 2 with other cities or dates
 - Predict the local check result before you run it
-- Cases 3 to 6, if built
+- Rerun Case 2 with `--guard off` and compare the two roots
 
 Note:
 - Block 18 (01:21 to 01:26).
@@ -757,9 +770,7 @@ Note:
 <p class="recap-progress">Part 1 ✓ · Part 2 ✓ · <strong>Part 3 ●</strong> · Part 4 · Part 5 · Part 6</p>
 
 - Part 1 · Opening and first trace: your first trace
-- **Part 2 · Read a trace**
-    - The root holds the facts: `input.requested` and `output.booking`
-    - Read the tail, not the mean: p99 and why tails matter
+- Part 2 · Read a trace: spans, the agent loop, percentiles
 
 <!-- .element: class="recap-past" -->
 
@@ -849,6 +860,8 @@ Note:
 3. Target root observations, name `tripmate`
 4. Don't save yet
 
+Lab guide: `labs/05-evals.md` <!-- .element: class="fine" -->
+
 Note:
 - Block 22 demo (01:41 to 01:46), then block 23, window W5 (01:46 to 02:01).
 - Lab guide: labs/05-evals.md.
@@ -890,7 +903,6 @@ uv run ws case 2 --rerun</div>
 Note:
 - Block 25 (01:56 to 02:01).
 - Use -n 5 each if behind.
-- One --mix command if O2 shipped.
 - Langfuse evaluator rules. [1]
 
 Sources:
@@ -921,7 +933,7 @@ Sources:
 
 ## Which check catches which case?
 
-| Check | Case 0 | Case 2 | Case 3 | Case 5 |
+| Check | Case 0 | Case 1 | Case 2 | Case 2 fixed |
 | --- | --- | --- | --- | --- |
 | Text regex | ? | ? | ? | ? |
 | Structured eval | ? | ? | ? | ? |
@@ -931,9 +943,35 @@ Sources:
 Use code evals for facts and judges for semantics. <!-- .element: class="small" -->
 
 Note:
-- Block 27 (02:06 to 02:11).
+- Block 27 (02:06 to 02:11). About 4 minutes here, then 1 minute on pass^k.
 - The room fills cells aloud.
 - The filled table is on the instructor copy, not here.
+- TODO: the columns changed from Cases 0, 2, 3, 5 to Cases 0, 1, 2 and 2 fixed. Update the filled table on the instructor copy.
+
+--
+
+## pass@k vs pass^k
+
+- pass@k: at least one of k tries succeeds
+- pass^k: all k tries succeed
+- p = 0.7: pass@3 = 97.3%, pass^3 = 34.3%
+
+An agent that books flights has to get it right every time. Use pass^k. <!-- .element: class="quote" -->
+
+Note:
+- Block 27, last minute.
+- Say:
+    - Code benchmarks use pass@k: one good answer out of k is enough.
+    - A customer doesn't get k tries. Every booking has to be right.
+    - 70% per try looks fine. Three bookings in a row all right: about one in three.
+- pass@k. [1]
+- pass^k; the paper reports "pass^8 <25% in retail". [2]
+- 97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
+
+Sources:
+
+1. [arXiv:2107.03374 (pass@k)](https://arxiv.org/abs/2107.03374)
+2. [arXiv:2406.12045 (pass^k)](https://arxiv.org/abs/2406.12045)
 
 --
 
@@ -954,9 +992,7 @@ Note:
 
 - Part 1 · Opening and first trace: your first trace
 - Part 2 · Read a trace: spans, the agent loop, percentiles
-- **Part 3 · The incident**
-    - The text is a claim. The tool result is the fact.
-    - A guard in `guards.py`, then a rerun: local check PASS
+- Part 3 · The incident: the text is a claim, the tool result is the fact
 
 <!-- .element: class="recap-past" -->
 
@@ -967,6 +1003,7 @@ Note:
 - Tested on the old Case 2 trace and the rerun, then run on traffic
 - LLM-as-judge: semantic, but needs a provider key and costs tokens
 - Code evals for facts, judges for semantics
+- pass^k: an agent that acts must be right every time
 
 <!-- .element: class="recap-current" -->
 
@@ -988,7 +1025,7 @@ Note:
 Note:
 - Blocks 29 to 33.
 - Checkpoint 7 at 02:34: "explain NO_DATA vs ALERT" poll.
-- Token budget and Cost per run are must-cover, not homework.
+- Cost per run, with the token budget, is must-cover, not homework.
 
 --
 
@@ -1004,8 +1041,10 @@ Note:
 Which one would you page on for TripMate? <!-- .element: class="quote" -->
 
 Note:
-- Block 29 (02:16 to 02:21). Show of hands.
-- Workshop plan recommendation, no external claim.
+- Block 29 (02:16 to 02:21). Show of hands, then Alert on rates and Why most alerts are false, about a minute each.
+- Say:
+    - Let the room argue for a minute. There's no single right answer.
+    - Pass rate is closest to what the customer feels. Latency and tool errors often explain it.
 
 --
 
@@ -1017,11 +1056,37 @@ Note:
 
 Note:
 - Block 29. One slide if behind.
+- Say:
+    - One failed run is noise. A rising failure rate is a signal.
+    - Users feel wrong bookings and slow answers, not stack traces.
+    - Burn rate is in the appendix for anyone who runs SLOs.
 - Google SRE workbook, alerting on SLOs. [1]
 
 Sources:
 
 1. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
+
+--
+
+## Why most alerts are false
+
+- A check that is 95% sensitive and 95% specific. 2% of runs are bad.
+- Precision = 0.95×0.02 / (0.95×0.02 + 0.05×0.98) = 28%
+- At 1,000 runs a day: 19 true alarms, 49 false
+
+Alert on windowed rates. Read them next to the sample count. <!-- .element: class="quote" -->
+
+Note:
+- Block 29, last minute.
+- Say:
+    - A good check on rare failures still pages you mostly for nothing.
+    - That's why we alert on a rate over a window, not on every bad run.
+- Own calculation (Bayes).
+- Reference: the base rate fallacy. [1]
+
+Sources:
+
+1. [Wikipedia: Base rate fallacy](https://en.wikipedia.org/wiki/Base_rate_fallacy)
 
 --
 
@@ -1039,7 +1104,8 @@ Note:
 - Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
 - No-data modes, and boolean average = share of true scores. [1]
 - Hobby allows 2 alerts. [2]
-- Record the real evaluation interval from the integration gate here.
+- TODO: record the real evaluation interval here after the dry run.
+- TODO: save the alert setup as `assets/alert-config.webp` as a fallback if the live demo fails.
 
 Sources:
 
@@ -1068,7 +1134,8 @@ Note:
     - the NO_DATA one shows NO_DATA
 - Then ws load -n 40 --case 2 --guard off, then the webhook payload.
 - In production use "Notify after sustained NO_DATA". [1]
-- If the gate shows different NO_DATA behaviour, record it here.
+- If the dry run shows different NO_DATA behaviour, record it here.
+- TODO: save the ALERT and NO_DATA pair as `assets/alert-vs-nodata.webp` as a fallback.
 
 Sources:
 
@@ -1083,22 +1150,8 @@ Sources:
 3. How do you tell those two apart?
 
 Note:
-- Block 32 (02:31 to 02:36). Poll for about 3 minutes (02:31 to 02:34), then Token budget.
+- Block 32 (02:31 to 02:36). Poll for about 4 minutes (02:31 to 02:35), then Cost per run. The spare minute pays for Why most alerts are false.
 - Answers are discussed live, not written here.
-
---
-
-## Token budget
-
-- Budget: 3,000 tokens per run
-- Compare a normal run with a rerun that adds a generation
-- Tokens per run is a cost signal you can alert on
-
-Note:
-- Block 32 (02:34 to 02:36), 2 minutes. Must cover, with Cost per run next.
-- If behind, read the three bullets and move on. Do not send it to homework.
-- Use Case 6 if built.
-- The 3,000 budget is a workshop example, not an external figure.
 
 --
 
@@ -1106,7 +1159,7 @@ Note:
 
 <div class="code-block">cost per run = tokens × price</div>
 
-- TripMate's budget: 3,000 tokens per run
+- TripMate's budget: 3,000 tokens per run. You can alert on tokens per run.
 - Failed and retried runs still cost
 - Cost per successful task = total cost ÷ successful runs
 
@@ -1116,10 +1169,11 @@ Price the successes, not the runs. <!-- .element: class="quote" -->
 
 Note:
 - Block 33 (02:36 to 02:39), 3 minutes. Must cover. About 2 minutes here, then the Part 5 recap.
+- The token budget slide is folded in here. Homework item 2 compares a normal run with a rerun.
 - Langfuse records usage and cost per generation, split by usage type such as input and output. It calculates cost from usage and a model price when the generation is ingested. [1]
 - If you do not send cost, Langfuse infers it from the model's price. If you send cost, yours is used. [1]
 - So tokens × price is two prices: input tokens and output tokens are priced separately.
-- Failed and retried runs still spend tokens, so cost per successful task is higher than cost per run. Workshop plan recommendation, no external claim.
+- Failed and retried runs still spend tokens, so cost per successful task is higher than cost per run.
 - The 3,000-token budget is a workshop example, not an external figure.
 - The example uses my own arithmetic: 100 × 3,000 = 300,000 and 300,000 ÷ 90 = 3,333, which is 11% above the budget.
 - Prices are not on the slide because they differ by model and change. Look yours up.
@@ -1136,12 +1190,10 @@ Sources:
 
 <p class="recap-progress">Part 1 ✓ · Part 2 ✓ · Part 3 ✓ · Part 4 ✓ · <strong>Part 5 ●</strong> · Part 6</p>
 
-- Part 1 · Opening and first trace
+- Part 1 · Opening and first trace: your first trace
 - Part 2 · Read a trace: spans, the agent loop, percentiles
 - Part 3 · The incident: investigate, fix, rerun
-- **Part 4 · Build an evaluator**
-    - A code evaluator scores every run: `booking_matches_request`
-    - Code evals for facts, judges for semantics
+- Part 4 · Build an evaluator: `booking_matches_request` scores every run
 
 <!-- .element: class="recap-past" -->
 
@@ -1149,9 +1201,9 @@ Sources:
 
 - Four signals: eval pass rate, p95 latency, tool error rate, tokens per run
 - Alert on rates over a window, and on what users feel
+- Why most alerts are false: base rates, so alert on windowed rates
 - An alert on avg `booking_matches_request`, with severity NO_DATA shown
 - ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
-- Tokens per run is a cost signal you can alert on
 - Cost per run: tokens × price, and cost per successful task
 
 <!-- .element: class="recap-current" -->
@@ -1183,12 +1235,41 @@ flowchart LR
 observe["observe (trace)"] --> diagnose["diagnose (compare request vs tool)"] --> fix["fix (guard)"] --> verify["verify (local check + evaluator)"] --> monitor["monitor (alert with NO_DATA)"]
 ```
 
+Could you prove what your bot told a customer? Yes: the root span holds the request and the booking. <!-- .element: class="quote" -->
+
 Note:
 - Block 34 (02:39 to 02:50), 11 minutes:
-    - this slide and the checklist, 02:39 to 02:44
+    - this slide, Turn the incident into a test, and a flash of the checklist, 02:39 to 02:44
     - Minimum setup for a small team, 02:44 to 02:47
     - Instrumentation overhead and load testing, 02:47 to 02:50
-- No external claim.
+- The quote answers the Air Canada question from Part 1.
+- Add: only if you keep the traces. Set trace retention to match how long complaints and disputes can arrive.
+
+--
+
+## Turn the incident into a test
+
+- Save the Case 2 run as a dataset item: the request in, the expected booking out
+- Run the dataset on every prompt, model or code change
+- Score it with the same check as `booking_matches.py`
+- A fixed bug stays fixed
+
+Online evals catch it in production. Offline evals catch it before. <!-- .element: class="quote" -->
+
+Note:
+- Block 34, about 3 minutes. Talk-through, no lab.
+- Say:
+    - Today we verified with a local check and an online evaluator.
+    - The missing piece is a regression test. Every incident becomes a dataset item.
+    - Then a prompt tweak that brings the bug back fails before it ships.
+- Part 1 survey: 52.4% run offline evals. [1]
+- Langfuse turns traces and feedback into dataset items and runs experiments on them. [2]
+- Not in the lab repo. Point people to the Langfuse guide.
+
+Sources:
+
+1. [LangChain: State of Agent Engineering](https://www.langchain.com/state-of-agent-engineering)
+2. [Langfuse: from user feedback to evaluation datasets](https://langfuse.com/resources/engineering/user-feedback-to-evaluation-datasets)
 
 --
 
@@ -1203,6 +1284,7 @@ Note:
 
 Note:
 - Block 34.
+- Flash this as reference, about 15 seconds. Don't read it out.
 - Full list: docs/production-checklist.md in the workshop repo.
 - OTel GenAI conventions. [1]
 
@@ -1223,6 +1305,7 @@ Sources:
 
 Note:
 - Block 34.
+- Flash this as reference, about 15 seconds. Minimum setup is next.
 - Checklist sources: Langfuse alerts [1] and the Google SRE workbook. [2]
 
 Sources:
@@ -1245,7 +1328,7 @@ The other seven can wait. <!-- .element: class="quote" -->
 Note:
 - Block 34 (02:44 to 02:47), 3 minutes.
 - These are checklist items 1, 2, 8, 10 and 12. The other seven are 3 to 7, 9 and 11.
-- Which five, and what can wait, is a workshop plan recommendation, no external claim.
+- Which five, and what can wait, is my recommendation.
 - If you can only measure a few things, pick a few: Google SRE says to focus on four golden signals (latency, traffic, errors, saturation) if you can only measure four. [1]
 - Say it plainly: a team of two does not need all twelve on day one.
 - If a sixth: tokens and cost per run (checklist 7), from Part 5.
@@ -1285,8 +1368,8 @@ Note:
 - CAVEAT: tail sampling is hard to run. It needs a stateful component such as the Collector's tail sampling processor. [3]
 - Langfuse's `sample_rate` is set in the client, and the SDK samples on the trace level. My reading: that is not tail sampling, so it cannot keep every error by itself. [4]
 - If volume is small, keep everything and sample later. Details: Appendix, sampling and PII.
-- Keep attributes small: workshop plan recommendation, no external claim.
-- Load testing: workshop plan recommendation, no external claim.
+- Keep attributes small: my recommendation.
+- Load testing: my recommendation.
     - Real tools have side effects, so stub them.
     - A real model costs tokens on every run and adds provider rate limits and noise, so use a recorded or mock model.
     - Fixed concurrency makes two runs comparable.
@@ -1305,9 +1388,37 @@ Sources:
 
 --
 
+## What we didn't cover
+
+- Trajectory evals: the wrong tool, loops, redundant calls
+- Multi-turn sessions: score the conversation, not one run
+- MCP and multi-agent: one trace across services
+- User feedback: a thumbs-down becomes a score, then a dataset item
+- Comparing prompt and model releases
+
+Each one builds on the same root span and the same evaluator. <!-- .element: class="small muted" -->
+
+Note:
+- Block 35, first minute. Name them, don't teach them.
+- Say:
+    - Everything today was one run of one agent. Real agents have sessions, many tools and other agents.
+    - The habits carry over: facts on the root, a code check for your costliest mistake, an alert on a rate.
+- Trajectory evals are covered in the DeepLearning.AI and Arize course. [1]
+- Langfuse sessions [2] and user feedback as scores. [3]
+- OTel MCP conventions: the MCP client span is the parent of the server span. Status: Development. [4]
+
+Sources:
+
+1. [DeepLearning.AI: Evaluating AI Agents](https://www.deeplearning.ai/short-courses/evaluating-ai-agents)
+2. [Langfuse: sessions](https://langfuse.com/docs/observability/features/sessions)
+3. [Langfuse: user feedback](https://langfuse.com/docs/observability/features/user-feedback)
+4. [OTel semantic conventions for MCP](https://opentelemetry.io/docs/specs/semconv/gen-ai/mcp/)
+
+--
+
 ## Homework and Q&A
 
-- Cases 3 to 6 if built, otherwise Case 2 variants
+- Case 2 with other cities and dates: predict, then run
 - Add the Langfuse `CallbackHandler` to your own agent
 - Read the maths appendix
 - Other tools exist. OpenTelemetry is vendor-neutral, so you can compare backends.
@@ -1332,24 +1443,23 @@ Sources:
 
 <p class="recap-progress">Part 1 ✓ · Part 2 ✓ · Part 3 ✓ · Part 4 ✓ · Part 5 ✓ · <strong>Part 6 ●</strong></p>
 
-- Part 1 · Opening and first trace
-- Part 2 · Read a trace
+- Part 1 · Opening and first trace: your first trace
+- Part 2 · Read a trace: spans, the agent loop, percentiles
 - Part 3 · The incident: investigate, fix, rerun
 - Part 4 · Build an evaluator: score every run
-- **Part 5 · Monitor and alert**
-    - Alert on rates over a window, and on what users feel
-    - ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
-    - Cost per run: tokens × price, and cost per successful task
+- Part 5 · Monitor and alert: rates, NO_DATA, cost per success
 
 <!-- .element: class="recap-past" -->
 
 ### Part 6 · Take it to production <!-- .element: class="recap-now" -->
 
 - The loop, again: observe, diagnose, fix, verify, monitor
+- Turn the incident into a test: a dataset item, run on every change
 - Checklist 1 to 6: trace every call, keep request and tool result on the root, validate before acting
 - Checklist 7 to 12: track latency and cost, eval live traffic, alert with no-data handling, redact PII
 - Minimum setup for a small team: five items, the rest can wait
 - Overhead and load testing: batch, tail-sample, stubbed tools in a sandbox
+- What we didn't cover: trajectories, sessions, MCP, feedback, releases
 - Homework: more cases, `CallbackHandler` in your own agent, the maths appendix
 
 <!-- .element: class="recap-current" -->
@@ -1409,7 +1519,6 @@ Note:
 - A p99 you can trust needs hundreds of runs. Use p50 and p95 for small samples.
 
 Note:
-- B0.
 - Nearest-rank vs numpy's default linear method. [1]
 - Langfuse's method is not documented on the pages checked.
 
@@ -1426,32 +1535,12 @@ Sources:
 - Assumes independent, identical steps. Real steps are correlated.
 
 Note:
-- B1. Own calculations.
+- Own calculations.
 - Fan-out reference: The Tail at Scale. [1]
 
 Sources:
 
 1. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
-
---
-
-## Appendix: pass@k vs pass^k
-
-- pass@k: at least one of k tries succeeds
-- pass^k: all k tries succeed
-- p = 0.7: pass@3 = 97.3%, pass^3 = 34.3%
-- Use pass^k for agents that act on behalf of users
-
-Note:
-- B2.
-- pass@k. [1]
-- pass^k; the paper reports "pass^8 <25% in retail". [2]
-- 97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
-
-Sources:
-
-1. [arXiv:2107.03374 (pass@k)](https://arxiv.org/abs/2107.03374)
-2. [arXiv:2406.12045 (pass^k)](https://arxiv.org/abs/2406.12045)
 
 --
 
@@ -1468,7 +1557,7 @@ Sources:
 ±5 points at p = 0.5 needs about 384 samples; ±3 needs about 1,067. Rule of three: 0 failures in n runs → upper bound about 3/n. <!-- .element: class="smaller" -->
 
 Note:
-- B3. Own calculations (Wilson score interval).
+- Own calculations (Wilson score interval).
 - Method reference: Wilson score interval. [1]
 - Rule of three. [2]
 
@@ -1476,23 +1565,6 @@ Sources:
 
 1. [Wikipedia: Wilson score interval](https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval)
 2. [Wikipedia: Rule of three (statistics)](https://en.wikipedia.org/wiki/Rule_of_three_(statistics))
-
---
-
-## Appendix: base rates and alert precision
-
-- Sensitivity 95%, specificity 95%, 2% of runs bad
-- Precision = 0.95×0.02 / (0.95×0.02 + 0.05×0.98) = 28%
-- At 1,000 runs a day: 19 true alarms, 49 false
-- Alert on windowed rates. Read them next to the sample count.
-
-Note:
-- B4. Own calculation (Bayes).
-- Reference: the base rate fallacy. [1]
-
-Sources:
-
-1. [Wikipedia: Base rate fallacy](https://en.wikipedia.org/wiki/Base_rate_fallacy)
 
 --
 
@@ -1504,7 +1576,6 @@ Sources:
 - Check a short window at the same time
 
 Note:
-- B5.
 - Google SRE workbook, alerting on SLOs. [1]
 - Example rules: observability-engineering-series ch11. [2]
 
@@ -1523,7 +1594,6 @@ Sources:
 - Run the redaction before tail sampling in the Collector
 
 Note:
-- B6.
 - Own calculation for the 1 in 20.
 - Collector tail sampling. [1]
 - Example config: observability-engineering-series ch9. [2]
@@ -1543,7 +1613,6 @@ Sources:
 - Judges cost tokens on every scored observation
 
 Note:
-- B7.
 - Langfuse LLM-as-a-judge docs. [1]
 
 Sources:
@@ -1575,6 +1644,23 @@ Sources:
 
 --
 
+## Appendix: cases at a glance
+
+| Case | Command | What you see |
+| --- | --- | --- |
+| 0 | `uv run ws run "…"` | A normal booking |
+| 1 | `uv run ws case 1` | A step goes red. The customer gets an apology. |
+| 2 | `uv run ws case 2` | Nothing is red. Read the confirmation. |
+<!-- .element: class="comparison-table" -->
+
+Symptoms only. Lab guides: `labs/` in the workshop repo. <!-- .element: class="fine" -->
+
+Note:
+- For people reading the deck after the workshop.
+- Symptoms only, no causes: this deck is public.
+
+--
+
 ## Backup: troubleshooting top 10
 
 <div class="placeholder">TODO: fill from <code>ws doctor</code> messages and docs/troubleshooting.md after the build.</div>
@@ -1588,10 +1674,20 @@ Note:
 
 ## Backup: public traces and offline view
 
-<div class="placeholder">TODO: public trace QR codes and a console-tree screenshot, after backup traces exist.</div>
+<div class="flow-diagram">$ uv run ws run "Book HYD to BLR on 2026-10-31" --exporter console
+agent tripmate OK
+  chain LangGraph OK
+    agent agent OK · generation ScriptedFakeLLM OK
+    chain tools OK · tool search_flights OK
+    agent agent OK · generation ScriptedFakeLLM OK
+    chain tools OK · tool book_flight OK
+    agent agent OK · generation ScriptedFakeLLM OK</div>
+
+<div class="placeholder">TODO: public trace QR codes</div>
 
 Note:
 - Backup slide for stuck laptops.
+- The tree is Case 0 from `--exporter console`, condensed: each `agent` line also has a `tools_condition` chain, and the root prints `requested`, `booking` and `final_message`.
 - Public trace links use langfuse.trace.public. [1]
 
 Sources:

@@ -25,7 +25,9 @@ This file holds the opening story for the deck in `index.html`. The opener is Ca
 > So the system was healthy and the outcome was wrong. Every component said "I'm fine." Nobody was checking whether the answer made sense.
 
 **Bridge line**
-> "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns 200 OK, and it books Hyderabad to Delhi when you asked for Delhi to Hyderabad. Today you'll learn to catch the swapped units before the spacecraft is gone."
+> "Our agent TripMate has its own Mars Climate Orbiter moment. Every span is green, every tool call returns OK, and the customer still gets a flight they didn't ask for. Today you'll learn to catch it before the spacecraft is gone."
+
+Do not say what the wrong flight was. That is the Case 2 lab answer.
 
 **Key facts and sources**
 | Fact | Source |
