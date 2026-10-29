@@ -2,6 +2,7 @@
 // from local files. This checks it renders fully, over http and file://, with no network
 // and no page or console errors.
 import { test, expect } from '@playwright/test';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -102,3 +103,66 @@ test('zero-to-hero schedule in the notes is consistent and sums to 180 minutes',
     expect(isWhole || split.some(part => part.from === range.from && part.to === range.to)).toBe(true);
   }
 });
+
+const qrFile = path.resolve(import.meta.dirname, '..', path.dirname(deck), 'assets/slides-qr.svg');
+const qrSha256 = 'b88e19a2fd3ec5871bd91e6e20524ecf97422681c3f7ad5ca83c8d6e32c3c936';
+
+test('zero-to-hero slide 5 QR file is the pinned one (error correction H, encodes the public deck URL)', () => {
+  const svg = fs.readFileSync(qrFile);
+  expect(createHash('sha256').update(svg).digest('hex')).toBe(qrSha256);
+  expect(svg.toString()).toContain('viewBox="0 0 570 570"');
+});
+
+for (const theme of ['dark', 'light']) {
+  for (const viewport of [{ width: 1280, height: 720 }, { width: 1920, height: 1080 }]) {
+    test(`zero-to-hero slide 5 shows a visible, scannable-size QR code in the ${theme} theme at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await page.addInitScript(value => localStorage.setItem('slides-theme', value), theme);
+      await page.goto(urls.http);
+      await page.waitForFunction(() => window.Reveal?.isReady());
+      await page.evaluate(() => Reveal.slide(2, 1));
+      await page.waitForFunction(() => Reveal.getSlides().indexOf(Reveal.getCurrentSlide()) === 4);
+      await page.waitForFunction(() => [Reveal.getCurrentSlide(), Reveal.getCurrentSlide().parentElement].every(el => getComputedStyle(el).opacity === '1'));
+      await page.locator('img[src="assets/slides-qr.svg"]').evaluate(img => img.decode());
+      const state = await page.evaluate(() => {
+        const section = Reveal.getCurrentSlide();
+        const img = section.querySelector('img[src="assets/slides-qr.svg"]');
+        const box = img.getBoundingClientRect();
+        const hidden = [];
+        for (let node = img; node && node !== document.documentElement; node = node.parentElement) {
+          const style = getComputedStyle(node);
+          if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) === 0) hidden.push(node.tagName);
+        }
+        const centre = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        return {
+          theme: document.documentElement.dataset.theme,
+          title: section.querySelector('h2').textContent.trim(),
+          alt: img.getAttribute('alt'),
+          caption: section.querySelector('figcaption').textContent,
+          natural: [img.naturalWidth, img.naturalHeight],
+          box: { x: box.x, y: box.y, width: box.width, height: box.height },
+          hidden,
+          onTop: centre === img,
+          viewport: [innerWidth, innerHeight],
+          noOverflow: section.scrollHeight <= section.clientHeight,
+          layoutInside: section.querySelector('.qr-layout').getBoundingClientRect().bottom <= document.querySelector('.reveal').getBoundingClientRect().bottom,
+        };
+      });
+      expect(state.theme).toBe(theme);
+      expect(state.title).toBe('Setup check');
+      expect(state.alt).toContain('slides.soumendrak.com/talks/2026/zero-to-hero-agent-observability/');
+      expect(state.caption).toContain('Scan for these slides');
+      expect(state.natural).toEqual([570, 570]);
+      expect(state.box.width).toBeGreaterThanOrEqual(200);
+      expect(Math.abs(state.box.width - state.box.height)).toBeLessThan(1);
+      expect(state.box.x).toBeGreaterThanOrEqual(0);
+      expect(state.box.y).toBeGreaterThanOrEqual(0);
+      expect(state.box.x + state.box.width).toBeLessThanOrEqual(state.viewport[0]);
+      expect(state.box.y + state.box.height).toBeLessThanOrEqual(state.viewport[1]);
+      expect(state.hidden).toEqual([]);
+      expect(state.onTop).toBe(true);
+      expect(state.noOverflow).toBe(true);
+      expect(state.layoutInside).toBe(true);
+    });
+  }
+}
