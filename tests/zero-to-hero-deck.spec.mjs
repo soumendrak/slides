@@ -38,13 +38,18 @@ for (const [scheme, url] of Object.entries(urls)) {
     // One recap closes each part, in order.
     expect(recaps).toEqual([1, 2, 3, 4, 5, 6].map(n => `Where we are: Part ${n} of 6`));
     const after = (title, next) => expect(titles[titles.indexOf(title) + 1]).toBe(next);
-    after('Token budget', 'Cost per run');
+    after('Why most alerts are false', 'Demo: create the alert');
+    after('Which check catches which case?', 'pass@k vs pass^k');
+    after('The loop, again', 'Turn the incident into a test');
+    after('What we didn\'t cover', 'Homework and Q&A');
+    expect(titles).not.toContain('Token budget');
+    expect(titles).not.toContain('Why tails matter for agents');
     after('Production checklist (2/2)', 'Minimum setup for a small team');
     after('Minimum setup for a small team', 'Instrumentation overhead and load testing');
     expect(titles.indexOf('Appendix: an agent that acted')).toBeGreaterThan(titles.indexOf('Appendix'));
     expect(titles).not.toContain('Why it matters: an agent that acted');
     expect(titles).not.toContain('Buffer C');
-    expect(counts).toEqual({ notesPlugin: true, slides: 79, withNotes: 79, diagrams: 3, errors: 0 });
+    expect(counts).toEqual({ notesPlugin: true, slides: 80, withNotes: 80, diagrams: 3, errors: 0 });
     expect(external).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
@@ -58,10 +63,9 @@ test('zero-to-hero schedule in the notes is consistent and sums to 180 minutes',
   expect(agenda.reduce((a, b) => a + b, 0)).toBe(180);
   const [opening, concepts, incident, pause, evaluator, alerts, production, buffers] = agenda;
 
-  const chapters = [...html.matchAll(/^## Part (\d): .*\n\n(?:(\d\d:\d\d) to (\d\d:\d\d))?/gm)]
-    .map(([, n, from, to]) => ({ n: Number(n), from: from && minutes(from), to: to && minutes(to) }));
-  chapters[0].from ??= 0;
-  chapters[0].to ??= chapters[1].from;
+  // Part 1's chapter slide shows no time line; it is the opening block from 00:00.
+  const chapters = [{ n: 1, from: 0, to: opening }, ...[...html.matchAll(/^## Part (\d): .*\n\n(\d\d:\d\d) to (\d\d:\d\d)/gm)]
+    .map(([, n, from, to]) => ({ n: Number(n), from: minutes(from), to: minutes(to) }))];
   expect(chapters.map(c => c.n)).toEqual([1, 2, 3, 4, 5, 6]);
   expect(chapters.map(c => c.to - c.from)).toEqual([opening, concepts, incident, evaluator, alerts, production]);
   expect(chapters[0].from).toBe(0);
