@@ -1,0 +1,71 @@
+/* Editable teaching figures for Part 5. Colors follow the shared deck theme. */
+.reveal .monitor-slide { --monitor-warn: #fbbf24; --monitor-warn-fill: #493818; }
+:root[data-theme="light"] .reveal .monitor-slide { --monitor-warn: #92400e; --monitor-warn-fill: #fef3c7; }
+.reveal .monitor-slide .monitor-lead { font-size: 29px; color: var(--deck-text); margin-bottom: 24px; }
+.reveal .monitor-slide .monitor-caption { font-size: 21px; line-height: 1.4; margin: 18px 0 0; color: var(--deck-muted); }
+.reveal .monitor-slide .monitor-takeaway { font-size: 28px; color: var(--deck-text); margin: 26px 0 0; padding-top: 18px; border-top: 1px solid var(--deck-border); }
+.reveal .monitor-slide .monitor-equation { font-size: 31px; color: var(--deck-text); line-height: 1.45; }
+.reveal .monitor-slide .monitor-result { font-size: 64px; font-weight: 650; color: var(--deck-blue); line-height: 1.15; margin: 8px 0 14px; }
+.reveal .monitor-slide .monitor-warn { color: var(--monitor-warn); }
+.reveal .monitor-slide .monitor-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; align-items: center; }
+.reveal .monitor-columns > *, .reveal .monitor-states > * { min-width: 0; }
+.reveal .monitor-slide .pele-diagram { margin: 22px 0; }
+.reveal .monitor-slide .pele-diagram svg { max-height: 240px; }
+.reveal .monitor-signal-list { margin: 0; }
+.reveal .monitor-signal-list > div { display: grid; grid-template-columns: 0.85fr 1.65fr 1fr; gap: 24px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--deck-border); }
+.reveal .monitor-signal-list dt { font-size: 29px; font-weight: 650; color: var(--deck-blue); }
+.reveal .monitor-signal-list dd { margin: 0; font-size: 27px; color: var(--deck-text); }
+.reveal .monitor-signal-list dd:last-child { font-size: 23px; color: var(--deck-muted); }
+.reveal .monitor-score-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 5px; }
+.reveal .monitor-score-grid span { height: 25px; display: flex; align-items: center; justify-content: center; font: 17px var(--deck-mono); background: var(--deck-blue); color: var(--deck-bg); }
+.reveal .monitor-score-grid span.fail { background: var(--monitor-warn-fill); color: var(--monitor-warn); }
+.reveal .monitor-slide .monitor-legend { display: flex; flex-wrap: wrap; gap: 28px; margin: 14px 0 0; font-size: 23px; }
+.reveal .monitor-slide .monitor-matrix { width: 100%; border-collapse: collapse; margin: 0; font-size: 26px; }
+.reveal .monitor-matrix th, .reveal .monitor-matrix td { padding: 14px 16px; border-bottom: 1px solid var(--deck-border); text-align: center; color: var(--deck-text); }
+.reveal .monitor-matrix th { font-size: 23px; font-weight: 500; color: var(--deck-muted); }
+.reveal .monitor-matrix th:first-child { text-align: left; }
+.reveal .monitor-matrix td strong { font-size: 36px; }
+.reveal .monitor-slide .monitor-alarm-bar { display: flex; height: 48px; margin-top: 24px; }
+.reveal .monitor-alarm-bar span { display: flex; justify-content: center; align-items: center; font-size: 23px; background: var(--deck-blue); color: var(--deck-bg); }
+.reveal .monitor-alarm-bar span:last-child { background: var(--monitor-warn-fill); color: var(--monitor-warn); }
+.reveal .monitor-slide .monitor-config { margin: 0; }
+.reveal .monitor-config > div { display: grid; grid-template-columns: 0.9fr 2fr; gap: 30px; padding: 13px 0; border-bottom: 1px solid var(--deck-border); }
+.reveal .monitor-config dt { font-size: 25px; color: var(--deck-muted); }
+.reveal .monitor-config dd { margin: 0; font-size: 27px; color: var(--deck-text); }
+.reveal .monitor-slide code { color: inherit; }
+.reveal .monitor-slide .monitor-states { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; margin: 28px 0; }
+.reveal .monitor-states > div + div { padding-left: 30px; border-left: 1px solid var(--deck-border); }
+.reveal .monitor-states h3 { font-size: 28px; margin: 0 0 18px; }
+.reveal .monitor-states p { font-size: 25px; margin-bottom: 12px; }
+.reveal .monitor-states .monitor-result { font-size: 54px; }
+.reveal .monitor-states .monitor-state { font: 29px var(--deck-mono); color: var(--monitor-warn); }
+.reveal .monitor-state-rule { margin: 18px 0 0; font-size: 25px; color: var(--deck-text); }
+.reveal .monitor-slide .monitor-scenario { font-size: 28px; color: var(--deck-text); margin: 20px 0 0; }
+.reveal .monitor-slide .monitor-cost-bars { margin: 24px 0; }
+.reveal .monitor-cost-bars div { margin: 24px 0; }
+.reveal .monitor-cost-bars p { font-size: 25px; margin: 0 0 9px; color: var(--deck-text); }
+.reveal .monitor-cost-bars span { display: block; height: 36px; background: var(--deck-blue); }
+.reveal .monitor-cost-bars div:last-child span { background: var(--monitor-warn); }
+.reveal .monitor-recap .recap-current { font-size: 27px; }
+@media screen and (max-width: 760px) {
+  html:not(.print-pdf) .reveal .monitor-slide .monitor-columns,
+  html:not(.print-pdf) .reveal .monitor-slide .monitor-states { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  html:not(.print-pdf) .reveal .monitor-states > div + div { padding: 20px 0 0; border-left: 0; border-top: 1px solid var(--deck-border); }
+  html:not(.print-pdf) .reveal .monitor-signal-list > div { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  html:not(.print-pdf) .reveal .monitor-config > div { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  html:not(.print-pdf) .reveal .monitor-slide .monitor-lead,
+  html:not(.print-pdf) .reveal .monitor-slide .monitor-takeaway,
+  html:not(.print-pdf) .reveal .monitor-slide .monitor-equation { font-size: 23px; }
+  html:not(.print-pdf) .reveal .monitor-signal-list dt,
+  html:not(.print-pdf) .reveal .monitor-signal-list dd,
+  html:not(.print-pdf) .reveal .monitor-config dd { font-size: 22px; }
+  html:not(.print-pdf) .reveal .monitor-matrix th,
+  html:not(.print-pdf) .reveal .monitor-matrix td { padding: 10px 6px; font-size: 18px; }
+  html:not(.print-pdf) .reveal .monitor-matrix td strong { font-size: 27px; }
+  html:not(.print-pdf) .reveal .monitor-alarm-bar span { font-size: 18px; }
+  html:not(.print-pdf) .reveal .monitor-slide .pele-diagram { overflow-x: auto; }
+  html:not(.print-pdf) .reveal .monitor-slide .pele-diagram svg { min-width: 540px; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .reveal .monitor-slide .fragment { transition: none !important; } }
+:root[data-motion="off"] .reveal .monitor-slide .fragment { transition: none !important; }
+@media print { .reveal .monitor-slide .fragment { visibility: visible !important; opacity: 1 !important; } }
