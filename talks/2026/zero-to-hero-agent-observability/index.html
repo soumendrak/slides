@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../../shared/styles/slides.css">
     <link rel="stylesheet" href="../../../shared/styles/diagrams.css">
     <link rel="stylesheet" href="assets/latency.css">
+    <link rel="stylesheet" href="assets/monitoring.css">
     <style>
         .reveal figure { margin: 0 auto; text-align: center; }
         .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
@@ -20,6 +21,23 @@
         .reveal .qr-figure .qr-url { font-size: 20px; line-height: 1.4; color: var(--deck-muted); }
         .reveal .linkedin-slide img { width: 360px; max-height: 360px; }
         .reveal .optional-marker { font-size: 0.5em; vertical-align: super; line-height: 0; }
+        .reveal .eval-takeaway h2 { font-weight: 800; color: var(--deck-text); padding-bottom: 0; margin-bottom: 0; }
+        .reveal .eval-takeaway .highlight { font-weight: inherit; }
+        .reveal .eval-workflow h3 { font-size: 28px; margin: 20px 0 12px; }
+        .reveal .eval-workflow .pele-diagram { margin: 0 0 12px; }
+        .reveal .eval-workflow .pele-diagram svg { max-height: 135px; }
+        .reveal .eval-workflow p { font-size: 25px; line-height: 1.35; margin: 12px 0; }
+        .reveal .eval-workflow .workflow-loop { color: var(--deck-text); padding-top: 16px; margin-top: 20px; border-top: 1px solid var(--deck-border); }
+        .reveal .eval-workflow .workflow-source { font-size: 20px; color: var(--deck-muted); }
+        .reveal .eval-gulfs .original-gulfs img { display: block; margin: 0 auto; max-height: 540px; max-width: 100%; border-radius: 0; object-fit: contain; }
+        .reveal .eval-gulfs figcaption { font-size: 20px; margin-top: 12px; color: var(--deck-muted); }
+        .reveal .take-home-list { list-style: none; padding: 0; margin: 0; }
+        .reveal .take-home-list li { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding: 11px 0; margin: 0; border-bottom: 1px solid var(--deck-border); }
+        .reveal .take-home-list .check-box { font-size: 27px; color: var(--deck-blue); line-height: 1.25; }
+        .reveal .take-home-list strong { display: block; font-size: 27px; line-height: 1.25; }
+        .reveal .take-home-list .check-detail { display: block; font-size: 23px; line-height: 1.35; margin-top: 4px; color: var(--deck-muted); }
+        .reveal .take-home-footer { font-size: 23px; margin: 20px 0 0; }
+        .reveal .take-home-lead { font-size: 28px; color: var(--deck-text); margin-bottom: 18px; }
         .reveal .eval-poll .comparison-table { font-size: 27px; }
         .reveal .eval-poll .comparison-table th:first-child { width: 24%; }
         .reveal .eval-poll-options { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 24px 0 18px; font-size: 27px; }
@@ -728,25 +746,12 @@ Note:
 
 --
 
-## Share and vote
-
-- Three pairs read their sentence, 30 seconds each
-- The room votes for the most precise one
-- I draw the chain from request to customer on the whiteboard
-
-Note:
-- Block 15 (01:06 to 01:11). Mic runner.
-- The causal chain is drawn live from the instructor copy, not shown here.
-- 60 s mention: stretch tasks for later.
-
---
-
 ## The text is a claim. The tool result is the fact.
 
 Debug and evaluate on facts. <!-- .element: class="quote" -->
 
 Note:
-- Block 15 close.
+- Block 15 (01:06 to 01:11). Close the investigation with the evidence comparison.
 - General lesson; no case specifics.
 - Say:
     - The final message is what the model says it did.
@@ -852,6 +857,68 @@ Note:
 Note:
 - Blocks 21 to 28.
 - Checkpoint 5 at 01:56, Checkpoint 6 at 02:01.
+
+--
+
+<!-- .slide: id="eval-three-gulfs" class="eval-workflow eval-gulfs" -->
+
+## Three gulfs in building AI systems
+
+<figure class="original-gulfs">
+<img src="assets/oreilly-aiee-0101.png" alt="Original diagram: Developer to LLM agent across the Gulf of Specification; LLM agent to Data across the Gulf of Generalization; Data back to Developer across the Gulf of Comprehension.">
+<figcaption>Source: <a href="https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9798341660717/files/assets/aiee_0101.png">O’Reilly · original diagram</a></figcaption>
+</figure>
+
+Note:
+- Comprehension: You don’t yet understand what your inputs look like or how the system actually behaves on them; look at more traces before changing anything.
+- Specification: Your requirements aren’t explicit enough for the LLM to follow; revise the prompt or agent logic to close the gap.
+- Generalization: The requirements are clear, but the LLM still fails on some inputs. Measure how often the failure occurs, and consider stronger interventions like more examples, better retrieval, or fine-tuning.
+
+Sources:
+
+1. [O’Reilly source diagram, asset aiee_0101.png](https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9798341660717/files/assets/aiee_0101.png)
+
+--
+
+<!-- .slide: id="eval-workflow" class="eval-workflow" -->
+
+## How to build evals
+
+### 1. Error analysis: discover what goes wrong
+
+```mermaid
+flowchart LR
+    traces["Collect diverse traces"] --> review["Human review: write open notes"] --> groups["Group and prioritize failures"]
+```
+
+<p><strong>Human annotation starts inside error analysis.</strong> Review examples before finalizing a rubric.</p>
+
+### 2. Turn important failures into repeatable checks
+
+```mermaid
+flowchart LR
+    criteria["Define pass / fail"] --> build["Build code check or judge"] --> validate["Validate the evaluator"] --> repeat["Rerun after changes"]
+```
+
+<p class="workflow-loop">↺ New failures → review more traces and update the criteria and eval set.</p>
+<p class="workflow-source">Adapted from <a href="https://hamel.dev/blog/posts/evals-faq/">Hamel Husain &amp; Shreya Shankar · AI Evals FAQ</a></p>
+
+Note:
+- Block 21, opening Part 4 within 01:36 to 01:41. About 60 seconds here, then Three ways to score quality and the existing poll. Do not extend the workshop.
+- This is a simplified synthesis of the FAQ, not its exact diagram or a quotation. Human annotation is part of error analysis, not a separate step that begins only after error analysis finishes.
+- Point along the first row: "Collect traces covering different real uses. A person familiar with the domain reads them and writes open notes about problems. Group similar problems, count them, and prioritize the ones worth addressing. That is error analysis."
+- Early notes describe observed problems without requiring a complete rubric. The FAQ calls this open coding; grouping notes into failure categories is axial coding. Keep the jargon in the notes unless someone asks.
+- Point along the second row: "Once we understand an important failure, define what passing and failing mean. Use a code check for an objective rule, or a judge for a judgment call. Check whether that evaluator works, then use the confirmed examples as a repeatable eval set."
+- Validation differs by method: code checks need passing, failing and edge-case tests. Judges need trusted human Pass/Fail labels, development examples and a separate held-out test set. Early discovery notes and later calibration labels serve different purposes; the same trace may be reused where appropriate without contaminating the held-out set.
+- For a judge, inspect disagreements with experts and measure both missed failures and false alarms. Keep the final test examples out of prompt tuning.
+- Point to the return arrow: "Rerun on changes. New failures send us back to the traces. Criteria and datasets evolve with the product."
+- TripMate teaching example: review the request and actual booking, describe a route mismatch, group that failure, define equality of the relevant requested and booked fields, test a structured check on correct and incorrect examples, and retain cases for reruns. The workshop's scripted case is a controlled teaching example, not evidence of production frequency.
+- Not every observed problem needs an expensive evaluator. Fix obvious bugs directly and automate checks where their value warrants the effort. Synthetic data can help start discovery when real traces are unavailable, but needs review and cannot establish production failure rates.
+- Source: FAQ questions on error analysis, when to write a rubric, how many examples are needed, and trusting automated evals. [1]
+
+Sources:
+
+1. [Hamel Husain and Shreya Shankar: AI Evals FAQ](https://hamel.dev/blog/posts/evals-faq/)
 
 --
 
@@ -1018,28 +1085,14 @@ Note:
 
 --
 
-## pass@k vs pass^k
+<!-- .slide: class="chapter-slide eval-takeaway" -->
 
-- pass@k: at least one of k tries succeeds
-- pass^k: all k tries succeed
-- p = 0.7: pass@3 = 97.3%, pass^3 = 34.3%
-
-An agent that books flights has to get it right every time. Use pass^k. <!-- .element: class="quote" -->
+## Let <span class="highlight">failures</span> write your evals
 
 Note:
-- Block 27, last minute.
-- Say:
-    - Code benchmarks use pass@k: one good answer out of k is enough.
-    - A customer doesn't get k tries. Every booking has to be right.
-    - 70% per try looks fine. Three bookings in a row all right: about one in three.
-- pass@k. [1]
-- pass^k; the paper reports "pass^8 <25% in retail". [2]
-- 97.3% = 1 − 0.3³ and 34.3% = 0.7³, own calculations.
-
-Sources:
-
-1. [arXiv:2107.03374 (pass@k)](https://arxiv.org/abs/2107.03374)
-2. [arXiv:2406.12045 (pass^k)](https://arxiv.org/abs/2406.12045)
+- Takeaway for Part 4. This phrasing is our workshop adaptation, not a direct quotation.
+- Say: "The workflow at the start of this part begins with observed failures. Choose the important ones, then write checks that help us improve."
+- Inspired by Hamel Husain and Shreya Shankar's AI Evals FAQ: https://hamel.dev/blog/posts/evals-faq/
 
 --
 
@@ -1075,126 +1128,288 @@ Note:
 
 ---
 
-<!-- .slide: class="chapter-slide" -->
+<!-- .slide: id="monitor-overview" class="chapter-slide monitor-slide" -->
 
 ## Part 5: Monitor and alert <!-- .element: class="text-green" -->
 
-02:16 to 02:39 · missing is not the same as failing, and what a run costs <!-- .element: class="quote" -->
+02:16 to 02:39 · How will we know if TripMate starts failing again? <!-- .element: class="quote" -->
+
+```mermaid
+flowchart LR
+    score["Score each booking"] --> watch["Watch results over time"] --> act["Investigate when needed"]
+```
+
+<p class="monitor-lead center">Quality · Missing measurements · Cost per success</p>
 
 Note:
-- Blocks 29 to 33.
-- Checkpoint 7 at 02:34: "explain NO_DATA vs ALERT" poll.
-- Cost per run, with the token budget, is must-cover, not homework.
+- Blocks 29 to 33. Keep the existing 23-minute slot.
+- Opening script: "We fixed TripMate. But how will we know if it starts failing again? In Part 4 we checked individual bookings. In Part 5 we watch those results over time, decide when someone should investigate, and measure the resources spent on a successful booking."
+- Point left to right along the diagram. A trace records execution; an evaluator produces a score; monitoring aggregates measurements; an alert calls for investigation. An alert does not automatically fix TripMate.
+- The worked examples here are illustrative, not measurements from a real customer system.
+- Checkpoint 7 at 02:34: explain ALERT vs NO_DATA.
+- Full rehearsal script and demo steps: speaker-notes/monitoring-alerts.md.
 
 --
+
+<!-- .slide: id="monitor-signals" class="monitor-slide" -->
 
 ## Four signals to watch
 
-<div class="metric-grid">
-<div class="metric-card"><h3 class="text-blue">Eval</h3><p>pass rate</p></div>
-<div class="metric-card"><h3 class="text-blue">p95</h3><p>latency</p></div>
-<div class="metric-card"><h3 class="text-blue">Tool</h3><p>error rate</p></div>
-<div class="metric-card"><h3 class="text-blue">Tokens</h3><p>per run</p></div>
-</div>
+<dl class="monitor-signal-list">
+<div><dt>Eval pass rate</dt><dd>Did we book what was requested?</dd><dd>Quality of the outcome</dd></div>
+<div><dt>p95 latency</dt><dd>How long do slower answers take?</dd><dd>Customer waiting time</dd></div>
+<div><dt>Tool error rate</dt><dd>Are search or booking calls failing?</dd><dd>Execution failures</dd></div>
+<div><dt>Tokens per run</dt><dd>Is each attempt using more tokens?</dd><dd>Resource consumption</dd></div>
+</dl>
 
-Which one would you page on for TripMate? <!-- .element: class="quote" -->
+<p class="monitor-takeaway fragment">A reversed booking can return OK. Which signal catches it?</p>
 
 Note:
-- Block 29 (02:16 to 02:21). Show of hands, then Alert on rates and Why most alerts are false, about a minute each.
-- Say:
-    - Let the room argue for a minute. There's no single right answer.
-    - Pass rate is closest to what the customer feels. Latency and tool errors often explain it.
+- Block 29 (02:16 to 02:21). Allow about 30 seconds for the opening bridge, 60 seconds here, 60 seconds for the rate example, and 2 minutes for false alarms. Use the remaining time for transitions.
+- Say: "Quality: was the requested booking made? Latency: how long did the customer wait? Errors: did a tool fail? Tokens: how much model usage did an attempt consume?"
+- Advance once to ask the question. Expected answer: the booking-matches-request evaluator. The tool may execute the wrong arguments successfully, so tool error rate alone misses the wrong outcome.
+- Ask which signal deserves an urgent notification. There is no universal answer: urgency depends on impact. For TripMate, a harmful wrong booking can merit immediate action even if it happens once.
+- A chart is something we watch; an alert is a condition that asks someone to act. Avoid paging on every metric just because it exists.
 
 --
+
+<!-- .slide: id="monitor-rates" class="monitor-slide" -->
 
 ## Alert on rates and symptoms
 
-- Alert on rates over a window, not on every exception
-- Alert on what users feel
-- Burn rate: how fast you spend your error budget (Appendix)
+<p class="monitor-lead">One window · 100 scored booking attempts · one score per attempt</p>
+
+<div class="monitor-columns">
+<div>
+<div class="monitor-score-grid" role="img" aria-label="100 scored attempts: 85 pass, labelled P; 15 fail, labelled F">
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span>P</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+<span class="fail">F</span>
+</div>
+<p class="monitor-legend"><span>P = 85 pass</span><span class="monitor-warn">F = 15 fail</span></p>
+</div>
+<div>
+<p class="monitor-equation fragment" data-fragment-index="0">Average score = sum of scores ÷ score count</p>
+<p class="monitor-result fragment" data-fragment-index="0">85 ÷ 100 = 85%</p>
+<p class="monitor-equation fragment" data-fragment-index="1">85% &lt; 90% → <strong>ALERT</strong></p>
+<p class="monitor-caption">90% is a workshop threshold, not a production target.</p>
+</div>
+</div>
+
+<p class="monitor-takeaway">Window = which results? Threshold = when to investigate?</p>
 
 Note:
-- Block 29. One slide if behind.
-- Say:
-    - One failed run is noise. A rising failure rate is a signal.
-    - Users feel wrong bookings and slow answers, not stack traces.
-    - Burn rate is in the appendix for anyone who runs SLOs.
-- Google SRE workbook, alerting on SLOs. [1]
+- Block 29. Start with the grid. Say: "Each tile is one scored attempt. A match scores 1; a mismatch scores 0. There are 85 ones and 15 zeroes."
+- First advance: "Their sum is 85. Divide by 100 scores and we get 0.85, or an 85% measured pass rate. The average of boolean scores is the share that pass."
+- Second advance: "Our example condition is below 0.9. Because 0.85 is below 0.9, it becomes ALERT. Exactly 0.9 would not breach this strict less-than condition."
+- Window means the lookback period, not the evaluation frequency. Every evaluation queries matching scores in that period. Choose an available window during the rehearsal; do not invent the interval.
+- Denominator: scores, not all requests. If 100 attempts occur but only 10 receive scores, the rate describes those 10. Watch scoring coverage and delays too.
+- A separate count alert can flag few scores. It does not gate or silence this rate alert.
+- Say: "A single harmful booking can require immediate action. Rates help us detect broader deterioration; they are not permission to ignore individual harm."
+- 90% is chosen to make the demo easy to see. It is not an acceptable wrong-booking allowance. Production conditions should reflect impact and a defined service objective.
+- Burn rate is in the appendix; it measures error-budget consumption relative to the allowed rate.
+- Boolean-score behavior: [1]. Alert design and user impact: [2]. Grid and arithmetic are illustrative.
 
 Sources:
 
-1. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
+1. [Langfuse: alerts](https://langfuse.com/docs/observability/features/alerts)
+2. [Google SRE workbook: alerting on SLOs](https://sre.google/workbook/alerting-on-slos/)
 
 --
 
-## Why most alerts are false
+<!-- .slide: id="monitor-false-alarms" class="monitor-slide" -->
 
-- A check that is 95% sensitive and 95% specific. 2% of runs are bad.
-- Precision = 0.95×0.02 / (0.95×0.02 + 0.05×0.98) = 28%
-- At 1,000 runs a day: 19 true alarms, 49 false
+## Why a good check can raise false alarms
 
-Alert on windowed rates. Read them next to the sample count. <!-- .element: class="quote" -->
+<p class="monitor-lead">Illustration: 1,000 runs · 2% actually bad · 95% sensitivity and specificity</p>
+
+<table class="monitor-matrix">
+<thead><tr><th scope="col">What the check says</th><th scope="col">Actually bad: 20</th><th scope="col">Actually good: 980</th></tr></thead>
+<tbody>
+<tr><th scope="row">Flags a problem</th><td><strong>19</strong> true alarms</td><td><strong class="monitor-warn">49</strong> false alarms</td></tr>
+<tr><th scope="row">Does not flag</th><td>1 missed failure</td><td>931 correct passes</td></tr>
+</tbody>
+</table>
+
+<div class="fragment">
+<div class="monitor-alarm-bar" role="img" aria-label="Of 68 flagged runs, 19 are true alarms and 49 are false alarms"><span style="width:27.941176%">19 true</span><span style="width:72.058824%">49 false</span></div>
+<p class="monitor-equation">True alarms among flags = 19 ÷ (19 + 49) ≈ <strong>28%</strong></p>
+</div>
+
+<p class="monitor-takeaway">Rare failures amplify false alarms. Validate the check; inspect rates and counts.</p>
 
 Note:
-- Block 29, last minute.
-- Say:
-    - A good check on rare failures still pages you mostly for nothing.
-    - That's why we alert on a rate over a window, not on every bad run.
-- Own calculation (Bayes).
-- Reference: the base rate fallacy. [1]
-
-Sources:
-
-1. [Wikipedia: Base rate fallacy](https://en.wikipedia.org/wiki/Base_rate_fallacy)
+- Block 29. Use counts first; do not begin with Bayes notation.
+- Script: "Imagine we know the ground truth. Of 1,000 runs, 20 are bad and 980 are good. A 95% sensitive check catches 19 of the 20 bad runs and misses one. A 95% specific check correctly clears 931 good runs, but incorrectly flags 49."
+- Advance: "That gives 68 flags: 19 true and 49 false. If we notify on every flag, most notifications in this example are false, even though both sensitivity and specificity are 95%. Good runs are much more common."
+- Sensitivity: share of actually bad runs detected. Specificity: share of actually good runs correctly cleared. Precision: share of flags that are actually bad. They answer different questions.
+- Optional formula for a question: precision = (0.95 × 0.02) / ((0.95 × 0.02) + (0.05 × 0.98)) = 27.94%.
+- The title applies to this hypothetical detector; it is not a claim that most real alerts everywhere are false. This is not a measured accuracy estimate for booking_matches_request.
+- Important: averaging over a window does not fix a biased or inaccurate evaluator. Validate the check against known examples. Windowed rates reduce sensitivity to isolated fluctuations; sample counts show how much evidence supports the rate.
+- Deterministic checks can also be wrong through incorrect criteria, inputs, or implementation. LLM judges need calibration against human labels.
+- All counts and probabilities are a worked example, not workshop telemetry.
 
 --
+
+<!-- .slide: id="monitor-config" class="monitor-slide" -->
 
 ## Demo: create the alert
 
-- Scores (boolean): avg `booking_matches_request` &lt; 0.9, smallest window
-- Default no-data mode: treat missing data as 0
-- So before any score exists, it reads as 0% pass and fires
-- Choose <span class="highlight">Show severity NO_DATA</span>
+<p class="monitor-lead">Langfuse → Alerts → New Alert</p>
 
-A count alert flags a small denominator. It doesn't silence the pass-rate alert. <!-- .element: class="fine" -->
+<dl class="monitor-config">
+<div><dt>Measure</dt><dd>Scores (boolean) · average</dd></div>
+<div><dt>Score filter</dt><dd><code>booking_matches_request</code></dd></div>
+<div><dt>Condition</dt><dd>Below <strong>0.9</strong> · choose a lookback window</dd></div>
+<div><dt>Missing scores</dt><dd><strong>Show severity NO_DATA</strong></dd></div>
+<div><dt>Notification</dt><dd>Select an existing automation when a message is needed</dd></div>
+</dl>
+
+<p class="monitor-takeaway fragment">No scores ≠ 0% passing. Missing measurements need their own state.</p>
+<p class="monitor-caption">Optional attendee exercise: Lab 6 · Alerts</p>
 
 Note:
-- Block 30 (02:21 to 02:26).
-- Optional: attendees build the same alert. Lab guide: labs/06-alerts.md.
-- No-data modes, and boolean average = share of true scores. [1]
-- Hobby allows 2 alerts. [2]
-- TODO: record the real evaluation interval here after the dry run.
-- TODO: save the alert setup as `assets/alert-config.webp` as a fallback if the live demo fails.
+- Block 30 (02:21 to 02:26), 5 minutes. Use the live project only after rehearsal; never claim these slides have created alerts.
+- Before the workshop: verify that the Part 4 evaluator writes boolean booking_matches_request scores. Pick the same score name, environment and TripMate scope used by the evaluator. A numeric score with the same name is a different data source.
+- Script while pointing: "We choose the boolean scores, average them, filter to our evaluator, then compare the result with 0.9 over a lookback window."
+- Choose and say the available window in the live UI. Evaluation is scheduled, not instantaneous. The actual evaluation interval still needs to be observed in rehearsal.
+- Advance: "For missing scores choose NO_DATA. Otherwise the default substitutes zero, which breaches our below-0.9 condition even though nothing was measured."
+- For a notification, link an existing alert automation. An Admin or Owner can create an automation if needed. A visible ALERT state and a delivered message are separate things to verify.
+- Show severity NO_DATA records the state without notifying. In a production context where scores should keep arriving, Notify after sustained NO_DATA can notify after a delay; choose the delay to tolerate normal evaluation latency.
+- Optional attendee guide: labs/06-alerts.md in the workshop repo. Hobby currently permits 2 alerts; recheck before promising attendee capacity.
+- Optional second alert: count of matching scores below 10, to flag a small denominator. This alert does not suppress the pass-rate alert.
+- Demo readiness: save a real screenshot of the configured alert before the event. If the live UI is unavailable, teach the labelled configuration guide; do not present it as live evidence.
+- UI behavior and roles: [1].
 
 Sources:
 
 1. [Langfuse: alerts](https://langfuse.com/docs/observability/features/alerts)
-2. [Langfuse pricing](https://langfuse.com/pricing)
 
 --
+
+<!-- .slide: id="monitor-no-data" class="monitor-slide" -->
 
 ## ALERT vs NO_DATA
 
-<div class="two-column">
-<div>
-<h3 class="text-red">ALERT</h3>
-<ul><li>We measured</li><li>It's below the threshold</li></ul>
-</div>
-<div>
-<h3 class="text-yellow">NO_DATA</h3>
-<ul><li>No matching scores in the window</li><li>Broken evaluator, no traffic, or a filter typo</li><li>Check the trace count to tell which</li></ul>
-</div>
+<p class="monitor-lead">Same window · condition: pass rate &lt; 90% · no-data mode: Show severity NO_DATA</p>
+
+<div class="monitor-states">
+<div><h3>Measured failures</h3><p>85 pass / 100 scores</p><p class="monitor-result">85%</p><p class="monitor-state">ALERT</p><p>We measured a breach.</p></div>
+<div><h3>Every score failed</h3><p>0 pass / 100 scores</p><p class="monitor-result">0%</p><p class="monitor-state">ALERT</p><p>We measured zero passes.</p></div>
+<div><h3>No scores arrived</h3><p>0 scores in the window</p><p class="monitor-result">?</p><p class="monitor-state">NO_DATA</p><p>We cannot calculate a rate.</p></div>
 </div>
 
+<p class="monitor-state-rule fragment">Default mode: missing → substitute 0 → ALERT<br>Selected mode: missing → NO_DATA</p>
+<p class="monitor-takeaway">An empty thermometer display does not mean the temperature is zero.</p>
+
 Note:
-- Block 31 (02:26 to 02:31).
-- Two pre-built alerts on my project with no scores:
-    - the default one shows ALERT
-    - the NO_DATA one shows NO_DATA
-- Then ws load -n 40 --case 2 --guard off, then the webhook payload.
-- In production use "Notify after sustained NO_DATA". [1]
-- If the dry run shows different NO_DATA behaviour, record it here.
-- TODO: save the ALERT and NO_DATA pair as `assets/alert-vs-nodata.webp` as a fallback.
+- Block 31 (02:26 to 02:31), 5 minutes.
+- Start with the first two columns. "85 passes out of 100 is 85%. No passes out of 100 is a measured zero. Both breach our demo threshold."
+- Point to the third. "No scores means no denominator. Zero divided by zero is undefined. We do not know the pass rate. NO_DATA expresses that uncertainty."
+- Advance: "The default missing-data mode substitutes zero. That is a configured behavior, not evidence that all bookings failed. With Show severity NO_DATA, the alert reports the absence of scores instead."
+- If rehearsed, show two real alerts over an empty window: default and NO_DATA modes. Do not promise the state before verifying the selected filters and window contain no scores. Existing scores remain in a rolling window until they age out.
+- Then use uv run ws load -n 40 --case 2 --guard off only with the workshop's simulated LLM mode and the failing Case 2 behavior verified. Wait for evaluator scores and scheduled alert evaluation; inspect actual score values rather than claiming an immediate transition.
+- The deterministic simulator supplies the wrong booking behavior; the evaluator and aggregation still demonstrate how alerts consume scores. It is not evidence of a real LLM failure rate.
+- Show severity NO_DATA does not notify. Notify after sustained NO_DATA is a separate mode for expected traffic and scoring, with a delay.
+- Missing scores can mean no traffic, evaluator failure or delay, ingestion delay, or filters that match nothing. The next slide distinguishes these.
+- Prebuilt-alert states, interval and notification delivery still need live rehearsal. If unavailable, use these clearly illustrative numbers.
 
 Sources:
 
@@ -1202,40 +1417,66 @@ Sources:
 
 --
 
+<!-- .slide: id="monitor-checkpoint" class="monitor-slide" -->
+
 ## Checkpoint 7: predict the state
 
-1. Your evaluator crashed for an hour. What does the default-mode alert show? The NO_DATA-mode alert?
-2. Nobody booked for an hour. What does the NO_DATA alert show?
-3. How do you tell those two apart?
+<p class="monitor-lead">No matching scores in the window. Is TripMate failing, or are we missing measurements?</p>
+
+```mermaid
+flowchart LR
+    missing["No matching scores"] --> traffic{"Matching TripMate traces?"}
+    traffic -->|"Yes"| pipeline["Check evaluator, delay and filters"]
+    traffic -->|"No"| quiet["Check traffic and trace ingestion"]
+```
+
+<p class="monitor-scenario">A. The evaluator stopped; booking traces continue.<br>B. Nobody made a booking request.</p>
+<p class="monitor-equation fragment">Both can show <strong>NO_DATA</strong>. Trace counts help distinguish them.</p>
+<p class="monitor-caption">Compare the same scope and period. Recent scores may still be processing.</p>
 
 Note:
-- Block 32 (02:31 to 02:36). Poll for about 4 minutes (02:31 to 02:35), then Cost per run. The spare minute pays for Why most alerts are false.
-- Answers are discussed live, not written here.
+- Block 32 (02:31 to 02:36). Discuss until 02:35; keep the spare minute for earlier explanation.
+- Ask before revealing: "In A, what would default missing-as-zero show under our pass-rate condition? What would NO_DATA mode show? Now consider B. Can score count alone distinguish them?"
+- Reveal answer: default is ALERT in either case once the query returns no data; selected NO_DATA mode is NO_DATA in either case. It does not diagnose why scores are missing.
+- A: matching traces exist but scores do not. Check evaluator execution, processing backlog or delay, score name/type, eligibility and alert filters.
+- B: if no requests arrived, missing scores may be expected. Compare request traffic with trace ingestion too; no traces can also mean broken tracing rather than a quiet service.
+- Use the same environment, TripMate trace scope, score name and lookback period. An evaluator sampling less than 100% needs an expected coverage baseline.
+- In both scenarios the alert query must actually be empty. If earlier scores remain in the lookback window, the state may still reflect those scores.
+- Say: "NO_DATA tells us a measurement is absent. We need another signal to explain the absence."
 
 --
 
-## Cost per run
+<!-- .slide: id="monitor-cost" class="monitor-slide" -->
 
-<div class="code-block">cost per run = tokens × price</div>
+## Cost per successful task
 
-- TripMate's budget: 3,000 tokens per run. You can alert on tokens per run.
-- Failed and retried runs still cost
-- Cost per successful task = total cost ÷ successful runs
+<p class="monitor-lead">Illustration: 100 attempts use 300,000 tokens · only 90 succeed</p>
 
-Price the successes, not the runs. <!-- .element: class="quote" -->
+<div class="monitor-columns">
+<div class="monitor-cost-bars" role="img" aria-label="3000 tokens per attempt compared with approximately 3333 tokens per successful task, about 11 percent higher">
+<div><p>Per attempt: <strong>3,000 tokens</strong></p><span style="width:90%"></span></div>
+<div class="fragment" data-fragment-index="0"><p>Per success: <strong>3,333 tokens</strong> · about 11% more</p><span style="width:100%"></span></div>
+</div>
+<div>
+<p class="monitor-equation">300,000 ÷ 100 = 3,000<br><span class="fragment" data-fragment-index="0">300,000 ÷ 90 ≈ <strong>3,333</strong></span></p>
+<p class="monitor-caption">The numerator includes usage from failed attempts and retries.</p>
+</div>
+</div>
 
-100 runs × 3,000 tokens = 300,000 tokens. 10 fail. 300,000 ÷ 90 = 3,333 tokens per success. <!-- .element: class="small muted" -->
+<p class="monitor-takeaway">Cost per success = total cost of all attempts ÷ successful tasks</p>
+<p class="monitor-caption">LLM cost = Σ (usage × applicable price), across calls and usage types.<br>Input and output prices differ. Simulated calls here are not provider charges.</p>
 
 Note:
-- Block 33 (02:36 to 02:39), 3 minutes. Must cover. About 2 minutes here, then the Part 5 recap.
-- The token budget slide is folded in here. Homework item 2 compares a normal run with a rerun.
-- Langfuse records usage and cost per generation, split by usage type such as input and output. It calculates cost from usage and a model price when the generation is ingested. [1]
-- If you do not send cost, Langfuse infers it from the model's price. If you send cost, yours is used. [1]
-- So tokens × price is two prices: input tokens and output tokens are priced separately.
-- Failed and retried runs still spend tokens, so cost per successful task is higher than cost per run.
-- The 3,000-token budget is a workshop example, not an external figure.
-- The example uses my own arithmetic: 100 × 3,000 = 300,000 and 300,000 ÷ 90 = 3,333, which is 11% above the budget.
-- Prices are not on the slide because they differ by model and change. Look yours up.
+- Block 33 (02:36 to 02:39), 3 minutes including recap. About 2 minutes here.
+- Start: "Our illustrative token budget is 3,000 per attempt. A hundred attempts use 300,000 tokens. That looks on budget. But ten attempts fail."
+- Advance: "Only 90 tasks succeeded. The same 300,000 tokens bought 90 successes, so each success took about 3,333 tokens on average: 11% more. Failed work still consumed resources."
+- The toy example assumes each attempt is a separate task, no retry later turns one of the 10 failures into a success, and every attempt uses 3,000 tokens. With retries, group attempts by task and count each successful task once.
+- Tokens are a usage measure, not money. To compute dollar cost, sum each generation's input tokens times its input price and output tokens times its output price, plus any other billed usage categories. Then sum across all calls and attempts. Account for tool charges separately if applicable.
+- Equal token counts need not have equal dollar cost when models, input/output mixes or caching differ. The bars compare tokens, not dollars.
+- Langfuse accepts generation usage/cost; when a matching model price is available, it can calculate cost from usage. Explicit ingested cost takes precedence. [1]
+- The workshop uses simulated LLM calls for fault cases. Any synthetic usage is illustrative, not a real provider bill. Real provider and evaluator calls, if enabled, are separate sources of actual spend.
+- Say: "Track the cost of delivering the successful outcome, including the attempts that did not work."
+- Definition of success here is the task outcome checked against intent, not simply absence of an exception or a fluent final message.
 
 Sources:
 
@@ -1243,7 +1484,7 @@ Sources:
 
 --
 
-<!-- .slide: class="recap-slide" -->
+<!-- .slide: class="recap-slide monitor-recap" -->
 
 ## Where we are: Part 5 of 6
 
@@ -1252,27 +1493,25 @@ Sources:
 - Part 1 · Opening and first trace: your first trace
 - Part 2 · Read a trace: spans, the agent loop, percentiles
 - Part 3 · The incident: investigate, fix, rerun
-- Part 4 · Build an evaluator: `booking_matches_request` scores every run
+- Part 4 · Build an evaluator: score individual bookings
 
 <!-- .element: class="recap-past" -->
 
 ### Part 5 · Monitor and alert <!-- .element: class="recap-now" -->
 
-- Four signals: eval pass rate, p95 latency, tool error rate, tokens per run
-- Alert on rates over a window, and on what users feel
-- Why most alerts are false: base rates, so alert on windowed rates
-- An alert on avg `booking_matches_request`, with severity NO_DATA shown
-- ALERT: we measured and it is below the threshold. NO_DATA: no scores in the window.
-- Cost per run: tokens × price, and cost per successful task
+- Watch scored outcomes over time: 85 / 100 = 85% pass
+- Investigate breaches; validate the evaluator and check counts
+- ALERT = measured breach; NO_DATA = no matching measurements
+- Include failed attempts in cost per successful task
 
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 33 (ends 02:39). Take 30 to 60 seconds of that block, then move on.
-- Read Part 5 aloud. Name the earlier parts in one breath each.
-- If behind, 15 seconds: read only the highlighted part.
+- End of Block 33 (ends 02:39). Take 30 to 60 seconds; do not add time to the schedule.
+- Closing script: "Watch whether TripMate succeeds, whether measurements are arriving, and what each successful task costs. When a condition breaches, investigate the traces. When measurements disappear, investigate the measurement pipeline and traffic."
+- Name the earlier parts in one breath; read the four current bullets.
 - Next: Part 6, Take it to production.
-- Summarises slides already shown. No new claims, no lab answers.
+- Recaps material already taught; no new demo claim.
 
 ---
 
@@ -1382,7 +1621,6 @@ Sources:
 4. One alert on a rate, with NO_DATA handled
 5. Redact PII before export
 
-The other seven can wait. <!-- .element: class="quote" -->
 
 Note:
 - Block 34 (02:44 to 02:47), 3 minutes.
@@ -1527,8 +1765,37 @@ Note:
 - Start of Block 36 (02:55 to 03:00), after Homework and Q&A (Block 35) and before Thank you. Take 30 to 60 seconds of that block.
 - Wrap-up for the whole workshop: walk the parts top to bottom, then finish on Part 6.
 - If behind, 15 seconds: read only the highlighted part.
-- Next: Thank you.
+- Next: AI agent observability: the big picture, then Thank you.
 - Summarises slides already shown. No new claims, no lab answers.
+
+--
+
+<!-- .slide: id="take-home-checklist" class="take-home-slide" -->
+
+## AI agent observability: the big picture
+
+<p class="take-home-lead">Understand what an agent did, whether it helped the user, and how reliably it performs.</p>
+
+<ol class="take-home-list" aria-label="Five questions you learned to answer">
+<li><span class="check-box" aria-hidden="true">01</span><div><strong>What happened?</strong><span class="check-detail">A trace connects the request, model calls, tool calls and actual results.</span></div></li>
+<li><span class="check-box" aria-hidden="true">02</span><div><strong>Did it do what the user wanted?</strong><span class="check-detail">Evaluations check the outcome. A tool returning OK can still mean the wrong booking.</span></div></li>
+<li><span class="check-box" aria-hidden="true">03</span><div><strong>Where did it go wrong?</strong><span class="check-detail">Read the steps and compare the evidence with the request, not just the final message.</span></div></li>
+<li><span class="check-box" aria-hidden="true">04</span><div><strong>How long did it take, and what did success cost?</strong><span class="check-detail">Look beyond averages: slow responses matter, and failed attempts still use resources.</span></div></li>
+<li><span class="check-box" aria-hidden="true">05</span><div><strong>How will we know if it goes wrong again?</strong><span class="check-detail">Rerun saved tests and monitor live results. Missing measurements need attention too.</span></div></li>
+</ol>
+
+<p class="take-home-footer"><strong>Observe → evaluate → improve → monitor.</strong> <a href="take-home-summary.md">Keep this three-hour recap</a></p>
+
+Note:
+- Block 36, within 02:55 to 03:00. About 60 seconds here after the recap, then Thank you. This does not add time to the session.
+- Say: "In three hours, you learned to answer five questions about an agent: what happened, whether it did what the user wanted, where it went wrong, how it performed, and how to catch the problem again. That is the big picture of AI agent observability."
+- Point to each question and connect it to the workshop: the first trace; the booking comparison and evaluator; reading the request and tool evidence; mean versus percentiles and cost per success; saved examples and alerting.
+- Keep this as a recap of ideas they understand, rather than an implementation checklist or a new lab. The linked handout repeats these five questions in plain language.
+- Trace: a record of observable execution, not access to hidden model reasoning. Eval: a quality check that can itself be wrong. Human review helps define and validate it.
+- Recovery: investigate, fix or guard the action, and rerun to verify the actual outcome. Preventing a wrong booking does not alone prove the requested booking succeeded.
+- Performance: averages can hide slow requests; more sequential steps add work and opportunities for delay. Failed attempts and retries still consume resources.
+- Monitoring: use measured rates with counts. An alert asks for investigation; it does not automatically fix the agent. NO_DATA means no matching measurements, which needs a different investigation from a measured breach.
+- Close: "Observe, evaluate, improve, monitor. Keep checking the outcome the user wanted."
 
 --
 

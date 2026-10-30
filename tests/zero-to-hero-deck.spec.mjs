@@ -38,8 +38,8 @@ for (const [scheme, url] of Object.entries(urls)) {
     // One recap closes each part, in order.
     expect(recaps).toEqual([1, 2, 3, 4, 5, 6].map(n => `Where we are: Part ${n} of 6`));
     const after = (title, next) => expect(titles[titles.indexOf(title) + 1]).toBe(next);
-    after('Why most alerts are false', 'Demo: create the alert');
-    after('Which check catches which case?', 'pass@k vs pass^k');
+    after('Why a good check can raise false alarms', 'Demo: create the alert');
+    after('Which check catches which case?', 'Let failures write your evals');
     after('The loop, again', 'Turn the incident into a test');
     after('What we didn\'t cover', 'Homework and Q&A');
     expect(titles).not.toContain('Token budget');
@@ -49,7 +49,7 @@ for (const [scheme, url] of Object.entries(urls)) {
     expect(titles.indexOf('Appendix: an agent that acted')).toBeGreaterThan(titles.indexOf('Appendix'));
     expect(titles).not.toContain('Why it matters: an agent that acted');
     expect(titles).not.toContain('Buffer C');
-    expect(counts).toEqual({ notesPlugin: true, slides: 80, withNotes: 80, diagrams: 5, errors: 0 });
+    expect(counts).toEqual({ notesPlugin: true, slides: 82, withNotes: 82, diagrams: 9, errors: 0 });
     expect(external).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
