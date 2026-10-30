@@ -1,4 +1,4 @@
-# Optional tone judge for the slide-40 example
+# Optional tone judge for the slide-41 example
 
 - Type: **LLM-as-a-Judge**; score type: **Boolean**.
 - Score name: `confirmation_tone_judge`.
