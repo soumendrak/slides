@@ -131,8 +131,7 @@ and what each successful task costs.” Allow 30–60 seconds for the recap.
 - Verify score type/name, filters, window, score arrival and alert evaluation timing.
 - Verify the synthetic fault case still produces the intended failing score.
 - Verify state transitions and notification delivery separately.
-- Save real screenshots for fallback. The slides are conceptual figures, not
-  evidence that alerts have been configured in a project.
+- The slides are conceptual figures, not evidence that alerts have been configured in a project.
 
 ## Sources
 

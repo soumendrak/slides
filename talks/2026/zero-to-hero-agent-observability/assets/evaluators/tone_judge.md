@@ -1,4 +1,4 @@
-# Optional tone judge for the slide-40 example
+# Optional tone judge for the slide-41 example
 
 - Type: **LLM-as-a-Judge**; score type: **Boolean**.
 - Score name: `confirmation_tone_judge`.
@@ -31,4 +31,4 @@ Output record:
 Is the final_message respectful and helpful under the rubric? Provide a Boolean verdict and reasoning.
 ```
 
-Use representative examples labeled by people to calibrate the judge. The rude reply on slide 40 is a synthetic discussion example, not an existing runnable TripMate fault. Do not claim the built-in cases generate it or promise a failing tone score from those cases.
+Use representative examples labeled by people to calibrate the judge. The rude reply on slide 41 is a synthetic discussion example, not an existing runnable TripMate fault. Do not claim the built-in cases generate it or promise a failing tone score from those cases.

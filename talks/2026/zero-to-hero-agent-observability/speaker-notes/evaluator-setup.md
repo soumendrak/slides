@@ -64,7 +64,7 @@ The score name is `confirmation_says_booked`. It reads `output.final_message` an
 
 This is intentionally weak. Its true result means the wording matched, not that the booking was correct. The point of the slide-45 comparison is to observe a false positive when a confirmation sounds successful while the actual booking is wrong.
 
-For the different PNR-format example on slide 40, create an optional extra Code evaluator using [pnr_format.py](../assets/evaluators/pnr_format.py). It reads the actual `output.booking.pnr` and returns `pnr_format_valid`. The six-character format is an exercise rule, not a universal airline rule. A valid-looking PNR is not evidence of a correct booking.
+For the different PNR-format example on slide 41, create an optional extra Code evaluator using [pnr_format.py](../assets/evaluators/pnr_format.py). It reads the actual `output.booking.pnr` and returns `pnr_format_valid`. The six-character format is an exercise rule, not a universal airline rule. A valid-looking PNR is not evidence of a correct booking.
 
 ## 4. Create the booking LLM judge
 
@@ -79,7 +79,7 @@ Do not map only `final_message`. The judge needs both requested intent and the a
 
 Keep TripMate itself in fake-model mode. The Langfuse worker calls the real judge model through its own LLM Connection. Turning TripMate to `LLM_MODE=openai` is not required and would prevent running the scripted fault cases. Judge calls consume provider tokens even though the agent responses are simulated.
 
-For slide 40's separate tone criterion, optionally create another judge with [tone_judge.md](../assets/evaluators/tone_judge.md). It assesses the reply's tone, not booking accuracy. The rude reply in the poll is a discussion example, not a built-in runnable TripMate case.
+For slide 41's separate tone criterion, optionally create another judge with [tone_judge.md](../assets/evaluators/tone_judge.md). It assesses the reply's tone, not booking accuracy. The rude reply in the poll is a discussion example, not a built-in runnable TripMate case.
 
 ## 5. Attach online evaluation rules
 

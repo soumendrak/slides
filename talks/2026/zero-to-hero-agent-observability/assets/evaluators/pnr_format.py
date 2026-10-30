@@ -1,4 +1,4 @@
-"""Optional slide-40 format check. Types are supplied by Langfuse.
+"""Optional slide-41 format check. Types are supplied by Langfuse.
 
 The six-character rule is stipulated for this teaching example, not a universal
 airline rule. A valid-looking PNR does not establish booking correctness.
