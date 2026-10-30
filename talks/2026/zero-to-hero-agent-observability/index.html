@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../../shared/assets/reveal.js-6.0.2/theme/night.min.css" id="theme">
     <link rel="stylesheet" href="../../../shared/styles/slides.css">
     <link rel="stylesheet" href="../../../shared/styles/diagrams.css">
+    <link rel="stylesheet" href="assets/latency.css">
     <style>
         .reveal figure { margin: 0 auto; text-align: center; }
         .reveal figure img { max-height: 430px; background: #fff; border-radius: 6px; }
@@ -17,6 +18,14 @@
         .reveal .qr-figure img { width: 320px; max-height: none; box-shadow: 0 0 0 1px #94a3b8; }
         .reveal .qr-figure figcaption { margin-top: 14px; font-size: 28px; }
         .reveal .qr-figure .qr-url { font-size: 20px; line-height: 1.4; color: var(--deck-muted); }
+        .reveal .linkedin-slide img { width: 360px; max-height: 360px; }
+        .reveal .optional-marker { font-size: 0.5em; vertical-align: super; line-height: 0; }
+        .reveal .eval-poll .comparison-table { font-size: 27px; }
+        .reveal .eval-poll .comparison-table th:first-child { width: 24%; }
+        .reveal .eval-poll-options { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 24px 0 18px; font-size: 27px; }
+        .reveal .eval-poll-question { margin-top: 20px; font-size: 27px; }
+        :root[data-theme="light"] .reveal .eval-setup-slide code { color: #6b21a8; }
+        :root[data-theme="light"] .reveal .eval-setup-slide .comparison-table tr:nth-child(even) { background: var(--deck-surface); }
         .reveal .lab-tag { color: #facc15; font-weight: 600; }
         .reveal .placeholder { border: 2px dashed #475569; padding: 18px; color: #94a3b8; }
         .reveal .medium { font-size: 0.75em; }
@@ -187,10 +196,11 @@ Note:
 <div class="two-column qr-layout">
 <div>
 
-- Workshop repo: <span class="highlight">https://github.com/soumendrak/AI-Agent-Observability</span>
+- Workshop repo: https://github.com/soumendrak/AI-Agent-Observability
 - Run this while I talk: `uv run ws doctor`
 - Pairing on one laptop is fine and encouraged
-- Green sticky: ready. Red sticky: need help.
+- Use code "TIDYTRACES-500" if you run out of credits at Langfuse.com.
+- [Common Google Docs](https://docs.google.com/document/d/1jsUJTuImy6t7g07mjQZaoEPozH6wRLdznNS8_Pbjcv8/edit?usp=sharing) for collaborating.
 
 </div>
 <figure class="qr-figure">
@@ -203,7 +213,7 @@ Note:
 - Block 1 (00:00 to 00:05).
 - The QR on the right opens this deck. Leave it up while people settle in.
 - Hands up: traced an LLM app before? Saw READY at home?
-- TAs count greens; reds get help.
+- TAs check setup progress and help anyone who is stuck.
 - Locked laptops pair with a ready neighbour.
 - If behind, skip the poll.
 
@@ -216,8 +226,6 @@ Note:
 <div class="agenda-card"><h3>Diagnose and fix</h3><p>Find a silent failure, add a guard</p></div>
 <div class="agenda-card"><h3>Evaluate and monitor</h3><p>Score live runs, alert on rates, watch cost</p></div>
 </div>
-
-Labs run in windows that end on a checkpoint, not the clock. Stickies tell TAs where to go. <!-- .element: class="small muted" -->
 
 Note:
 - Agenda: opening 16 min, concepts 25, incident 40, break 10, evaluator 35, alerts and cost 23, production and close 21, buffers 10.
@@ -273,7 +281,7 @@ Sources:
 
 --
 
-## Tracing is table stakes. Today we close the loop.
+## Instrumentation is the first step. Today we close the loop.
 
 ```mermaid
 flowchart LR
@@ -295,25 +303,26 @@ Sources:
 
 ## Why me
 
-- AI Observability Architect, PepsiCo, Hyderabad
-- Tidy Traces: a daily AI observability newspaper
-- Ragwatch: OTel-native tracing SDK for RAG and agents
-- widescope: browser-only trace viewer for LLM and agent pipelines
-- observability-engineering-series: 11 chapters of runnable code
+- [AI Observability Architect, PepsiCo](https://soumendrak.com/about)
+- [OpenTelemetry Certified Associate](https://www.soumendrak.com/blog/2026/01/opentelemetry-certification/) with 14+ Years of Experience
+- Creator and Maintainer of:
+    - [Tidy Traces](https://tidytraces.com): a daily AI observability newspaper
+    - [Widescope](https://widescope.soumendrak.com/): browser-only trace viewer for LLM and agent pipelines
+    - [Practical Observability with Python](https://www.soumendrak.com/series/practical-observability-with-python/): 11 chapters of runnable code
 
 Views are my own. This workshop is independent of my employer. <!-- .element: class="fine" -->
 
 Note:
 - Block 3 (00:07 to 00:12). 60 seconds, facts only.
-- About me [1], Tidy Traces [2], Ragwatch [3], widescope [4], observability-engineering-series [5].
+- About me [1], Tidy Traces [2], widescope [3], observability-engineering-series [4], OTCA certification information [5].
 
 Sources:
 
 1. [soumendrak.com/about](https://soumendrak.com/about)
 2. [Tidy Traces](https://tidytraces.com)
-3. [Ragwatch on GitHub](https://github.com/soumendrak/ragwatch)
-4. [widescope on GitHub](https://github.com/soumendrak/widescope)
-5. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
+3. [widescope on GitHub](https://github.com/soumendrak/widescope)
+4. [observability-engineering-series on GitHub](https://github.com/soumendrak/observability-engineering-series)
+5. [My OpenTelemetry certification](https://www.soumendrak.com/blog/2026/01/opentelemetry-certification/)
 
 --
 
@@ -357,8 +366,6 @@ Note:
        ├─ generation
        ├─ book_flight (tool)
        └─ generation</div>
-
-Green sticky if your tree matches the projector. <!-- .element: class="small" -->
 
 Note:
 - Block 4 (00:12 to 00:16). Tour my trace on the projector.
@@ -533,35 +540,59 @@ Sources:
 
 --
 
+<!-- .slide: id="mean-percentiles" class="latency-slide" -->
+
 ## Checkpoint 2: mean vs percentiles
 
-- Guess your p99 from your mean, then read the last line of `ws load`
-- 49 runs at 1 s plus one at 30 s: mean 1.58 s, median 1 s, p99 30 s
-- With 50 runs, p99 is your slowest run. An illustration, not an estimate.
+<p class="latency-lead">50 complete requests: <strong>49 wait 1 s</strong>, <strong class="latency-warm">one waits 30 s</strong>.</p>
 
-<div class="code-block">P(at least one slow step) = 1 − 0.99ⁿ: 9.6% at 10 steps, 22.2% at 25</div>
+<div class="latency-overview">
+<div>
+<div class="latency-ranks" data-latency-ranks role="img" aria-label="50 waits sorted shortest to longest: ranks 1 to 49 are 1 second; rank 50 is 30 seconds"></div>
+<p class="latency-caption">Sorted left to right, then top to bottom. Each tile is one request.</p>
+</div>
+<div class="latency-summary">
+<p><span>Mean: add and divide</span><strong>(49 × 1 + 30) / 50 = 1.58 s</strong></p>
+<p><span>Median: middle two waits</span><strong>(1 + 1) / 2 = 1 s</strong></p>
+<p><span>Nearest-rank percentiles</span><strong>p95 = 1 s · p99 = 30 s</strong></p>
+</div>
+</div>
 
-Agents multiply tails. Intuition, not a prediction: real steps aren't independent. Tools compute percentiles differently. <!-- .element: class="smaller dim" -->
+<div class="latency-controls" aria-label="Inspect a percentile">
+<button type="button" data-latency-percentile="95" aria-pressed="false">Show p95</button>
+<button type="button" data-latency-percentile="99" aria-pressed="true">Show p99</button>
+<span data-latency-rank-explanation aria-live="polite">p99: ⌈0.99 × 50⌉ = rank 50 → 30 s</span>
+</div>
+
+<div class="latency-method">
+<pre><code class="mermaid">flowchart LR
+S["Sort the waits"] --> R["Rank = ceil(p / 100 × N)"] --> V["Read the wait at that rank"]</code></pre>
+</div>
+
+<p class="latency-takeaway">The mean alone cannot tell you p99. Compare both in <code>ws load</code>. <a href="#/agent-tail">Why agent steps matter → appendix</a></p>
 
 Note:
 - Block 9 (00:36 to 00:41).
-- Say:
-    - The mean hides the one slow run. The customer who waited 30 seconds doesn't care about 1.58.
-    - An agent takes many steps, so one slow step is likely somewhere in the run.
+- Teaching sequence, about 3 minutes, then compare the load output:
+    - Point at the tiles. Each is one complete request, not a step. Forty-nine people waited 1 second; the last waited 30 seconds.
+    - Add all individual durations: 49 × 1 + 30 = 79 seconds. Divide by 50 requests: mean 1.58 seconds. Nobody in this example waited 1.58 seconds.
+    - The median averages sorted ranks 25 and 26; both are 1 second.
+    - Click Show p95. Calculate 0.95 × 50 = 47.5, round up to rank 48, then read 1 second. The chosen tile is outlined and labelled.
+    - Click Show p99. Calculate 0.99 × 50 = 49.5, round up to rank 50, then read 30 seconds.
+    - A nearest-rank percentile is a cutoff with at least that percentage of sampled waits at or below it. Ties can include more: 98% are at or below 1 second; 100% are at or below 30 seconds here.
+    - Ask: if all 50 requests instead took 1.58 seconds, would the mean change? No. Would p99 change? Yes, to 1.58 seconds. We cannot derive p99 from the mean.
+    - Read the last line of ws load. Compare mean and tail percentiles, and state the sample count.
 - The worksheet uses the ws load numbers (nearest rank).
-- Nearest-rank p99 of 50 values is the maximum, here 30 s. [1]
-- numpy's default linear method interpolates between the two largest. [1]
+- For this sample, nearest-rank p99 is the maximum. It is not a stable estimate of production p99. [1]
+- NumPy's default linear method gives 15.79 seconds here: zero-based position 48.51, then 1 + 0.51 × (30 − 1). Other percentile methods can disagree. [1]
+- Conventional median and nearest-rank p50 can differ on other even-sized samples. They match here because the middle values tie.
 - 1.58 s = (49 × 1 + 30) / 50, my own calculation.
 - Offline: ws load -n 50 --exporter console prints the same line.
-- Tail formula: assumes each step independently has a 1% chance of hitting its p99. My own calculation.
-- The Tail at Scale reports 63% at fan-out 100. [2]
-- A slow model or backend slows several steps at once.
-- Details: Appendix, reliability compounding.
+- The linked appendix introduces a separate model for steps inside one request. Teach it separately; its 1% per-step assumption is not the 2% slow-request share in this example.
 
 Sources:
 
 1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
-2. [The Tail at Scale (CACM)](https://cacm.acm.org/research/the-tail-at-scale/)
 
 --
 
@@ -621,7 +652,7 @@ Note:
 
 --
 
-## A five-step method
+## A five-step method <sup class="optional-marker" title="Optional slide" aria-label="Optional slide">#</sup>
 
 1. Filter level = ERROR
 2. Filter type = tool
@@ -631,6 +662,7 @@ Note:
 
 Note:
 - Block 10.
+- The superscript # marks this as an optional slide.
 - Skip this slide if behind and say the steps aloud.
 
 --
@@ -667,17 +699,6 @@ Note:
 
 --
 
-## Case 2 hints
-
-<div class="placeholder">Hint 1 and hint 2 are revealed live, one at a time.</div>
-
-Note:
-- Block 12 (hint 1 at +4 min) and block 13 (hint 2).
-- Read the hints from the instructor copy.
-- Deliberately not written here: this deck is public.
-
---
-
 ## <span class="lab-tag">Lab 3</span> Fill the evidence table
 
 | Span | Field | What it says | What the user asked |
@@ -698,7 +719,7 @@ Note:
 
 What went wrong, where it shows, and why the confirmation hid it. <!-- .element: class="quote" -->
 
-Green sticky when it's written. A TA checks it. <!-- .element: class="small" -->
+A TA checks your sentence. <!-- .element: class="small" -->
 
 Note:
 - Block 14 (01:01 to 01:06).
@@ -760,7 +781,7 @@ Note:
 The guard prevents the incorrect action. The evaluator checks the recorded outcome afterwards. <!-- .element: class="quote" -->
 
 Note:
-- Block 17 (01:16 to 01:21). Sticky: PASS.
+- Block 17 (01:16 to 01:21). TAs check the rerun result.
 - Stuck more than 5 minutes: TA shows the reference fix from the answer sheet.
 - If the room is behind, I show the fix and rerun live from the instructor copy.
 
@@ -768,7 +789,7 @@ Note:
 
 ## Buffer A: stretch
 
-- Run Case 2 with other cities or dates
+- Run Case 2 with other cities or dates like `uv run ws case 2 "Book HYD to MAA on 2026-11-05" --rerun`
 - Predict the local check result before you run it
 - Rerun Case 2 with `--guard off` and compare the two roots
 
@@ -839,7 +860,7 @@ Note:
 | Check | Strength | Cost |
 | --- | --- | --- |
 | Code | Deterministic | Cheap |
-| LLM-as-judge | Semantic | Tokens, and it can be wrong |
+| LLM-as-a-judge | Semantic | Tokens, and it can be wrong |
 | Human review | Ground truth | Slow |
 <!-- .element: class="comparison-table" -->
 
@@ -855,16 +876,34 @@ Sources:
 
 --
 
-## Poll: which check catches it?
+<!-- .slide: id="eval-examples" class="eval-poll" -->
 
-- A regex on the confirmation text
-- A structured comparison of request and booking
-- An LLM judge
+## Poll: which check fits each example?
+
+| Example | Evidence and criterion |
+| --- | --- |
+| **1 · PNR format** | Rule: six uppercase letters or digits.<br>Returned PNR: `AB12`. Does it meet the format rule? |
+| **2 · Booking accuracy** | Requested: DEL → BOM, **1 Nov**.<br>Booked: DEL → BOM, **2 Nov**. Message: “Your requested trip is booked.” |
+| **3 · Reply tone** | The booking matches the request.<br>Reply: “Booked. Next time, try reading the instructions.” Criterion: polite and helpful. |
+<!-- .element: class="comparison-table" -->
+
+<div class="eval-poll-options"><span><strong>A</strong> · Regex / format check</span><span><strong>B</strong> · Structured comparison</span><span><strong>C</strong> · LLM judge with a rubric</span></div>
+
+<p class="eval-poll-question">For each example: which check would you choose, and what evidence does it need?</p>
+
+Three synthetic examples. Choose the simplest suitable check. <!-- .element: class="fine" -->
 
 Note:
 - Block 21 poll.
-- Discuss after the votes.
-- No factual claim.
+- Allow about 90 seconds: 15 seconds to read, then ask for an A/B/C choice and the evidence needed for each example. This fits inside Block 21; do not add a new time block.
+- These are independent synthetic discussion examples, not new runnable TripMate cases. The six-character PNR rule is stipulated for this exercise, not asserted as a universal airline rule.
+- Example 1: A is the simplest default. A full-string format check such as [A-Z0-9]{6} rejects AB12 because it is four characters long. Its input is the actual returned PNR, not just a success message. Matching the format does not establish that a booking exists or is correct.
+- Example 2: B is the simplest default. Compare the structured requested date with the actual booking date: 1 Nov versus 2 Nov. Its inputs must include both request and booking. A regex that merely sees “booked” in the confirmation would pass the text while missing the wrong date. An LLM judge could also find the mismatch if given both records, but exact field equality does not require a model.
+- Example 3: C is a reasonable default for judging tone across varied wording. Give the judge the user context, final reply, and a rubric for polite, respectful and helpful language. The structured booking check can pass while tone fails. A regex for this one phrase would not cover general tone, paraphrases or context.
+- Human review can assess these examples and supplies reference labels for calibrating the tone judge. Do not present an LLM judge as infallible or treat human labels as automatically unanimous.
+- Accept another method if the participant explains why it is suitable, what evidence it receives, and its cost or limitations. This is a choice of a sensible default, not a claim that only one method can evaluate each case.
+- Close by asking: can a judge receiving only “Your requested trip is booked” verify the actual booking? No: it needs the request and the recorded booking outcome.
+- Copy-ready format and tone evaluators are linked from speaker-notes/evaluator-setup.md for anyone who wants to implement the poll examples after the discussion.
 
 --
 
@@ -872,15 +911,19 @@ Note:
 
 1. Evaluators → New → Code evaluator → Python
 2. Paste `evals/booking_matches.py` from the repo
-3. Target root observations, name `tripmate`
+3. Filter: Is Root Observation = true, Name = `tripmate`
 4. Don't save yet
 
-Lab guide: `labs/05-evals.md` <!-- .element: class="fine" -->
+<p class="fine">Lab guide: <code>labs/05-evals.md</code> · <a href="#/eval-code-setup">Full Langfuse setup</a></p>
 
 Note:
 - Block 22 demo (01:41 to 01:46), then block 23, window W5 (01:46 to 02:01).
 - Lab guide: labs/05-evals.md.
 - Common slips: not targeting root, not selecting a sample.
+- Full setup walkthrough: appendix slides eval-code-setup, eval-judge-setup and eval-rules-setup. Copy-ready guide: speaker-notes/evaluator-setup.md.
+- The local assets/evaluators/booking_matches.py file is a copy of the participant repo's evals/booking_matches.py. Paste the whole file; Langfuse supplies EvaluationContext, EvaluationResult and Score.
+- Code reads the matched root's input and output directly. Code evaluators do not use a judge-style variable mapping screen.
+- Test first, save second. Saving a definition alone does not enable evaluation of new traffic; attach an online rule in Checkpoint 6.
 - Langfuse code evaluators: [1]
     - need observations from an OTel-based SDK (Python SDK v3+)
     - standard library only, no network
@@ -896,7 +939,7 @@ Sources:
 
 - Test on your old Case 2 trace
 - Test on your rerun trace
-- Sticky when both results match what you expect
+- Confirm both results match what you expect
 
 Note:
 - Block 24 (01:51 to 01:56).
@@ -926,7 +969,7 @@ Sources:
 
 --
 
-## Demo: LLM-as-judge
+## Demo: LLM-as-a-judge
 
 - Judge prompt: "Does the booking match the request?"
 - Needs an LLM connection, meaning a provider key
@@ -934,10 +977,17 @@ Sources:
 
 Code or judge for this? <!-- .element: class="quote" -->
 
+<p class="fine"><a href="#/eval-judge-setup">Setup walkthrough</a> · <a href="assets/evaluators/booking_judge.md">Copy-ready judge prompt</a></p>
+
 Note:
 - Block 26 (02:01 to 02:06). In my own project.
 - Screenshot if behind (first cut).
 - Calibration details: Appendix.
+- Setup: Settings → LLM Connections, choose a model with structured outputs, then Evaluators → New evaluator → LLM-as-a-Judge. Use the System and User messages in assets/evaluators/booking_judge.md.
+- Score type Boolean; score name booking_matches_request_judge. Map input to Observation Input and output to Observation Output. Select root tripmate samples to test, then save and attach a rule.
+- The judge must receive both requested intent and the actual booking. Giving it only final_message cannot establish booking correctness. It does not automatically inspect child spans.
+- TripMate stays in LLM_MODE=fake. The judge uses a separate real model connection in Langfuse; do not switch the participant agent into real-model mode for this exercise.
+- Full setup guide, sample filters and troubleshooting: speaker-notes/evaluator-setup.md. Online-rule walkthrough: appendix eval-rules-setup.
 - Langfuse LLM-as-a-judge docs. [1]
 
 Sources:
@@ -955,13 +1005,16 @@ Sources:
 | LLM judge | ? | ? | ? | ? |
 <!-- .element: class="comparison-table" -->
 
-Use code evals for facts and judges for semantics. <!-- .element: class="small" -->
+<p class="small">Use code evals for facts and judges for semantics. <a href="#/eval-code-setup">Setup instructions</a></p>
 
 Note:
 - Block 27 (02:06 to 02:11). About 4 minutes here, then 1 minute on pass^k.
 - The room fills cells aloud.
-- The filled table is on the instructor copy, not here.
-- TODO: the columns changed from Cases 0, 2, 3, 5 to Cases 0, 1, 2 and 2 fixed. Update the filled table on the instructor copy.
+- Define the text regex before asking: it checks only whether final_message begins with Booked. Its score name is confirmation_says_booked. It is intentionally weak, so a true result is not evidence of a correct booking.
+- Structured eval means booking_matches_request; the judge uses the same booking-correctness criterion with full root input and output, under score name booking_matches_request_judge.
+- Ask for each check's predicted reported score, not a tick meaning “an error was detected.” Distinguish a check's verdict from whether the actual task succeeded.
+- The setup guide includes the expected comparison and copy-ready code. Judge results must be observed and discussed, not assumed to agree: speaker-notes/evaluator-setup.md.
+- Appendix walkthroughs: eval-code-setup, eval-judge-setup and eval-rules-setup. Open these if participants need the configuration steps.
 
 --
 
@@ -990,15 +1043,6 @@ Sources:
 
 --
 
-## Buffer B
-
-Finish your evaluator. TAs are coming round.
-
-Note:
-- Block 28 (02:11 to 02:16).
-
---
-
 <!-- .slide: class="recap-slide" -->
 
 ## Where we are: Part 4 of 6
@@ -1023,7 +1067,7 @@ Note:
 <!-- .element: class="recap-current" -->
 
 Note:
-- End of Block 28 (ends 02:16). Take 30 to 60 seconds of that block, then move on.
+- Block 28 (02:11 to 02:16). Take 30 to 60 seconds for this recap, then move on.
 - Read Part 4 aloud. Name the earlier parts in one breath each.
 - If behind, 15 seconds: read only the highlighted part.
 - Next: Part 5, Monitor and alert.
@@ -1488,30 +1532,21 @@ Note:
 
 --
 
-<!-- .slide: class="thanks-slide" -->
+<!-- .slide: id="linkedin" class="thanks-slide linkedin-slide" -->
 
 ## Thank you <!-- .element: class="text-green" -->
 
-<img src="../../../shared/assets/images/linkedin-qr-code.webp" alt="LinkedIn QR Code">
+<img src="../../../shared/assets/images/linkedin-qr-code.webp" alt="Scan to connect with Soumendra Kumar Sahoo on LinkedIn">
 
-Connect on LinkedIn <!-- .element: class="connect-text" -->
+<p class="connect-text">Connect with me on LinkedIn<br><span class="small">Soumendra Kumar Sahoo</span></p>
 
-Feedback form: <span class="highlight">[QR on the day]</span>
-
-tidytraces.com · github.com/soumendrak/ragwatch · github.com/soumendrak/widescope <!-- .element: class="muted" -->
-
-Thanks to The Data AI Guild and our TAs <!-- .element: class="muted" -->
+Thanks to The Data AI Guild and our TAs <!-- .element: class="small muted" -->
 
 Note:
 - Block 36 (02:55 to 03:00).
-- Collect stickies; photo.
-- Links on the slide: Tidy Traces [1], Ragwatch [2], widescope [3].
-
-Sources:
-
-1. [Tidy Traces](https://tidytraces.com)
-2. [Ragwatch on GitHub](https://github.com/soumendrak/ragwatch)
-3. [widescope on GitHub](https://github.com/soumendrak/widescope)
+- Group photo.
+- Leave this slide up while people scan the QR code and connect.
+- The QR code is the same one used in the Lili on Coolify and ITER Claude Limits talks.
 
 ---
 
@@ -1531,7 +1566,7 @@ Note:
 
 - n = 50: nearest-rank p99 is rank ⌈0.99 × 50⌉ = 50, the maximum
 - numpy default (linear): position 0.99 × 49 = 48.51
-- A p99 you can trust needs hundreds of runs. Use p50 and p95 for small samples.
+- A sample maximum does not establish a stable production p99. Report sample count and method.
 
 Note:
 - Nearest-rank vs numpy's default linear method. [1]
@@ -1540,6 +1575,61 @@ Note:
 Sources:
 
 1. [numpy.percentile documentation](https://numpy.org/doc/stable/reference/generated/numpy.percentile.html)
+
+--
+
+<!-- .slide: id="agent-tail" class="latency-slide agent-tail-slide" -->
+
+## Appendix: why more steps add delay
+
+<p class="latency-lead">Assume each step independently has a <strong>1% chance of exceeding a slow threshold T</strong>.</p>
+
+<div class="agent-tail-layout">
+<div>
+<p class="agent-tail-heading"><strong data-tail-count>10 steps</strong><span>Each square is a step in one request.</span></p>
+<div class="agent-step-grid" data-agent-step-grid role="img" aria-label="10 active steps out of 100 possible steps"></div>
+<div class="agent-risk-track" role="img" data-tail-risk-track aria-label="9.6 percent chance of at least one slow step"><span data-tail-risk-fill></span></div>
+<p class="agent-risk-result"><strong data-tail-risk>9.6%</strong> encounter at least one slow step</p>
+<p class="agent-risk-formula" data-tail-formula>1 − 0.99¹⁰ = 9.6%</p>
+</div>
+<div class="agent-timing-example">
+<h3>One slow step can extend the wait</h3>
+<pre><code class="mermaid">flowchart LR
+A["LLM: 1 s"] --> B["Tool: 8 s"] --> C["LLM: 1 s"]</code></pre>
+<p>Sequential total: <strong>1 + 8 + 1 = 10 s</strong><br>All three at 1 s: <strong>3 s</strong></p>
+<p class="latency-caption">Timing example only. The probability model does not determine the extra seconds.</p>
+</div>
+</div>
+
+<div class="latency-controls agent-tail-presets" aria-label="Choose the number of steps">
+<button type="button" data-tail-preset="1" aria-pressed="false">1 step <span>1.0%</span></button>
+<button type="button" data-tail-preset="10" aria-pressed="true">10 steps <span>9.6%</span></button>
+<button type="button" data-tail-preset="25" aria-pressed="false">25 steps <span>22.2%</span></button>
+<button type="button" data-tail-preset="100" aria-pressed="false">100 steps <span>63.4%</span></button>
+<button type="button" data-tail-play>Animate 1 → 100</button>
+<button type="button" data-tail-pause disabled>Pause</button>
+</div>
+
+<p class="agent-tail-derivation">P(no slow steps) = 0.99<sup>n</sup> &nbsp; → &nbsp; P(at least one) = 1 − 0.99<sup>n</sup></p>
+<p class="latency-caption" data-tail-status role="status">Synthetic model. Independent steps, same slow probability. This is not the whole request’s p99.</p>
+
+Note:
+- Appendix only. This is a separate example from the 50 complete requests on slide 22.
+- Define the unit: n is the number of steps inside one request. Slow means a step duration exceeds a chosen threshold T.
+- State the assumptions before clicking: each step independently has probability q = 0.01 of being slow, and q is the same for every step. This is an illustrative model, not a measured property of TripMate.
+- Click 1 step: a 1% chance of a slow step. Click 10 steps: 9.6%. Click 25: 22.2%. Click 100: 63.4%.
+- Animate 1 to 100 gradually adds active blue squares and updates the calculated probability. Grey squares are possible additional steps, not completed steps or observed runs. No squares represent sampled failures.
+- Pause to discuss any intermediate count. Clicking a preset stops the animation and sets an exact count. Motion off or reduced motion keeps the presets usable and disables playback. Leaving the slide stops playback.
+- Derive the complement: a step has a 99% chance of not being slow. Independence lets us multiply: 0.99 raised to n is the chance none is slow. Subtract from 1 to include every case with one or more slow steps.
+- The Mermaid diagram is a conditional timing example: if one tool takes 8 seconds and the other two steps take 1 second each, a sequential request takes 10 seconds instead of 3. It omits overhead. We have not inferred an 8-second delay from the probability formula.
+- More sequential steps add baseline work and more opportunities for slow work. Parallel steps have a different total-time calculation: waiting for all results takes approximately the maximum duration rather than the sum, excluding overhead.
+- Shared rate limits or a slow provider can make steps dependent. The product formula then need not hold. With unequal but independent probabilities qi, use 1 − product(1 − qi).
+- This calculates the probability of encountering at least one slow step. It does not calculate request p99 or prove an end-to-end latency target was exceeded. Measure complete request durations for that.
+- All probabilities and timing examples are my own calculations under the stated assumptions. The broader tail-latency motivation is discussed in The Tail at Scale. [1]
+
+Sources:
+
+1. [Dean and Barroso: The Tail at Scale](https://research.google/pubs/the-tail-at-scale/)
 
 --
 
@@ -1620,6 +1710,118 @@ Sources:
 
 --
 
+<!-- .slide: id="eval-code-setup" class="eval-setup-slide" -->
+
+## Appendix: code evaluator setup
+
+1. Evaluators → New evaluator → Code evaluator → Python
+2. Create one evaluator per source file below
+3. Sample filters: **Is Root Observation = true**, **Name = tripmate**
+4. Select a sample root → Run test → inspect score and comment → Save
+
+| Copy the whole Python file | Boolean score returned |
+| --- | --- |
+| [booking_matches.py](assets/evaluators/booking_matches.py) | `booking_matches_request` |
+| [confirmation_says_booked.py](assets/evaluators/confirmation_says_booked.py) | `confirmation_says_booked` |
+<!-- .element: class="comparison-table" -->
+
+<p class="small">Code reads <code>ctx.observation.input</code> and <code>.output</code> directly. No LLM key or variable mapping is needed.</p>
+
+<p class="fine"><a href="speaker-notes/evaluator-setup.md">Copy-ready setup guide</a> · <a href="#/eval-judge-setup">Next: judge setup</a></p>
+
+Note:
+- Appendix setup reference; use from Lab 5 without adding a new teaching block.
+- Regex and structured comparison are both code evaluators. Give the two definitions distinct score names.
+- Source files are bundled locally with the slides and can be opened or downloaded from the table links. Langfuse supplies EvaluationContext, EvaluationResult and Score; paste each file as is into a separate Python evaluator.
+- booking_matches.py is copied from the participant repo's canonical evals/booking_matches.py. It checks the actual structured request and booking, including missing or invalid fields.
+- confirmation_says_booked.py intentionally checks wording only. A matching confirmation can coexist with a wrong actual booking. Do not use it as a booking-correctness check.
+- For the PNR-format poll example, the guide links an optional third file, assets/evaluators/pnr_format.py. Its six-character rule is specific to the exercise.
+- Code evaluators read ctx directly; do not look for the judge's variable-mapping UI. The supplied files accept both objects and JSON strings for root output.
+- A self-hosted deployment needs a configured code-evaluator dispatcher. This is a platform prerequisite, not something participants fix in the Python script. [1]
+- Save only after a sample test works, then attach a rule using the later appendix slide. [1]
+
+Sources:
+
+1. [Langfuse: code evaluator setup and prerequisites](https://langfuse.com/docs/evaluation/evaluation-methods/code-evaluators)
+
+--
+
+<!-- .slide: id="eval-judge-setup" class="eval-setup-slide" -->
+
+## Appendix: LLM judge setup
+
+1. Settings → LLM Connections: configure a provider and model
+2. New evaluator → LLM-as-a-Judge → choose that model
+3. Paste the [System and User messages](assets/evaluators/booking_judge.md)
+4. Score type: **Boolean** · name: `booking_matches_request_judge`
+
+| Prompt variable | Map to the matched observation's |
+| --- | --- |
+| `{{input}}` | Whole Input: includes `requested` |
+| `{{output}}` | Whole Output: includes `booking` and `final_message` |
+<!-- .element: class="comparison-table" -->
+
+<p class="small">Test on root <code>tripmate</code> samples. Inspect verdict <strong>and reasoning</strong>, then save.</p>
+
+<p class="small">TripMate stays in <code>LLM_MODE=fake</code>. The separate judge calls a real model and uses tokens.</p>
+
+<p class="fine"><a href="speaker-notes/evaluator-setup.md">Copy-ready setup guide</a> · <a href="#/eval-rules-setup">Next: enable rules</a></p>
+
+Note:
+- Appendix reference for the instructor's judge demo. No provider credentials belong in the public deck.
+- Choose a model that supports structured outputs; Langfuse uses the configured Boolean score contract. [1]
+- Copy both message roles from assets/evaluators/booking_judge.md. The score name must differ from the deterministic code evaluator's score name so the results remain distinguishable.
+- Map input and output to whole observation records. The prompt reads nested requested and booking fields. Do not map only the confirmation message.
+- Target Is Root Observation = true and Name = tripmate. An observation-level judge does not automatically see sibling or child spans. [1]
+- Keep the participant agent in fake-model mode. The separate judge call is real and runs through Langfuse's LLM Connection. The scripted fault cases are not available in TripMate's real-model mode.
+- The prompt ignores final_message when deciding whether the booking matches. It asks for valid, matching origin, destination and date, and a brief reason.
+- Judge agreement with code is an expectation to test. Review mismatches and calibrate against labeled examples before relying on the scores.
+- For the separate tone example on slide 40, the guide links assets/evaluators/tone_judge.md. It has a different criterion and score name; the rude reply is a synthetic discussion example, not a built-in runnable case.
+
+Sources:
+
+1. [Langfuse: LLM judge setup, mappings and model requirements](https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge)
+
+--
+
+<!-- .slide: id="eval-rules-setup" class="eval-setup-slide" -->
+
+## Appendix: run and inspect scores
+
+1. Attach evaluators to a rule: **root = true**, **name = tripmate**
+2. Set **sampling = 100%** for the demo; leave historical backfill off
+3. After the Lab 4 guard fix is saved, generate fresh traffic:
+
+<div class="code-block">uv run ws case 0
+uv run ws case 1 --guard off
+uv run ws case 2 --guard off
+uv run ws case 2 --rerun</div>
+
+4. Open the root's scores or the Scores view. Compare:
+
+<p class="small"><code>confirmation_says_booked</code> · <code>booking_matches_request</code> · <code>booking_matches_request_judge</code></p>
+
+<p class="small">An evaluator defines <strong>how</strong> to score. A rule defines <strong>which new observations</strong> get scored.</p>
+
+<p class="fine"><a href="speaker-notes/evaluator-setup.md">Setup guide, expected comparison and troubleshooting</a></p>
+
+Note:
+- Appendix reference for Checkpoint 6 and the comparison exercise. [1]
+- Saving an evaluator definition alone does not score future traffic automatically. Attach it to a rule using the matched root/name filters. The same filters can be used in separate rules if convenient. [1]
+- Use 100% sampling only for this small workshop demo. Keep the judge's provider usage in mind.
+- Leave Also run on past observations off at first. Produce fresh runs after the rules are enabled; existing test samples are not proof that online scoring is configured. [1]
+- The guarded rerun requires the participant's Lab 4 guard implementation to be saved. The --rerun flag reloads and checks it; it does not write the fix automatically.
+- The --guard off commands reproduce the original fault even after the guard fix is present.
+- Inspect three distinct score names on the same root observation. Code and the judge use booking correctness; the intentionally weak regex only checks success wording. The guide contains the expected results and explains the false positive.
+- The terminal's local PASS check does not prove a Langfuse rule ran. Confirm scores in the Langfuse UI and inspect evaluator execution status if they are absent.
+- No live Langfuse rule or judge execution is established merely by adding these setup instructions. Rehearse against the actual project before the workshop.
+
+Sources:
+
+1. [Langfuse: evaluators, rules and scores](https://langfuse.com/docs/evaluation/core-concepts)
+
+--
+
 ## Appendix: calibrating an LLM judge
 
 - Label 20 to 50 runs by hand
@@ -1674,40 +1876,6 @@ Note:
 - For people reading the deck after the workshop.
 - Symptoms only, no causes: this deck is public.
 
---
-
-## Backup: troubleshooting top 10
-
-<div class="placeholder">TODO: fill from <code>ws doctor</code> messages and docs/troubleshooting.md after the build.</div>
-
-Note:
-- Backup slide.
-- Wrong region, bad or swapped keys, missing .env, proxy or TLS.
-- Wrong Python, uv sync not run, wrong tag, guards.py edited early.
-
---
-
-## Backup: public traces and offline view
-
-<div class="flow-diagram">$ uv run ws run "Book HYD to BLR on 2026-10-31" --exporter console
-agent tripmate OK
-  chain LangGraph OK
-    agent agent OK · generation ScriptedFakeLLM OK
-    chain tools OK · tool search_flights OK
-    agent agent OK · generation ScriptedFakeLLM OK
-    chain tools OK · tool book_flight OK
-    agent agent OK · generation ScriptedFakeLLM OK</div>
-
-<div class="placeholder">TODO: public trace QR codes</div>
-
-Note:
-- Backup slide for stuck laptops.
-- The tree is Case 0 from `--exporter console`, condensed: each `agent` line also has a `tools_condition` chain, and the root prints `requested`, `booking` and `final_message`.
-- Public trace links use langfuse.trace.public. [1]
-
-Sources:
-
-1. [Langfuse: OpenTelemetry get started](https://langfuse.com/docs/opentelemetry/get-started)
 </textarea>
             </section>
 
@@ -1720,5 +1888,6 @@ Sources:
     <script src="../../../shared/assets/js/pele-1.9.0.global.js"></script>
     <script src="../../../shared/scripts/diagrams.js"></script>
     <script src="../../../shared/scripts/slides.js"></script>
+    <script src="assets/latency.js"></script>
 </body>
 </html>

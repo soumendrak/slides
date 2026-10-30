@@ -49,7 +49,7 @@ for (const [scheme, url] of Object.entries(urls)) {
     expect(titles.indexOf('Appendix: an agent that acted')).toBeGreaterThan(titles.indexOf('Appendix'));
     expect(titles).not.toContain('Why it matters: an agent that acted');
     expect(titles).not.toContain('Buffer C');
-    expect(counts).toEqual({ notesPlugin: true, slides: 80, withNotes: 80, diagrams: 3, errors: 0 });
+    expect(counts).toEqual({ notesPlugin: true, slides: 80, withNotes: 80, diagrams: 5, errors: 0 });
     expect(external).toEqual([]);
     expect(pageErrors).toEqual([]);
   });
