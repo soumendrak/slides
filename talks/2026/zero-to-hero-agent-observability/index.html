@@ -216,6 +216,8 @@ Note:
 
 - Workshop repo: https://github.com/soumendrak/AI-Agent-Observability
 - Run this while I talk: `uv run ws doctor`
+- Success: it ends with `READY-XXXX`, your own four-character code
+- Not set up? Clone, `uv sync`, copy `.env.example` to `.env`, then `uv run ws doctor` · [Troubleshooting](https://github.com/soumendrak/AI-Agent-Observability/blob/main/docs/troubleshooting.md)
 - Pairing on one laptop is fine and encouraged
 - Use code "TIDYTRACES-500" if you run out of credits at Langfuse.com.
 - [Common Google Doc](https://docs.google.com/document/d/1jsUJTuImy6t7g07mjQZaoEPozH6wRLdznNS8_Pbjcv8/edit?usp=sharing) for collaborating.
@@ -389,7 +391,6 @@ Note:
 - Block 4 (00:12 to 00:16). Tour my trace on the projector.
 - Stragglers: pair up, open a public trace, or switch to --exporter console.
 - The tree is simplified. The real trace also has `agent`, `tools_condition` and `tools` chains between steps. Point at the five steps, not the wrappers.
-- TODO: swap the tree for an annotated Langfuse screenshot saved as `assets/checkpoint1-trace.webp`.
 
 --
 
@@ -531,8 +532,6 @@ Spot the difference between the two runs. <!-- .element: class="quote" -->
 Note:
 - Block 8 (00:31 to 00:36). W1 runs until 00:32, then this 3-minute demo (00:32 to 00:35), then OpenTelemetry names (00:35 to 00:36).
 - Demo in my own project with LLM_MODE=openai.
-- If behind: screenshot of the two runs.
-- TODO: save the screenshot as `assets/real-model-two-runs.webp`.
 
 --
 
@@ -772,7 +771,7 @@ Note:
 - Block 16, window W4 (01:11 to 01:21).
 - Lab guide: labs/04-fix-and-rerun.md.
 - Pseudo-code and the reference fix are on the instructor copy and TA answer sheet only.
-- If asked what the user sees: the guard runs inside `book_flight`, so the tool errors and TripMate apologises instead of booking. No booking beats a wrong booking.
+- If asked what the user sees: the guard runs inside `book_flight`, so the guard turns the wrong booking into a red tool error, then TripMate retries and books the right trip.
 
 --
 
@@ -780,7 +779,8 @@ Note:
 
 <div class="code-block">uv run ws case 2 --rerun</div>
 
-- Look for `booking_matches_request: PASS (local check)`
+- Expect one red `book_flight` span (your guard), then a correct booking.
+- Look for `booking_matches_request: PASS (local check, same logic as the Langfuse evaluator)`
 - Open the new trace and compare its root with the old one
 
 The guard prevents the incorrect action. The evaluator checks the recorded outcome afterwards. <!-- .element: class="quote" -->
@@ -821,7 +821,7 @@ Note:
 - Case 1 warm-up, then Case 2: nothing is red, so read the confirmation too
 - Evidence table and one sentence: what went wrong and where it shows
 - The text is a claim. The tool result is the fact.
-- Lab 4: a guard in `guards.py`, then a rerun: `booking_matches_request: PASS (local check)`
+- Lab 4: a guard in `guards.py`, then a rerun: `booking_matches_request: PASS (local check, same logic as the Langfuse evaluator)`
 
 <!-- .element: class="recap-current" -->
 
@@ -844,7 +844,6 @@ Note:
 - Blocks 19 and 20.
 - Collect zone readiness from TAs.
 - Cut to 7 minutes if more than 10 minutes behind.
-- TODO: add a timer.
 
 ---
 
@@ -1048,7 +1047,7 @@ Code or judge for this? <!-- .element: class="quote" -->
 
 Note:
 - Block 26 (02:01 to 02:06). In my own project.
-- Screenshot if behind (first cut).
+- If behind, cut this demo first.
 - Calibration details: Appendix.
 - Setup: Settings → LLM Connections, choose a model with structured outputs, then Evaluators → New evaluator → LLM-as-a-Judge. Use the System and User messages in assets/evaluators/booking_judge.md.
 - Score type Boolean; score name booking_matches_request_judge. Map input to Observation Input and output to Observation Output. Select root tripmate samples to test, then save and attach a rule.
@@ -1375,7 +1374,7 @@ Note:
 - Show severity NO_DATA records the state without notifying. In a production context where scores should keep arriving, Notify after sustained NO_DATA can notify after a delay; choose the delay to tolerate normal evaluation latency.
 - Optional attendee guide: labs/06-alerts.md in the workshop repo. Hobby currently permits 2 alerts; recheck before promising attendee capacity.
 - Optional second alert: count of matching scores below 10, to flag a small denominator. This alert does not suppress the pass-rate alert.
-- Demo readiness: save a real screenshot of the configured alert before the event. If the live UI is unavailable, teach the labelled configuration guide; do not present it as live evidence.
+- If the live UI is unavailable, teach the labelled configuration guide; do not present it as live evidence.
 - UI behavior and roles: [1].
 
 Sources:
@@ -1709,7 +1708,7 @@ Sources:
 1. [DeepLearning.AI: Evaluating AI Agents](https://www.deeplearning.ai/short-courses/evaluating-ai-agents)
 2. [Langfuse: sessions](https://langfuse.com/docs/observability/features/sessions)
 3. [Langfuse: user feedback](https://langfuse.com/docs/observability/features/user-feedback)
-4. [OTel semantic conventions for MCP](https://opentelemetry.io/docs/specs/semconv/gen-ai/mcp/)
+4. [OTel semantic conventions for MCP](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/mcp.md)
 
 --
 
@@ -2043,7 +2042,7 @@ Note:
 - Keep the participant agent in fake-model mode. The separate judge call is real and runs through Langfuse's LLM Connection. The scripted fault cases are not available in TripMate's real-model mode.
 - The prompt ignores final_message when deciding whether the booking matches. It asks for valid, matching origin, destination and date, and a brief reason.
 - Judge agreement with code is an expectation to test. Review mismatches and calibrate against labeled examples before relying on the scores.
-- For the separate tone example on slide 40, the guide links assets/evaluators/tone_judge.md. It has a different criterion and score name; the rude reply is a synthetic discussion example, not a built-in runnable case.
+- For the separate tone example on slide 41, the guide links assets/evaluators/tone_judge.md. It has a different criterion and score name; the rude reply is a synthetic discussion example, not a built-in runnable case.
 
 Sources:
 
